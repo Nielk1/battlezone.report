@@ -1,0 +1,497 @@
+
+$sidebar-icon-size: 42px; // icon size
+$sidebar-folder-padding: 4px; // padding around the folder border
+$sidebar-icon-spacing: 8px; // spacing between icons
+$sidebar-padding: 8px; // padding of the entire sidebar (mostly affects top/bottom)
+$sidebar-icons-sidepad: 14px; // extra space on the sides of icons for the active indicator
+
+$sidebar-width: $sidebar-icon-size + $sidebar-icons-sidepad * 2;
+
+//    0              1
+//  7                  2
+//  6                  3
+//    5              4
+.chamfer {
+    --chamfer-size-inner: var(--chamfer-size, 3px);
+    clip-path: polygon(var(--chamfer-size-inner) 0, calc(100% - var(--chamfer-size-inner)) 0, 100% var(--chamfer-size-inner), 100% calc(100% - var(--chamfer-size-inner)), calc(100% - var(--chamfer-size-inner)) 100%, var(--chamfer-size-inner) 100%, 0 calc(100% - var(--chamfer-size-inner)), 0 var(--chamfer-size-inner));
+}
+@mixin chamfer($size: 3px) {
+    --chamfer-size-inner: #{$size};
+    clip-path: polygon(
+        var(--chamfer-size-inner) 0,
+        calc(100% - var(--chamfer-size-inner)) 0,
+        100% var(--chamfer-size-inner),
+        100% calc(100% - var(--chamfer-size-inner)),
+        calc(100% - var(--chamfer-size-inner)) 100%,
+        var(--chamfer-size-inner) 100%,
+        0 calc(100% - var(--chamfer-size-inner)),
+        0 var(--chamfer-size-inner)
+    );
+}
+
+//  0
+//    1
+//    2
+//  3
+@mixin chamfer-right($size: 3px) {
+    --chamfer-size-inner: #{$size};
+    clip-path: polygon(
+        calc(100% - var(--chamfer-size-inner)) 0,
+        100% var(--chamfer-size-inner),
+        100% calc(100% - var(--chamfer-size-inner)),
+        calc(100% - var(--chamfer-size-inner)) 100%
+    );
+}
+
+// Import Bootstrap's SASS source
+@import 'bootstrap/scss/bootstrap';
+
+.sidebar-layout {
+    display: flex;
+    height: 100vh;
+}
+
+.sidebar {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    width: #{$sidebar-width};
+    height: 100vh;
+    z-index: 101;
+
+    //box-shadow: 2px 0 8px rgba(0,0,0,0.05);
+    //border-right:1px solid black;
+    transition: transform 0.3s;
+    will-change: transform;
+
+    .sidebar-scroll {
+        flex: 1 1 auto;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+
+        /* Hide scrollbar for Chrome, Edge, Safari */
+        &::-webkit-scrollbar {
+            display: none;
+        }
+        /* Hide scrollbar for Firefox */
+        scrollbar-width: none;
+        gap: #{$sidebar-icon-spacing};
+
+        padding: #{$sidebar-padding};
+    }
+
+    .sidebar-top
+    {
+        position: relative;
+        padding: #{$sidebar-folder-padding};
+        background-color: var(--bs-tertiary-bg);
+        border-radius: 12px;
+    }
+    .sidebar-top,
+    .sidebar-bottom {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: #{$sidebar-icon-spacing};
+
+        hr {
+            width: 100%;
+            margin: 0;
+        }
+    }
+
+    .sidebar-icon-box {
+        width: #{$sidebar-icon-size};
+        height: #{$sidebar-icon-size};
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 1.2rem;
+        cursor: pointer;
+        user-select: none;
+        position: relative; // Needed for absolute positioning of ::after
+
+        border-radius: 12px;
+        //@include chamfer(6px);
+
+        // special chamfer customization
+        .sidebar-icon {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            border-radius: inherit;
+            //@include chamfer(6px);
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            //font-weight: bold;
+            //font-size: 1.2rem;
+            //cursor: pointer;
+            //user-select: none;
+
+            --bs-bg-opacity: 1;
+            background-color: rgba(var(--bs-secondary-rgb), var(--bs-bg-opacity)) !important;
+        }
+        // end special chamfer customization
+
+        &::after {
+            content: '';
+            position: absolute;
+            left: #{-$sidebar-icons-sidepad};
+            width: 5px;
+            height: max(10px, #{$sidebar-icon-size / 3});
+            opacity: 0;
+            background-color: var(--bs-body-color);
+            border-radius: 0 5px 5px 0;
+            transition: height 0.3s,
+                        opacity 0.2s;
+            //transition: height 0.3s,
+            //            opacity 0.2s,
+            //            clip-path 0.3s;
+            //@include chamfer-right(5px);
+        }
+
+        &.active::after {
+            height: #{$sidebar-icon-size} !important;
+            opacity: 1;
+        }
+
+        &.pip::after {
+            height: 10px;
+            opacity: 1;
+        }
+
+        &:hover::after {
+            height: #{$sidebar-icon-size / 2};
+            opacity: 1;
+        }
+    }
+
+    .sidebar-spacer {
+        flex: 1 1 0;
+    }
+
+    .sidebar-top[data-cluster-id=custom] {
+        background-color: inherit;
+        border-radius: 0;
+        &::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            //top: 0; left: 0; right: 0; bottom: 0;
+            //background-color: var(--bs-secondary-bg);
+            background-color: var(--bs-tertiary-bg);
+            @include chamfer(8px);
+        }
+
+        .sidebar-icon-box {
+            border-radius: 0;
+            //@include chamfer(6px);
+
+            // special chamfer customization
+            .sidebar-icon {
+                position: absolute;
+                top: 0; left: 0; right: 0; bottom: 0;
+                //border-radius: inherit;
+                @include chamfer(6px);
+
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                //font-weight: bold;
+                //font-size: 1.2rem;
+                //cursor: pointer;
+                //user-select: none;
+
+                --bs-bg-opacity: 1;
+                background-color: rgba(var(--bs-secondary-rgb), var(--bs-bg-opacity)) !important;
+            }
+            // end special chamfer customization
+
+            &::after {
+                border-radius: 0;
+                transition: height 0.3s,
+                            opacity 0.2s,
+                            clip-path 0.3s;
+                @include chamfer-right(5px);
+            }
+        }
+    }
+
+
+
+
+
+
+
+    /* Floating arrow buttons */
+    .scroll-arrow {
+        position: fixed;
+        z-index: 102;
+        width: 32px;
+        height: 32px;
+        background: #cbd5e1;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+
+        width: #{$sidebar-icon-size};
+        height: 24px;
+        //margin-top: #{$sidebar-folder-padding};
+        //margin-bottom: #{$sidebar-folder-padding};
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 1.2rem;
+        cursor: pointer;
+        user-select: none;
+    }
+    .scroll-arrow.up {
+        top: 8px;
+    }
+    .scroll-arrow.down {
+        bottom: 8px;
+    }
+}
+.sidebar-toggle {
+    position: absolute;
+    //top: 8px;
+    top: 0;
+    right: -#{$sidebar-icon-size};
+    left: auto;
+    //left: #{$sidebar-width};
+    z-index: 9999;
+
+    width: #{$sidebar-icon-size};
+    height: #{$sidebar-icon-size};
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+    cursor: pointer;
+    user-select: none;
+
+    transition: opacity 0.3s;
+
+    border-radius: 12px;
+    //@include chamfer(6px);
+}
+
+.header-bar {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    width: 100%;
+    height: 42px;
+    inset: 0;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    border-bottom: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color) !important;
+}
+
+.main-content {
+    display: flex;
+    flex: 1;
+    //padding: 2rem;
+    //overflow: auto;
+    overflow: hidden;
+    inset:0;
+
+    //border-radius: var(--bs-border-radius-sm) !important;
+
+    //--bs-border-width: 10px;
+    //border-top-left-radius: 6px !important;
+    border-left: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color) !important;
+    //border-top: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color) !important;
+
+    transition: margin-left 0.3s;
+    will-change: margin-left;
+}
+
+.sub-content {
+    border-left: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color) !important;
+}
+
+
+.sidebar-hidden {
+    .sidebar {
+        transform: translateX(#{-$sidebar-width});
+    }
+    .main-content {
+        margin-left: #{-$sidebar-width};
+        //border-top-left-radius: 0 !important;
+        border-left: none !important;
+    }
+    .sub-content {
+        border-left: none !important;
+    }
+    .sidebar-toggle {
+        opacity: 0.25;
+
+        &:hover {
+            opacity: 1;
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Example SCSS for Discord-like channel list
+.channel-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0.5rem 0;
+    //background: var(--bs-tertiary-bg, #23272a);
+    font-family: inherit;
+    .divider {
+        height: 1px;
+        //background: var(--bs-secondary-bg, #36393f);
+        margin: 0.5rem 0;
+    }
+}
+
+.channel-section {
+    display: flex;
+    flex-direction: column;
+}
+
+.channel-header {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    font-weight: bold;
+    color: var(--bs-tertiary-color);
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.2s;
+    &:hover, &:focus {
+        background: var(--bs-secondary-bg, #36393f);
+        outline: none;
+    }
+    .arrow {
+        margin-left: 0.5rem;
+        transition: transform 0.2s;
+    }
+    .header-text {
+        //flex: 1;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+
+.channel-group {
+    display: flex;
+    flex-direction: column;
+    &.open {
+        display: flex;
+    }
+    &:not(.open) {
+        display: none;
+    }
+}
+
+.channel-item {
+    display: flex;
+    align-items: center;
+    padding: 5px 5px;
+    gap: 0.5rem;
+    color: var(--bs-tertiary-color);
+    cursor: pointer;
+    border-radius: 6px;
+    position: relative;
+
+    margin: 1px 2px 1px 5px;
+
+    //transition: background 0.2s, color 0.2s;
+
+    .channel-icon {
+        font-size: 1.2em;
+        //margin-right: 0.5rem;
+    }
+    .channel-name {
+        flex: 1;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .channel-action {
+        background: none;
+        border: none;
+        color: var(--bs-tertiary-color);
+        //opacity: 0;
+        display: none;
+        cursor: pointer;
+        //margin-left: 0.5rem;
+        //transition: opacity 0.2s;
+        .gear {
+            font-size: 1.1em;
+        }
+    }
+    &:hover, &.active {
+        //background: var(--bs-secondary-bg, #36393f);
+        background: var(--bs-tertiary-bg);
+        color: #fff;
+        .channel-action {
+            //opacity: 1;
+            display: block;
+        }
+    }
+    &.active {
+        //background: var(--bs-primary, #5865f2);
+        background: var(--bs-secondary-bg);
+        color: #fff;
+        font-weight: bold;
+        .channel-action {
+            //opacity: 1;
+            color: #fff;
+            display: block;
+        }
+    }
+}
+
+/*
+// Optional: Hide gear button unless hovered or active
+.channel-item:not(:hover):not(.active) .channel-action {
+    //opacity: 0;
+    pointer-events: none;
+}
+.channel-item:hover .channel-action,
+.channel-item.active .channel-action {
+    //opacity: 1;
+    pointer-events: auto;
+}
+*/
