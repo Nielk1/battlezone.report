@@ -21,7 +21,7 @@ class IsThereAnyDealService
 
     public function getDataForApi()
     {
-        $json = file_get_contents(storage_path('app/game_map.json'));
+        $json = file_get_contents(resource_path('data/itad_game_map.json'));
         // Remove // comments
         $json = preg_replace('!//.*!', '', $json);
         // Remove /* ... */ comments

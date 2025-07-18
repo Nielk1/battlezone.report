@@ -1,0 +1,21 @@
+{
+    "id": {
+        "018d937f-0eb2-7278-89bd-eebe8ef86d67": ["BZ98R","BZCC"],
+        "018d937f-1922-704c-a233-7e7be462386a": ["BZ98R"],
+        "018d937e-ff58-70c9-8e6b-3e0e1b062cfa": ["TROR"],
+        "018d937f-0c9f-73a9-bb07-c51567aecdd2": ["BZ98R","TROR"],
+        "0197ee14-8277-72f0-aa84-3a9fbc3747cc": ["BZ98R","TROR"], // ZOOM Platform only (wtf is this?)
+        "018d937f-1553-704a-ac5d-46c93c7f1376": ["BZVR"], // steam only
+        "018d937e-f09f-7309-a3ab-f1bac7d86b0b": ["BZVR"], // everywhere else
+        "018d937e-f9e7-705c-bbba-997d7652ce01": ["BZCC"]
+    },
+    "name": {
+        "BZVR": "Battlezone Gold",
+        "BZ98R": "Battlezone 98 Redux",
+        "TROR": "The Red Odyssey DLC",
+        "BZCC": "Battlezone Combat Commander",
+        "BZ98R|TROR": "Battlezone 98 Redux Odyssey Edition",
+        "BZ98R|BZCC": "Battlezone Strategy Bundle"
+    },
+    "order": [ "BZ98R", "TROR", "BZCC", "BZVR" ]
+}
