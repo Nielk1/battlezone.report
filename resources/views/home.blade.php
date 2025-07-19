@@ -69,13 +69,6 @@
     max-width: 430px;
 }
 
-.svg-icon svg {
-    height: 2em;
-    width: auto;
-    display: inline-block;
-    vertical-align: middle;
-}
-
 .price-row {
     width: 100%;
     gap: 4px;

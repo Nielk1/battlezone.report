@@ -363,24 +363,78 @@ $sidebar-width: $sidebar-icon-size + $sidebar-icons-sidepad * 2;
 
 
 
+.svg-icon {
+    margin: -5px 0;
+    svg {
+        height: 2em;
+        width: auto;
+        display: inline-block;
+        vertical-align: middle;
+    }
+}
 
+.channel-actions {
+    display: flex;
+    gap: 0;
+}
 
+.channel-action {
+    margin: -5px 0;
+    svg {
+        height: 1.5em;
+        width: auto;
+        display: inline-block;
+        vertical-align: middle;
+    }
+}
 
+.channel-group {
+    margin-left: 0;
+}
 
+// Indent child channels if parent has an icon
+.channel-section > .channel-group,
+.channel-group > .channel-group {
+    margin-left: 12px;
+    & > .channel-item::before {
+        //content: '\\';
+        content: '';
+        position: absolute;
+        //left: -15px;
+        //font-size: x-large;
+        //font-weight: bold;
+        //bottom: 5px;
+
+        left: -8px;
+        height:50%;
+        border-left: solid color-mix(in srgb, rgb(var(--bs-tertiary-color-rgb)), var(--bs-body-bg)) 4px;
+        border-radius: 2px;
+        transition: height 0.3s;
+    }
+}
+
+.channel-section > .channel-group,
+.channel-group > .channel-group {
+    & > .channel-item:hover::before,
+    & > .channel-item.active::before {
+        border-color: var(--bs-body-color);
+        height:85%;
+    }
+}
 
 // Example SCSS for Discord-like channel list
 .channel-list {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 1rem;
     padding: 0.5rem 0;
     //background: var(--bs-tertiary-bg, #23272a);
     font-family: inherit;
-    .divider {
-        height: 1px;
-        //background: var(--bs-secondary-bg, #36393f);
-        margin: 0.5rem 0;
-    }
+    //.divider {
+    //    height: 1px;
+    //    //background: var(--bs-secondary-bg, #36393f);
+    //    margin: 0.5rem 0;
+    //}
 }
 
 .channel-section {
@@ -393,17 +447,20 @@ $sidebar-width: $sidebar-icon-size + $sidebar-icons-sidepad * 2;
     align-items: center;
     padding: 0.5rem 1rem;
     font-weight: bold;
-    color: var(--bs-tertiary-color);
+    //color: var(--bs-tertiary-color);
+    color: color-mix(in srgb, rgb(var(--bs-tertiary-color-rgb)), var(--bs-body-bg));
     cursor: pointer;
     user-select: none;
-    transition: background 0.2s;
+    //transition: background 0.2s;
     &:hover, &:focus {
-        background: var(--bs-secondary-bg, #36393f);
+        //background: var(--bs-secondary-bg, #36393f);
+        color: var(--bs-header-color);
         outline: none;
     }
     .arrow {
         margin-left: 0.5rem;
         transition: transform 0.2s;
+        font-family: monospace;
     }
     .header-text {
         //flex: 1;
@@ -416,11 +473,11 @@ $sidebar-width: $sidebar-icon-size + $sidebar-icons-sidepad * 2;
 .channel-group {
     display: flex;
     flex-direction: column;
-    &.open {
-        display: flex;
-    }
-    &:not(.open) {
+    &.closed {
         display: none;
+    }
+    &:not(.closed) {
+        display: flex;
     }
 }
 
@@ -429,7 +486,8 @@ $sidebar-width: $sidebar-icon-size + $sidebar-icons-sidepad * 2;
     align-items: center;
     padding: 5px 5px;
     gap: 0.5rem;
-    color: var(--bs-tertiary-color);
+    //color: var(--bs-tertiary-color);
+    color: color-mix(in srgb, rgb(var(--bs-tertiary-color-rgb)), var(--bs-body-bg));
     cursor: pointer;
     border-radius: 6px;
     position: relative;
@@ -451,7 +509,8 @@ $sidebar-width: $sidebar-icon-size + $sidebar-icons-sidepad * 2;
     .channel-action {
         background: none;
         border: none;
-        color: var(--bs-tertiary-color);
+        //color: var(--bs-tertiary-color);
+        color: color-mix(in srgb, rgb(var(--bs-tertiary-color-rgb)), var(--bs-body-bg));
         //opacity: 0;
         display: none;
         cursor: pointer;
@@ -464,7 +523,7 @@ $sidebar-width: $sidebar-icon-size + $sidebar-icons-sidepad * 2;
     &:hover, &.active {
         //background: var(--bs-secondary-bg, #36393f);
         background: var(--bs-tertiary-bg);
-        color: #fff;
+        color: var(--bs-body-color);
         .channel-action {
             //opacity: 1;
             display: block;
@@ -473,11 +532,11 @@ $sidebar-width: $sidebar-icon-size + $sidebar-icons-sidepad * 2;
     &.active {
         //background: var(--bs-primary, #5865f2);
         background: var(--bs-secondary-bg);
-        color: #fff;
+        color: var(--bs-body-color);
         font-weight: bold;
         .channel-action {
             //opacity: 1;
-            color: #fff;
+            color: var(--bs-body-color);
             display: block;
         }
     }

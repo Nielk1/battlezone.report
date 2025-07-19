@@ -8,7 +8,7 @@ use App\Http\Controllers\IssueController;
 Route::get('/', [PageController::class, 'index'])->name('home');
 Route::get('/test', [PageController::class, 'test']);
 
-Route::get('/issue', [IssueController::class, 'index'])->name('issue');
+Route::get('/issue/{type?}/{id?}', [IssueController::class, 'index'])->name('issue');
 
 Route::get('/welcome', function () {
     return view('welcome');

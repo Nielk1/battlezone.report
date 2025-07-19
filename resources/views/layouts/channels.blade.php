@@ -93,12 +93,6 @@
 }
 
 
-
-
-
-
-
-
 </style>
 <div class="page-container">
     <aside class="sidebar2" id="sidebar2" @if(isset($sidebarWidth)) style="width: {{ $sidebarWidth }}px;" @endif>
@@ -108,46 +102,11 @@
         <div class="sidebar2-content">
             <!-- Example HTML for a Discord-like channel list -->
             <div class="channel-list">
-                <div class="channel-section">
-                    <div class="channel-header" tabindex="0">
-                        <span class="header-text">General</span>
-                        <span class="arrow open">&#9660;</span> <!-- ▼ -->
+                @foreach($channels as $channel)
+                    <div class="channel-section">
+                        @include('partials.channel-list', ['channel' => $channel])
                     </div>
-                    <div class="channel-group open">
-                        <div class="channel-item active">
-                            <span class="channel-icon">&#128172;</span> <!-- 💬 -->
-                            <span class="channel-name">chat</span>
-                            <button class="channel-action" title="Settings">
-                                <span class="gear">&#9881;</span> <!-- ⚙️ -->
-                            </button>
-                        </div>
-                        @for ($i = 0; $i < 50; $i++)
-                            <div class="channel-item">
-                                <span class="channel-icon">&#128276;</span> <!-- 🔔 -->
-                                <span class="channel-name">announcements</span>
-                                <button class="channel-action" title="Settings">
-                                    <span class="gear">&#9881;</span>
-                                </button>
-                            </div>
-                        @endfor
-                    </div>
-                </div>
-                <div class="divider"></div>
-                <div class="channel-section">
-                    <div class="channel-header" tabindex="0">
-                        <span class="arrow">&#9654;</span> <!-- ▶ -->
-                        <span class="header-text">Voice</span>
-                    </div>
-                    <div class="channel-group">
-                        <div class="channel-item">
-                            <span class="channel-icon">&#127908;</span> <!-- 🎤 -->
-                            <span class="channel-name">General Voice</span>
-                            <button class="channel-action" title="Settings">
-                                <span class="gear">&#9881;</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
         <div class="resizer" id="resizer"></div>

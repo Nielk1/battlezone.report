@@ -1,5 +1,84 @@
-{{-- filepath: resources/views/hello.blade.php --}}
-@php($activeNav = 'issue')
+<?php
+//require_once app_path('Models/Channel.php');
+//use App\Models\Channel;
+$activeNav = 'issue';
+
+/*$channels = [
+    Channel::fromArray([
+        'name' => 'Issue 2016-04-25',
+        'type' => 'issue',
+        'children' => [
+            [
+                'name' => 'general',
+                'icon' => 'logo_article',
+                'type' => 'article',
+                'action' => 'issue/2016-04-25#article1',
+                'buttons' => ['permalink'],
+            ],
+            [
+                'name' => 'random',
+                'icon' => 'logo_steam',
+                'type' => 'article',
+                'action' => 'issue/2016-04-25#article2',
+                'buttons' => ['permalink'],
+                'children' => [
+                    [
+                        'name' => 'general',
+                        'icon' => 'logo_steam',
+                        'type' => 'article',
+                        'action' => 'issue/2017-02-09#article1',
+                        'buttons' => ['permalink'],
+                    ],
+                    [
+                        'name' => 'random',
+                        'icon' => 'logo_steam',
+                        'type' => 'article',
+                        'action' => 'issue/2017-02-09#article2',
+                        'buttons' => ['permalink'],
+                    ]
+                ]
+            ]
+        ]
+    ]),
+    Channel::fromArray([
+        'name' => 'Issue 2017-02-09',
+        'type' => 'issue',
+        'icon' => 'logo_steam',
+        'children' => [
+            [
+                'name' => 'general',
+                'icon' => 'logo_steam',
+                'type' => 'article',
+                'action' => 'issue/2017-02-09#article1',
+                'buttons' => ['permalink'],
+            ],
+            [
+                'name' => 'random',
+                'type' => 'article',
+                'action' => 'issue/2017-02-09#article2',
+                'buttons' => ['permalink'],
+                'children' => [
+                    [
+                        'name' => 'general',
+                        'icon' => 'logo_steam',
+                        'type' => 'article',
+                        'action' => 'issue/2017-02-09#article1',
+                        'buttons' => ['permalink'],
+                    ],
+                    [
+                        'name' => 'random',
+                        'icon' => 'logo_steam',
+                        'type' => 'article',
+                        'action' => 'issue/2017-02-09#article2',
+                        'buttons' => ['permalink'],
+                    ]
+                ]
+            ]
+        ]
+    ]),
+];*/
+?>
+
 @extends('layouts.channels')
 
 @section('title', 'Issue')
@@ -37,9 +116,6 @@
     background: transparent;
 }
 .sidebar3-content::-webkit-scrollbar-thumb {
-    background: transparent;
-}
-.sidebar3-content:hover::-webkit-scrollbar-thumb {
     background: #ccc;
     border-radius: 6px;
     border: 2px solid transparent; /* Simulates margin around the thumb */
