@@ -30,6 +30,19 @@ class Channel extends Model
         $this->children = $children;
     }
 
+    // Returns [any children have icon, all child has icon]
+    public function childrenHaveIcon(): array
+    {
+        $anyTrue = false;
+        foreach ($this->children as $child) {
+            if ($child->icon)
+                $anyTrue = true;
+            else
+                return [ $anyTrue, false];
+        }
+        return [ $anyTrue, $anyTrue ];
+    }
+
     /**
      * Create a Channel from an array (recursive)
      */

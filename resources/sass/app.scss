@@ -392,9 +392,9 @@ $sidebar-width: $sidebar-icon-size + $sidebar-icons-sidepad * 2;
     margin-left: 0;
 }
 
-// Indent child channels if parent has an icon
-.channel-section > .channel-group,
-.channel-group > .channel-group {
+.channel-section > .channel-group.has-icon-parent, // prefix with marker if parent has icon
+.channel-section > .channel-group:not(.all-icon):not(.has-icon-parent), // prefix with marker if parent has no icon and any children have icons
+.channel-group > .channel-group { // always prefix with markers for deeper levels
     margin-left: 12px;
     & > .channel-item::before {
         //content: '\\';
@@ -411,10 +411,6 @@ $sidebar-width: $sidebar-icon-size + $sidebar-icons-sidepad * 2;
         border-radius: 2px;
         transition: height 0.3s;
     }
-}
-
-.channel-section > .channel-group,
-.channel-group > .channel-group {
     & > .channel-item:hover::before,
     & > .channel-item.active::before {
         border-color: var(--bs-body-color);

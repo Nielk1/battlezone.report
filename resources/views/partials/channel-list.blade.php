@@ -10,7 +10,8 @@
     </span>
 </div>
 @if (!empty($channel->children))
-    <div class="channel-group{{ $channel->icon ? ' has-icon' : '' }}">
+    @php($iconFlags = $channel->childrenHaveIcon())
+    <div class="channel-group{{ $channel->icon ? ' has-icon-parent' : '' }}{{ $iconFlags[0] ? ' any-icon' : '' }}{{ $iconFlags[1] ? ' all-icon' : '' }}">
         @foreach($channel->children as $child)
             @include('partials.channel-list', ['channel' => $child])
         @endforeach

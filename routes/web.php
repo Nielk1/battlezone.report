@@ -4,11 +4,13 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HelloController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\IssueController;
+use App\Http\Controllers\ArticleController;
 
 Route::get('/', [PageController::class, 'index'])->name('home');
 Route::get('/test', [PageController::class, 'test']);
 
 Route::get('/issue/{type?}/{id?}', [IssueController::class, 'index'])->name('issue');
+Route::get('/article/{type?}/{id?}', [ArticleController::class, 'index']);
 
 Route::get('/welcome', function () {
     return view('welcome');

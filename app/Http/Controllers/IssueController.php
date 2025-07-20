@@ -19,10 +19,26 @@ class IssueController extends Controller
         //}
         //return view('issue');
 
-        // load issue list
         $json = file_get_contents(resource_path('data/issues.json'));
         $channelsRaw = json_decode($json, true);
         $channels = array_map([Channel::class, 'fromArray'], $channelsRaw);
+
+        if (!$id) {
+            // get latest id of all types
+            $latestEntry = $channels[count($channels) - 1];
+
+            // get latest id of specific type if possible
+            if ($type) {
+                for ($i = count($channels) - 1; $i >= 0; $i--) {
+                    if ($type === null || $channels[$i]->type === $type) {
+                        $latestEntry = $channels[$i];
+                        break;
+                    }
+                }
+            }
+
+            return redirect()->route('issue', ['type' => $latestEntry->type, 'id' => $latestEntry->action], 302);
+        }
 
         return view('issue', ['channels' => $channels]);
     }
