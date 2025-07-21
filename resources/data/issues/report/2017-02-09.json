@@ -1,0 +1,15 @@
+{
+    "title":"The Field Report: \r\nThe Red Odyssey",
+    "image":"issues/2017-02-09-back.jpg",
+    "date":"2017-02-09",
+    "articles":[
+        {"type":"news","code":"intro-feb17"},
+
+        {"type":"interview","code":"interview-with-robert-waring"},
+        {"type":"guide","code":"bobcat-bettys-guide-fighters"},
+        {"type":"news","code":"workshop-rundown-new-year"},
+        {"type":"news","code":"community-news-feb17"},
+        {"type":"news","code":"get-involved"},
+        {"type":"news","code":"patch-development-feb17"}
+    ]
+}

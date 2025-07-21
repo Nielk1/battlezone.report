@@ -1,0 +1,11 @@
+[
+    {
+        "name": "The First Bzooka War",
+        "type": "volume",
+        "code": "the-first-bzooka-war",
+        "url": "/chronicle/volume/the-first-bzooka-war",
+        "children": [
+            {"icon": "logo_article", "type": "chapter", "code": "1", "name": "1. Battle of Canyons", "url": "/chronicle/volume/the-first-bzooka-war#1", "buttons": [{"icon": "logo_target", "name": "Permalink", "attr": {"onclick": "window.location.href='/chronicle/volume/the-first-bzooka-war/1'"}}]}
+        ]
+    }
+]

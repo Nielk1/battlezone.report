@@ -1,0 +1,113 @@
+<p>Aside from hunting down bugs in the game the twenty community beta testers were also tasked with loading the workshop up with day-one content, and they rose to the task. With nearly 100 items on the workshop we figure you could do with some help in sifting through them all, so we've picked out some highlights for you.</p>
+
+<p>In this section we're going to take a brief look at some of the day-one items in the workshop - what they do, why you should get them, and what else you can expect in the near future.</p>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card mb-3 print-avoid-page-break">
+            <a class="card-img-top d-print-none" href="http://steamcommunity.com/sharedfiles/filedetails/?id=663756685" target="_blank" rel="noopener noreferrer"><img class="card-img-top" src="/images/articles/news/workshop-rundown-day-one-top-ten-0.jpg" alt="Battlezone: The Lost Maps"></a>
+            <div class="card-body">
+                <h3 class="card-title">10 - Battlezone: The Lost Maps</h3>
+                <p class="card-text">We're kicking off our list with the oldest of the old - older than Battlezone itself, in fact! Battlezone: The Lost Maps is a collection of maps and missions that were removed from the original Battlezone (some even <i>before</i> it's first release), recovered from places like the 0.8 beta and the earliest builds of the game. Maps like "Divots" and "Capture the Flag" that only a lucky few of you will have played before are back - and there are more in the works.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card mb-3 print-avoid-page-break">
+            <a class="card-img-top d-print-none" href="http://steamcommunity.com/sharedfiles/filedetails/?id=663670768" target="_blank" rel="noopener noreferrer"><img class="card-img-top" src="/images/articles/news/workshop-rundown-day-one-top-ten-9.jpg" alt="Checkerboard Atlases"></a>
+            <div class="card-body">
+                <h3 class="card-title">9 - Checkerboard Atlases</h3>
+                <p class="card-text">Those of you who are veteran mapmakers from the original game may have noticed that the new release is lacking one particularly useful feature: checkerboards! During the first pass of texturing with MakeTRN it's not unusual for the program to encounter terrain squares that it doesn't know what to do with, so it places a default texture there in the assumption that you'll be touching things up later. Realising that some mapmakers never actually bothered with the touchup, Battlezone 98 Redux switches the default from the red-and-black checkerboard that it used to be to the world's first solid texture that stands out a bit less - great for the player, not so good for the mapmaker. This handy little utility mod replaces those default textures with a new texture that's even more garish than the original; a violent-magenta-and-lime-green checkerboard with a helpful "Missing Texture" notice so you know exactly what's going on.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card mb-3 print-avoid-page-break">
+            <a class="card-img-top d-print-none" href="http://steamcommunity.com/sharedfiles/filedetails/?id=626038370" target="_blank" rel="noopener noreferrer"><img class="card-img-top" src="/images/articles/news/workshop-rundown-day-one-top-ten-8.jpg" alt="Instant Action Demo"></a>
+            <div class="card-body">
+                <h3 class="card-title">8 - Instant Action Demo</h3>
+                <p class="card-text">The Workshop's top two subscribed items - at 85 and 70 each - are Activision's two official Instant Action maps. These were built to demonstrate the creation of Instant Action levels for other users and so were never intended to present much of a challenge, but here they are. User Mission 1 (the more challenging of the two) will pit you against an entrenched Soviet force on Achilles, while the slightly User Mission 2 have you stand their ground for ten minutes against CCA assault.</p>
+                <p class="card-text">For more Instant Action, check out Sporkinator's "Capt. Chaos Strikes Again", which comes in both NSDF and CCA versions.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card mb-3 print-avoid-page-break">
+            <img class="card-img-top d-print-none" src="/images/articles/news/workshop-rundown-day-one-top-ten-7.jpg" alt="Soundtrack Mods">
+            <div class="card-body">
+                <h3 class="card-title">7 - Soundtrack Mods</h3>
+                <p class="card-text">There are three of these currently on the workshop: the Early Demo Soundtrack, the Red Odyssey Soundtrack, and the Rise of the Black Dogs: Re-Orchestrated Soundtrack. They're pretty simple mods - they just swap out the music - so let's dive right in.</p>
+                <p class="card-text"><a href="http://steamcommunity.com/sharedfiles/filedetails/?id=662335646" target="_blank" rel="noopener noreferrer">The first of those</a> isn't very big - it consists of only three tracks, composed by art director Carey Chico to give composer Jeehun Hwang and idea of what the final product should be. They're different, but they're <a href="http://steamcommunity.com/sharedfiles/filedetails/?id=662335646" target="_blank" rel="noopener noreferrer">definitely Battlezone</a>.</p>
+                <p class="card-text">Most veteran players will be familiar with <a href="http://steamcommunity.com/sharedfiles/filedetails/?id=659285076" target="_blank" rel="noopener noreferrer">The Red Odyssey's soundtrack</a>, with its epic swelling brass and 80s-sounding synths. It's a classic and, thanks to Sporkinator, you can now have it in Battlezone 98 Redux too.</p>
+                <p class="card-text">The gem in this particular item is the <a href="http://steamcommunity.com/sharedfiles/filedetails/?id=662343422" target="_blank" rel="noopener noreferrer">Rise of the Black Dogs: Re-Orchestrated Soundtrack</a>. It was first released in Summer 2015 as part of the Heracles Brigade's Rise of the Black Dogs Decompilation Project, an effort to port all of the exclusive content from the Nintendo 64 version of Battlezone to the PC. The first thing they finished was the soundtrack, ripping it out of the cartridge and fixing it up to match more appropriately with that of the PC game. Those of you who played Battlezone: Rise of the Black Dogs should find this mod to be an interesting nostalgic twist, while the rest of you can be assured of a third kick-ass alternative soundtrack to play to.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card mb-3 print-avoid-page-break">
+            <div class="card-img-top d-print-none d-flex" style="overflow: hidden;">
+                <a style="flex: 1 1 0;" href="http://steamcommunity.com/sharedfiles/filedetails/?id=667107617" target="_blank" rel="noopener noreferrer"><img style="width:100%;" src="/images/articles/news/workshop-rundown-day-one-top-ten-6a.jpg" alt="World Packs"></a>
+                <a style="flex: 1 1 0;" href="http://steamcommunity.com/sharedfiles/filedetails/?id=667265668" target="_blank" rel="noopener noreferrer"><img style="width:100%;" src="/images/articles/news/workshop-rundown-day-one-top-ten-6b.jpg" alt="World Packs"></a>
+                <a style="flex: 1 1 0;" href="http://steamcommunity.com/sharedfiles/filedetails/?id=668132729" target="_blank" rel="noopener noreferrer"><img style="width:100%;" src="/images/articles/news/workshop-rundown-day-one-top-ten-6c.jpg" alt="World Packs"></a>
+            </div>
+            <div class="card-body">
+                <h3 class="card-title">6 - World Packs</h3>
+                <p class="card-text">There are three items in this category; Ganymede, Elysium, and Ceres. Players of Battlezone: The Red Odyssey will remember the former two as the new worlds on which all but one of the expansion's new maps were set; dusty, bleak-looking places that had that strange charm to them that only Team Evolve's texturing could really create. In particular, Elysium's intriguing purple atmosphere is beautiful thing to behold in Battlezone 98 Redux.</p>
+                <p class="card-text">Each of these packs come with three strategy maps ported from Battlezone 1.5: Ganymede comes with ScrapPool's "Hills of War", Goomba's "Cracked Nerves" and DL's "Made in China"; while Elysium comes packaged with Mr. Spock's "Biometal Run", "Grand Theft" and "HiLo", the latter converted from Battlezone 2.</p>
+                <p class="card-text">The third pack is Ceres, a brand new asteroid-based tileset created by DeusExCeteri. It somehow manages to be both similar to and distinct from the moon and Elysium, its combination of blue-tinted bedrock and brownish gravel producing a surprising level of contrast for what you'd think would be quite a bland world. It comes with three of her own maps; the tight and frantic "The Conduit", the 6-player "Clockwork Battlefield" (one of only two on the workshop!) and the deathmatch map "Pure Chaos" (which features a Chinese CP-Stabber powerup from The Red Odyssey!).</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card mb-3 print-avoid-page-break">
+            <div class="card-img-top d-print-none d-flex" style="overflow: hidden;">
+                <a style="flex: 1 1 0;" href="http://steamcommunity.com/sharedfiles/filedetails/?id=664560219" target="_blank" rel="noopener noreferrer"><img style="width:100%;" src="/images/articles/news/workshop-rundown-day-one-top-ten-5a.jpg" alt="Deus Ex Maps"></a>
+                <a style="flex: 1 1 0;" href="http://steamcommunity.com/sharedfiles/filedetails/?id=664476805" target="_blank" rel="noopener noreferrer"><img style="width:100%;" src="/images/articles/news/workshop-rundown-day-one-top-ten-5b.jpg" alt="Deus Ex Maps"></a>
+                <a style="flex: 1 1 0;" href="http://steamcommunity.com/sharedfiles/filedetails/?id=666507262" target="_blank" rel="noopener noreferrer"><img style="width:100%;" src="/images/articles/news/workshop-rundown-day-one-top-ten-5c.jpg" alt="Deus Ex Maps"></a>
+            </div>
+            <div class="card-body">
+                <h3 class="card-title">5 - Deus Ex Maps</h3>
+                <p class="card-text">From Deux Ex's world packs to Deus Ex's maps. DeusExCeteri is still a relatively new face in the Battlezone community, but her meteoric rise as mapper and modder shows no sign of stopping. Aside from the aforementioned world packs she's got three fresh and innovative standalone maps on the workshop, and we're going to run down them one-by-one.</p>
+                <p class="card-text">First up is "Guardians", Battlezone's first defense-only deathmatch map. How does that work, you ask? We've got no idea - it just does! Grab yourself a turret, howitzer or minelayer from any of three factions (NSDF, CCA and Black Dogs), keep an eye out for an upgrade and hunt down your opponents!</p>
+                <p class="card-text">"Twilight Zone" is the first map on the workshop to take advantage of the newly adjustable lighting system. As night draws in on Venus, you're going to need to rely on the lights of your tank - and those of the enemy - to see what you're doing. Keep an eye out for the coloured terrain squares used to indicate spawn points, weapon crates, and ammo and repair drops. This map really is a thing of beauty.</p>
+                <p class="card-text">"Lord of the Pit" is something of a rarity; a custom-build King of the Hill map, one of only two on the workshop (see item 3 for the other). The "hill" isn't so much a hill as an island in the middle of a lake of lava, so try not to fall off! As a bonus, this one includes the "Dominik" Red Wolf Czar, Battlezone 98 Redux's first reskinned unit (see item 2)!</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card mb-3 print-avoid-page-break">
+            <a class="card-img-top d-print-none" href="http://steamcommunity.com/id/HyperFighter/myworkshopfiles/?appid=301650" target="_blank" rel="noopener noreferrer"><img class="card-img-top" src="/images/articles/news/workshop-rundown-day-one-top-ten-4.jpg" alt="MPI Maps"></a>
+            <div class="card-body">
+                <h3 class="card-title">4 - MPI Maps</h3>
+                <p class="card-text">The lua-supported Multi-Player Instant gamemode is one of the most significant new features of Battlezone 1.5 and Battlezone 98 Redux, and there have already been multiple questions on the Steam Community boards asking for maps. Well, here they are - eight MPI maps created by community legend HyperFighter. These will pit you and up to two friends (one friend in the case of "The Venusian Strike") in co-operative play against the AI. Or you can fight each other <i>and</i> the AI, if you really want to. At an average of 42 subscribers each, these are some of the hottest maps on the workshop - finding a partner shouldn't cause you any trouble.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card mb-3 print-avoid-page-break">
+            <a class="card-img-top d-print-none" href="http://steamcommunity.com/sharedfiles/filedetails/?id=648231739" target="_blank" rel="noopener noreferrer"><img class="card-img-top" src="/images/articles/news/workshop-rundown-day-one-top-ten-3.jpg" alt="Battlezone: Battle Grounds"></a>
+            <div class="card-body">
+                <h3 class="card-title">3 - <a href="http://steamcommunity.com/app/301650/discussions/0/368542844486021353/" target="_blank" rel="noopener noreferrer">Battlezone: Battle Grounds</a></h3>
+                <p class="card-text">If anything is to blame for the sheer amount of content on the workshop, it's this. Weighing in at over 50 items, the authorized map pack "Battlezone: Battle Grounds" is simply <i>massive</i> - and there's about the same again yet to come! We simply don't have the space to cover every item included, but with 16 strategy maps and 36 deathmatch maps to choose from you can rest assured that there's plenty to be getting on with. The developer assures us that there's plenty more to come - 53 Instant Action maps more, to be precise, along with incremental updates to bring the maps from their 1998 forms to 2016's Battlezone mapping standards.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card mb-3 print-avoid-page-break">
+            <a class="card-img-top d-print-none" href="http://steamcommunity.com/sharedfiles/filedetails/?id=665749778" target="_blank" rel="noopener noreferrer"><img class="card-img-top" src="/images/articles/news/workshop-rundown-day-one-top-ten-2.jpg" alt="Red Wolf Czar"></a>
+            <div class="card-body">
+                <h3 class="card-title">2 - Red Wolf Czar</h3>
+                <p class="card-text">The most popular item on the workshop this week is also one of the most unique; the Red Wolf "Dominik" Czar. Those of you who have been part of the Battlezone community for some time might remember the Red Wolves - or Krasnyy Volk Spetsnaz, as the CCA knew them - as the CCA special forces squadron featured in ssuser's "Red Wolf Mission Pack". There have been several versions of the Red Wolf skin pack over the years, each artist collaborating with the last, and this is the first part of the latest. This beautiful skin doesn't just overwrite the Czar either - you can find it lurking in "Total Destruction" during the NSDF campaign, you will be rewarded with the chance to drive it yourself between the fourth and eighth missions of the CCA campaign, and can supplement your army with them (along with the CCA Fury) in "Punishing the Black Dogs". Considering this was only created as a test to establish a workflow for modders, this has really taken off.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card mb-3 print-avoid-page-break">
+            <a class="card-img-top d-print-none" href="http://steamcommunity.com/sharedfiles/filedetails/?id=656993383" target="_blank" rel="noopener noreferrer"><img class="card-img-top" src="/images/articles/news/workshop-rundown-day-one-top-ten-1.jpg" alt="Deus Ex's HUD Mod"></a>
+            <div class="card-body">
+                <h3 class="card-title">1 - Deus Ex's HUD Mod</h3>
+                <p class="card-text">Our top item in this issue goes out to everyone who's a little disgruntled about the vibrancy and brightness of the new HUD - we know you're out there! DeusExCeteri's HUD Mod was on the front page of the workshop for weeks before release and is still there now, and we know why; its simple elegance calls to mind the HUD style of Battlezone without shying away from updating the visuals, blending the dark simplicity of the old with the high-res quality of the new. All three colours of HUD are included - American green, Soviet red and Fury blue (complete with Greek text!). We have it on good authority that there are more HUD mods on the way, too.</p>
+            </div>
+        </div>
+    </div>
+</div>

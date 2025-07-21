@@ -1,0 +1,10 @@
+{
+    "title":"The First Bzooka War",
+    "image":"chronicle/volume/the-first-bzooka-war/1-back.jpg",
+    "authors":[
+        {"name":"HyperFighter"}
+    ],
+    "articles":[
+        {"type":"chapter","code":"1"}
+    ]
+}

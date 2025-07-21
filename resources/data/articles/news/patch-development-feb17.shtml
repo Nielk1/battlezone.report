@@ -1,0 +1,115 @@
+<p>By now you have probably heard the news that there’s a big patch on the way. Some of you may have it already and others might be waiting for it to be pushed, but we’ve got the lowdown on the major features of the latest update right here for all of you.</p>
+<h3>Multiplayer and Mods</h3>
+<p>Multiplayer has seen a few big improvements come this latest patch, including visible full games and the ability to password-protect game lobbies for private games. Perhaps the biggest change, though, is the introduction of multiplayer-compatible mods. The mods currently allowed are mostly texture and audio edits, allowing players to customize their experience as they play with their friends online. In order to see if a mod you’re using (or making) is multiplayer-compatible, check your Mods tab while in the main menu; mods shown in green will work in multiplayer, while those in red will be limited to single-player use. Maps with custom content will remain unaffected.</p>
+<h3>Performance</h3>
+<p>Comments regarding performance issues with the game have finally been answered with this patch. Developers have worked on optimizing the code, and have managed to achieve massive performance improvements in gameplay. This is a boost especially for players with lower-end PCs that had issues getting a smooth, playable frame rate in older versions.</p>
+<h3>Custom Campaigns</h3>
+<p>One of the biggest additions to be brought into this patch are Custom Campaigns. Custom campaigns made using this feature can be downloaded from the workshop and played in sequence just like the stock campaigns, complete with full briefing, debriefing, monologue and custom world support. For those intending to create their own, an example custom campaign will be included with the patch.</p>
+<h3>Addon</h3>
+<p>The latest patch has changed the functionality of the addon folder. Now it behaves exactly like Steam’s workshop folder regarding custom content. This change makes it easier to download mods that are not on Steam. Modders should note that any project in the addon folder must include a custom INI matching those needed for the workshop and that they will not be able to use subfolders within their project.</p>
+
+<h3>Full List of Changes</h3>
+
+<h4>Performance and features</h4>
+<ul>
+<li>A general code cleanup was performed resulting in a small framerate improvement.</li>
+<li>A refactoring of all the shaders resulting in a large framerate improvement.</li>
+<li>The GL shaders were rewritten for a large performance increase.</li>
+<li>A DX11 renderer was added. On some higher-end systems this will increase framerate 50%-75%.</li>
+<li>To swap renderers, add the following to the launch options:<br/><code>-renderer=dx9</code>, <code>-renderer=dx11</code>, <code>-renderer=gl</code></li>
+<li>The terrain shader and vertex format were rewritten to dramatically lower the amount of VRAM used by the terrain.</li>
+<li>The shadow system was rewritten to use less VRAM while increasing the quality of the shadows. Ultra shadows now use less VRAM than Med shadows did and look much better.</li>
+<li>Shadow maps are now 16-bit, cutting their VRAM usage by 50%.</li>
+<li>Shadows now can be enabled in all graphics settings and there is now a no-shadow option.</li>
+<li>The effects system has had an optimization pass. Large battles no longer reduce the framerate drastically.</li>
+<li>Added the emissive texture pass to Low-quality graphics.</li>
+<li>Added PSSM shadows at High, Very High, and Ultra shadow settings.</li>
+<li>The mission name was added to the mission briefing screen.</li>
+<li>Effects now properly glow if glow is turned on.</li>
+<li>Made the glow nonlinear so that it acts more like an HDR bloom effect.</li>
+<li>Adjusted the terrain and object shaders LOD for extra performance.</li>
+<li>Shadows adjusted to remove jitter seen at Low and Medium resolutions.</li>
+<li>Rejiggered PCF sample points for more performance.</li>
+<li>Added password protected games.</li>
+<li>MP now uses a custom server and custom low level net code.</li>
+<li>Locked, Launched and Full games are now visible in the MP lobby.</li>
+<li>An icon was added for locked games.</li>
+<li>Asset preloading is vastly improved, dramatically reducing load times.</li>
+<li>Reticles have been redone in high resolution glory!</li>
+<li>Changing your Steam name now changes your BZ name.</li>
+<li>Fixed the pilot hammering the animation system every frame while standing.</li>
+<li>Add new "Very Low" detail setting that uses per-vertex lighting. This will be very fast on low-end hardware.</li>
+<li>Updated Low/Med/High graphics:
+<ul>
+    <li>Low: 1 light + specular map + emissive map</li>
+    <li>Medium: 8 lights + specular map + emissive map</li>
+    <li>High: 8 lights + normal map + specular map + emissive map</li>
+</ul></li>
+<li>Added support for Razer Chroma Keyboard and mouse.</li>
+</ul>
+
+<h4>Bugs</h4>
+<ul>
+    <li>Fixed grey lightning on Great Pyramid (multdm29).</li>
+    <li>Fixed lightning color so that it is read correctly from trn now. Lightning bolts on worlds like Venus did not originally obey their color settings</li>
+    <li>Fixed AI wandering off map when interrupted by a sub-task while following a path.</li>
+    <li>Fixed Io emissive texture (adjusting lava brightness in the texture).</li>
+    <li>Black Dog mission 6, fixed it so the APC cannot die in cutscene (or immediately prior).</li>
+    <li>Black Dog mission 15, fixed being able to destroy the Launchpad, (which effectively screwed the whole mission). Also fixed a bug where Betty would crash (or stomp on VO) during cutscenes.</li>
+    <li>Black Dog mission 14, fixed that the audio was checking to see if APC was dead before providing nag audio.</li>
+    <li>Chinese mission 4, adjusted lighting to look nicer.</li>
+    <li>Updated Black Dog Scout and NSDF Scout cockpit geo as cockpit was sliding off screen.</li>
+    <li>Black Dog mission 11, fixed an issue where a pilot would try to enter a non-pilotable recycler and get stuck.</li>
+    <li>Line up Craft "bumper" contact points with the transform position. Reduces spurious ground hits on large vehicles like the Recycler.</li>
+    <li>Made sure that units de-cloak in all instances where they lose a pilot. This fixes sniping a cloaked pilot and the ship remaining cloaked.</li>
+    <li>Fixed objectives on the first training mission.</li>
+    <li>Fixed various random crashes.</li>
+    <li>Fixed some network connection issues.</li>
+    <li>Fixed cockpit for Yeti.</li>
+    <li>Fixed a problem where spamming space during a cutscene would end the scene, but the audio would play on.</li>
+    <li>Black Dog mission 12, fixed an issue where the recycler could get stuck in the portal.</li>
+    <li>You can no longer kick yourself although it is not clear why you would want too.</li>
+    <li>Fix for Collision with rear of Hephestus.</li>
+    <li>Fixed Scale of Chinese Command Building.</li>
+    <li>Fix for missing CR's in .inf file for gun tower.</li>
+    <li>Training mission 4, updates objectives as they are completed now.</li>
+    <li>Chinese mission 2, increase hangar distance threshold to 40m so mission can end properly.</li>
+    <li>Fixed upside down Howitzer cockpit in Chinese mission 4.</li>
+    <li>Prevent Black Dog mission 6 from removing player-occupied APC and triggering an erroneous mission failure.</li>
+    <li>Adjusted avturr and bvturr POV to make them easier to control from the cockpit.</li>
+    <li>Repeat hopping now animates correctly.</li>
+    <li>MP lobby chat now scrolls and has time stamps.</li>
+    <li>MP lobby chat is saved to BZChatLog.txt.</li>
+    <li>MP lobby now displays a total number of players in all lobbies and games on the top of the screen.</li>
+    <li>Remove smoothing on Great Pyramid (multdm29). This restores DM29 to its stairsteppy glory.</li>
+    <li>Soviet Fury now rides a bit lower and matches its target icon.</li>
+    <li>Added a command line to disable all mods. Launch the game with -disablemods and no mods will load. Use this to troubleshoot weirdness.</li>
+    <li>Fixed a rare crash in Black Dog mission 2 if you destroy the recycler too early.</li>
+    <li>Fixed AI team crash when team 2 has a null AIP.</li>
+    <li>TRO track 5 replaced. This fixes the repeating audio some people hear.</li>
+    <li>Fixed wonky cockpit shadows by disabling shadows on cockpit meshes.</li>
+    <li>CCA mission 1, move nav beacon 2 into the playable area.</li>
+    <li>Black Dog mission 12, make portal indestructible while all four shields are alive and powered.</li>
+    <li>Black Dog mission 11, give 30 second warning before portal detonation.</li>
+    <li>Fixed minigun mounted on the wrong hard-point in variant Black Dog Scout. </li>
+    <li>Fail Training mission 2 if the drone dies before the turret deploys at the target range. </li>
+    <li>Fix terrain tile placement in US mission 2.</li>
+    <li>No longer apply boundary to destroyed empty vehicles; fixes weirdness seen in misn06 opening cut-scene.</li>
+    <li>Fixed pilot sniper dots appearing above the pilot's head while in falling animation</li>
+    <li>Fixed build point when producing units from the CRA Recycler</li>
+    <li>Aligned CCA Launch Pad's model with its collision mesh</li>
+</ul>
+
+<h4>Modding</h4>
+<ul>
+    <li>New mod type: Custom campaigns. A workshop item can now include multiple missions with custom load screens, mission descriptions, loading audio and missions will progress and campaign progress will be saved.</li>
+    <li>Mods that conform to a whitelist of allowed files will now be active in MP. On the mod screen item colors indicate MP safety. Red for unsafe, green for safe.</li>
+    <li>Added “Builder” to uploader ODF header list</li>
+    <li>Restructured the addons folder. It now functions like the workshop folder, and can be used for testing workshop items. Items must be in folders with no subfolders like the workshop and must contain a standard workshop .ini.</li>
+    <li>Addons no longer will be read for any loose files.</li>
+    <li>.stb files no longer exist. Replaced by .sta files which are text and only contain the new sprites, not the whole sprite table like .stb's did.</li>
+    <li>There is now a single unified terrain atlas for Titan.</li>
+    <li>All terrain atlases can use a .csv file to map atlas textures to TRN textures.</li>
+    <li>Edit directory now contains new terrain atlases and sample .csv files.</li>
+    <li><code>/edit</code> is now usable in full screen as we’ve redone the load/save dialogs.</li>
+</ul>

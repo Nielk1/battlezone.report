@@ -1,0 +1,36 @@
+<p>There's more to the Battlezone community than meets the eye. It's got history and it's got talent, and there are a few small groups of dedicated fans trying to keep that history and creativity alive.</p>
+
+<p>They want your help. Here's how.</p>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card mb-3">
+            <a class="card-img-top d-print-none" href="http://battlezone.wikia.com/wiki/Main_Page" target="_blank" rel="noopener noreferrer"><img class="card-img-top" src="/images/articles/news/get-involved-0.jpg" alt="Battlezone Wiki"></a>
+            <div class="card-body">
+                <h3 class="card-title">Battlezone Wiki</h3>
+                <p class="card-text">The Battlezone Wiki is a user-driven encyclopaedia of all things Battlezone, from information about the games themselves to the lore and history behind them, trivia, strategy tips and gameplay walkthroughs. Whatever you want to know about, be it something as well-known as Battlezone, the Scion Collective, or how best to beat Eagle's Nest 1; or something as obscure as the Office of Intelligence and Internal Security, Battlezone: Rise of the Black Dogs, or the man who worked on The Red Odyssey and Call of Duty: Ghosts, the wiki has you covered.</p>
+                <p class="card-text">Like all wikis, the Battlezone Wiki is a constant work-in-progress and is open to user contribution on every article. Do you know something we don't? Throw it in!</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card mb-3">
+            <a class="card-img-top d-print-none" href="http://battlezone.wikia.com/wiki/Battlezone_Version_Archive" target="_blank" rel="noopener noreferrer"><img class="card-img-top" src="/images/articles/news/get-involved-1.jpg" alt="Battlezone Version Archive"></a>
+            <div class="card-body">
+                <h3 class="card-title">Battlezone Version Archive</h3>
+                <p class="card-text">The Version Archive is the primary source of research and information on previous and obscure versions of Battlezone games, from the 0.8 beta version of Battlezone to the rare 1.2 patch for The Red Odyssey and Battlezone II's 1.3 public betas. It also maintains copies of strategy guides, console titles, and the original arcade games.</p>
+		        <p class="card-text">If you own a Battlezone product that isn't listed as part of the Archive, you can help contribute by sending details, scans and photographs to ded10c(at)live.co.uk.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card mb-3">
+            <a class="card-img-top d-print-none" href="http://bzscrap.org/" target="_blank" rel="noopener noreferrer"><img class="card-img-top" src="/images/articles/news/get-involved-2.jpg" alt="BZScrap"></a>
+            <div class="card-body">
+                <h3 class="card-title">BZScrap</h3>
+                <p class="card-text">BZScrap has been the biggest, longest-running and widest-serving archive of Battlezone files for over a decade. Its contents include everything from official patches and documentation to map packs and community projects; there are over 15GB of files archived so far, and we want more.</p>
+                <p class="card-text">If you've got files BZScrap hasn't, you can e-mail them (or links to them) to submissions AT bzscrap.org.</p>
+            </div>
+        </div>
+    </div>
+</div>

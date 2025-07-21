@@ -1,0 +1,37 @@
+[
+    {
+        "name": "Field Report: Battlezone '98 Redux",
+        "type": "report",
+        "code": "2016-04-25",
+        "year": "2016",
+        "month": "04/25",
+        "url": "/issue/report/2016-04-25#issue_mast",
+        "cover": "issues/2016-04-25-cover.png",
+        "image": "issues/2016-04-25-back.jpg",
+        "children": [
+            {"icon": "logo_interview", "type": "interview", "code": "interview-with-jason-kingsley", "name": "Interview with Jason Kingsley, CEO of Rebellion Developments", "url": "/issue/report/2016-04-25#interview/interview-with-jason-kingsley", "buttons": [{"icon": "logo_target", "name": "Permalink", "attr": {"onclick": "window.location.href='/acticle/news/interview-with-jason-kingsley'"}}]},
+            {"icon": "logo_guide", "type": "guide", "code": "bobcat-bettys-guide-light-tanks", "name": "Bobcat Betty’s Guide to The Bobcat (Light Tanks)", "url": "/issue/report/2016-04-25#guide/bobcat-bettys-guide-light-tanks", "buttons": [{"icon": "logo_target", "name": "Permalink", "attr": {"onclick": "window.location.href='/article/guide/bobcat-bettys-guide-light-tanks'"}}]},
+            {"icon": "logo_guide", "type": "guide", "code": "beginners-strat-guide", "name": "Beginner’s Strategy Guide", "url": "/issue/report/2016-04-25#guide/beginners-strat-guide", "buttons": [{"icon": "logo_target", "name": "Permalink", "attr": {"onclick": "window.location.href='/article/guide/beginners-strat-guide'"}}]},
+            {"icon": "logo_article", "type": "news", "code": "workshop-rundown-day-one-top-ten", "name": "Workshop Run-Down: The Day One Top Ten", "url": "/issue/report/2016-04-25#news/workshop-rundown-day-one-top-ten", "buttons": [{"icon": "logo_target", "name": "Permalink", "attr": {"onclick": "window.location.href='/article/news/workshop-rundown-day-one-top-ten'"}}]}
+        ]
+    },
+    {
+        "name":"Field Report: The Red Odyssey",
+        "type": "report",
+        "code": "2017-02-09",
+        "year": "2017",
+        "month": "02/09",
+        "url": "/issue/report/2017-02-09#issue_mast",
+        "cover": "issues/2017-02-09-cover.png",
+        "image":"issues/2017-02-09-back.jpg",
+        "children":[
+            {"icon": "logo_article", "type": "news", "code": "intro-feb17", "name": "Foreword", "url":"/issue/report/2017-02-09#news/intro-feb17", "buttons": [{"icon": "logo_target", "name": "Permalink", "attr": {"onclick": "window.location.href='/article/news/intro-feb17'"}}]},
+            {"icon": "logo_interview", "type": "interview", "code": "interview-with-robert-waring", "name": "Interview with Robert Waring", "url":"/issue/report/2017-02-09#interview/interview-with-robert-waring", "buttons": [{"icon": "logo_target", "name": "Permalink", "attr": {"onclick": "window.location.href='/article/interview/interview-with-robert-waring'"}}]},
+            {"icon": "logo_guide", "type": "guide", "code": "bobcat-bettys-guide-fighters", "name": "Bobcat Betty’s Guide to The Flanker (Fighters)", "url":"/issue/report/2017-02-09#guide/bobcat-bettys-guide-fighters", "buttons": [{"icon": "logo_target", "name": "Permalink", "attr": {"onclick": "window.location.href='/article/guide/bobcat-bettys-guide-fighters'"}}]},
+            {"icon": "logo_article", "type": "news", "code": "workshop-rundown-new-year", "name": "Workshop Run-Down: New Year", "url":"/issue/report/2017-02-09#news/workshop-rundown-new-year", "buttons": [{"icon": "logo_target", "name": "Permalink", "attr": {"onclick": "window.location.href='/article/news/workshop-rundown-new-year'"}}]},
+            {"icon": "logo_article", "type": "news", "code": "community-news-feb17", "name": "Community News", "url":"/issue/report/2017-02-09#news/community-news-feb17", "buttons": [{"icon": "logo_target", "name": "Permalink", "attr": {"onclick": "window.location.href='/article/news/community-news-feb17'"}}]},
+            {"icon": "logo_article", "type": "news", "code": "get-involved", "name": "Get Involved", "url":"/issue/report/2017-02-09#news/get-involved", "buttons": [{"icon": "logo_target", "name": "Permalink", "attr": {"onclick": "window.location.href='/article/news/get-involved'"}}]},
+            {"icon": "logo_article", "type": "news", "code": "patch-development-feb17", "name": "Patch Development", "url":"/issue/report/2017-02-09#news/patch-development-feb17", "buttons": [{"icon": "logo_target", "name": "Permalink", "attr": {"onclick": "window.location.href='/article/news/patch-development-feb17'"}}]}
+        ]
+    }
+]

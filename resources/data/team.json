@@ -1,0 +1,35 @@
+{
+  "team": [
+    {
+      "name": "John \"Nielk1\" Klein",
+      "position": "Web Developer, Editor",
+      "image": "nielk1.png",
+      "social": {
+        "twitter": "nielk1"
+      }
+    },
+    {
+      "name": "Anthony \"Ded10c\" Hadley",
+      "position": "Lead Editor, Contributor",
+      "image": "ded10c.png",
+      "social": {
+        "twitter": "ded10c"
+      }
+    },
+    {
+      "name": "Dee \"DeusExCeteri\" Rains",
+      "position": "Editor, Contributor",
+      "image": "deus.png"
+    },
+    {
+      "name": "HyperFighter",
+      "position": "Contributor",
+      "image": "hyperfighter.jpg"
+    },
+    {
+      "name": "Mike Arkin",
+      "position": "Advisor",
+      "image": "arkin.jpg"
+    }
+  ]
+}

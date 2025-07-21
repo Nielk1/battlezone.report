@@ -1,0 +1,11 @@
+{
+    "title":"An Intro to: \r\nBattlezone '98 Redux",
+    "image":"issues/2016-04-25-back.jpg",
+    "date":"2016-04-25",
+    "articles":[
+        {"type":"interview","code":"interview-with-jason-kingsley"},
+        {"type":"guide","code":"bobcat-bettys-guide-light-tanks"},
+        {"type":"guide","code":"beginners-strat-guide"},
+        {"type":"news","code":"workshop-rundown-day-one-top-ten"}
+    ]
+}

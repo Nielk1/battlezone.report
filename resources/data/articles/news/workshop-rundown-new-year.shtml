@@ -1,0 +1,351 @@
+<style>
+@media print {
+    #workshop_rundown_new_year_grid.grid {
+        position:static !important;
+        height:auto !important;
+    }
+    #workshop_rundown_new_year_grid.grid > .grid-item {
+        position:relative !important;
+        left:0 !important;
+        top:0 !important;
+        width: 100% !important;
+    }
+}
+</style>
+
+<p>It’s been nine months since the release of Battlezone 98 Redux, and with that we figured it was time to give you a list of our top favourite maps and mods on the Workshop. Since the GOG release some of these mods have also been put out on ModDB as well; where that’s the case we’ll throw a link to that in as well.</p>
+
+<!-- <div class="row"> -->
+<div>
+    <div class="grid row" id="workshop_rundown_new_year_grid">
+        <div class="grid-item col-12 col-md-8">
+            <div class="grid-item-content card mb-3 print-avoid-page-break">
+                <div class="card-img-top d-print-none d-flex" style="overflow: hidden;">
+                    <div style="flex: 1 1 0;"><img style="width: 100%;" src="/images/articles/news/workshop-rundown-new-year-0a.jpg" alt="Omega Squadron Multiplayer Map Pack"/></div>
+                    <div style="flex: 1 1 0;"><img style="width: 100%;" src="/images/articles/news/workshop-rundown-new-year-0b.jpg" alt="Omega Squadron Instant Action Map Pack"/></div>
+                </div>
+                <div class="card-body">
+                    <div class="pb-2">
+                        <div class="price-row">
+                            <div class="d-flex flex-row flex-md-column flex-xl-row flex-row" role="group">
+                                <a href="http://steamcommunity.com/sharedfiles/filedetails/?id=669768479" target="_blank" rel="noopener noreferrer" role="button" class="btn btn-dark d-flex align-items-center sale-btn" style="--bs-btn-border-color: #111111; --bs-btn-bg: #111111;"><span class="svg-icon"><!--#svg logo_steam --></span>
+                                    <span class="text-nowrap flex-fill text-center">
+                                        <span class="text-body-secondary">
+                                            Multiplayer <span class="hidden-xs">Map Pack</span>
+                                        </span>
+                                    </span>
+                                </a>
+                                <a href="http://steamcommunity.com/sharedfiles/filedetails/?id=677699019" target="_blank" rel="noopener noreferrer" role="button" class="btn btn-dark d-flex align-items-center sale-btn" style="--bs-btn-border-color: #111111; --bs-btn-bg: #111111;"><span class="svg-icon"><!--#svg logo_steam --></span>
+                                    <span class="text-nowrap flex-fill text-center">
+                                        <span class="text-body-secondary">
+                                            Instant Action <span class="hidden-xs">Map Pack</span>
+                                        </span>
+                                    </span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <h3 class="card-title">Omega Squadron Map Packs</h3>
+                    <p class="card-text">When it was first released in 2013, Omega Squadron quickly became one of Battlezone's best-loved singleplayer mods. A few of its multiplayer maps were quickly included in the unofficial distribution of the 1.5 patch. Now, these maps have been updated for Battlezone 98 Redux - and what an update they've received. The multiplayer pack contains 26 maps across Strategy, Deathmatch, Action MPI or "Skirmish" (with 35 new lua parameters), and Mission MPI (with 8). The Instant Action pack contains 10 new IA maps with improved AI and 14 new cheats to use to make your life easier - or harder. These are some of the most organic and well-designed maps Battlezone has ever seen. Get them.</p>
+                </div>
+            </div>
+        </div>
+        <div class="grid-item col-12 col-md-4">
+            <div class="grid-item-content card mb-3 print-avoid-page-break">
+                <img class="card-img-top d-print-none" src="/images/articles/news/workshop-rundown-new-year-1.png" alt="HD Reticle Pack"/>
+                <div class="card-body">
+                    <div class="pb-2">
+                        <div class="price-row">
+                            <div class="d-flex flex-row flex-md-column flex-xl-row flex-row" role="group">
+                                <a href="http://steamcommunity.com/sharedfiles/filedetails/?id=688808310" target="_blank" rel="noopener noreferrer" role="button" class="btn btn-dark d-flex align-items-center sale-btn" style="--bs-btn-border-color: #111111; --bs-btn-bg: #111111;"><span class="svg-icon"><!--#svg logo_steam --></span>
+                                    <span class="text-nowrap flex-fill text-center">
+                                        <span class="text-body-secondary">
+                                            Steam
+                                        </span>
+                                    </span>
+                                </a>
+                                <a href="http://www.moddb.com/games/battlezone-98-redux/addons/hd-reticle-pack" target="_blank" rel="noopener noreferrer" role="button" class="btn btn-danger d-flex align-items-center sale-btn"><span class="svg-icon"><!--#svg logo_moddb --></span>
+                                    <span class="text-nowrap flex-fill text-center">
+                                        <span class="text-body-secondary">
+                                            ModDB
+                                        </span>
+                                    </span>
+                                </a>
+                            </div>
+                            <div class="btn btn-info disabled btn-block sale-btn" style="width: 100%;">
+                                <span class="d-none d-sm-inline">Now included in Battlezone 98 Redux</span>
+                                <span class="d-sm-none">Now part of Game</span>
+                            </div>
+                        </div>
+                    </div>
+                    <h3 class="card-title">HD Reticle Pack</h3>
+                    <p class="card-text">This simple mod is designed to resolve the issues with Battlezone 98 Redux's reticles, which become noticeably pixelated when scaled up. These double-resolution versions of the game's stock reticles are both faithful and beautiful.</p>
+                    <p class="card-text">Goes well with: The Classic HUD</p>
+                </div>
+            </div>
+        </div>
+        <div class="grid-item col-12 col-md-4">
+            <div class="grid-item-content card mb-3 print-avoid-page-break">
+                <img class="card-img-top d-print-none" src="/images/articles/news/workshop-rundown-new-year-2.png" alt="Burns' Rebellion"/>
+                <div class="card-body">
+                    <div class="pb-2">
+                        <div class="price-row">
+                            <div class="d-flex flex-row flex-md-column flex-xl-row flex-row" role="group">
+                                <a href="http://steamcommunity.com/sharedfiles/filedetails/?id=731314309" target="_blank" rel="noopener noreferrer" role="button" class="btn btn-dark d-flex align-items-center sale-btn" style="--bs-btn-border-color: #111111; --bs-btn-bg: #111111;"><span class="svg-icon"><!--#svg logo_steam --></span>
+                                    <span class="text-nowrap flex-fill text-center">
+                                        <span class="text-body-secondary">
+                                            Steam
+                                        </span>
+                                    </span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <h3 class="card-title">Burns' Rebellion Trilogy</h3>
+                    <p class="card-text">As they stand, the Burns’ Rebellion missions are two of the best custom missions ever created for Battlezone. If you’ve ever wondered what happened in the gap between Battlezone and Battlezone II, where the Scions came from or how they ended up where they are, or why everybody seems to think they’re in any way similar to the Furies, or if you’re simply looking for a few new missions to blast your way through with some new toys, this is for you. The Part III: Exodus update - featuring the Battle of Long Ravine, is “coming sooner than ever before” and promises full voice work for the entire trilogy, more new units and terrain textures, and a new HUD.</p>
+                </div>
+            </div>
+        </div>
+        <div class="grid-item col-12 col-md-4">
+            <div class="grid-item-content card mb-3 print-avoid-page-break">
+                <img class="card-img-top d-print-none" src="/images/articles/news/workshop-rundown-new-year-3.jpg" alt="Battlezone Re-Orchestrated"/>
+                <div class="card-body">
+                    <div class="pb-2">
+                        <div class="price-row">
+                            <div class="d-flex flex-row flex-md-column flex-xl-row flex-row" role="group">
+                                <a href="http://steamcommunity.com/sharedfiles/filedetails/?id=680256441" target="_blank" rel="noopener noreferrer" role="button" class="btn btn-dark d-flex align-items-center sale-btn" style="--bs-btn-border-color: #111111; --bs-btn-bg: #111111;"><span class="svg-icon"><!--#svg logo_steam --></span>
+                                    <span class="text-nowrap flex-fill text-center">
+                                        <span class="text-body-secondary">
+                                            Steam
+                                        </span>
+                                    </span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <h3 class="card-title">Battlezone Re-Orchestrated</h3>
+                    <p class="card-text">You may have already been following the Blake Robinson Synthetic Orchestra's re-orchestrations of the Battlezone soundtrack. You may have seen the calls for him to do the whole game, rather than the three tracks he had released on his YouTube channel. Well, he's doing it - at time of writing this mod contains new versions of six of the game's tracks, and more are forthcoming.</p>
+                    <p class="card-text">Goes well with: Audio Overhaul Mod</p>
+                </div>
+            </div>
+        </div>
+        <div class="grid-item col-12 col-md-4">
+            <div class="grid-item-content card mb-3 print-avoid-page-break">
+                <img class="card-img-top d-print-none" src="/images/articles/news/workshop-rundown-new-year-4.png" alt="A Nasty Surprise Remake"/>
+                <div class="card-body">
+                    <div class="pb-2">
+                        <div class="price-row">
+                            <div class="d-flex flex-row flex-md-column flex-xl-row flex-row" role="group">
+                                <a href="http://steamcommunity.com/sharedfiles/filedetails/?id=700772106" target="_blank" rel="noopener noreferrer" role="button" class="btn btn-dark d-flex align-items-center sale-btn" style="--bs-btn-border-color: #111111; --bs-btn-bg: #111111;"><span class="svg-icon"><!--#svg logo_steam --></span>
+                                    <span class="text-nowrap flex-fill text-center">
+                                        <span class="text-body-secondary">
+                                            Steam
+                                        </span>
+                                    </span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <h3 class="card-title">A Nasty Surprise Remake</h3>
+                    <p class="card-text">blue banana's remake of the seventh NSDF mission, A Nasty Surprise, was received with gusto when it was first released in 2015. Rebuilt from the ground up, this new version includes a more immersive cinematic approach, tougher AI, expanded possibilities and a whole pile of small fixes and improvements. If Wreckers is an example of what can be done without lua, this is an example of what can be done with it.</p>
+                </div>
+            </div>
+        </div>
+        <div class="grid-item col-12 col-md-4">
+            <div class="grid-item-content card mb-3 print-avoid-page-break">
+                <img class="card-img-top d-print-none" src="/images/articles/news/workshop-rundown-new-year-5.png" alt="INSTANT ACTION: Wreckers"/>
+                <div class="card-body">
+                    <div class="pb-2">
+                        <div class="price-row">
+                            <div class="d-flex flex-row flex-md-column flex-xl-row flex-row" role="group">
+                                <a href="http://steamcommunity.com/sharedfiles/filedetails/?id=670202215" target="_blank" rel="noopener noreferrer" role="button" class="btn btn-dark d-flex align-items-center sale-btn" style="--bs-btn-border-color: #111111; --bs-btn-bg: #111111;"><span class="svg-icon"><!--#svg logo_steam --></span>
+                                    <span class="text-nowrap flex-fill text-center">
+                                        <span class="text-body-secondary">
+                                            Steam
+                                        </span>
+                                    </span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <h3 class="card-title">Wreckers</h3>
+                    <p class="card-text">Wreckers, originally created by ssuser, is an Instant Action map that is epic in both size and scope. The CCA have discovered a cache of Hadean and Olympian relics and found amongst them the Hadean Devastator; an artillery shell capable of causing incredible damage, which they have reverse-engineered to produce a new weapon dubbed the "Day Wrecker". Your task, while these new weapons rain down around you, is to destroy the CCA's nearby base and all of their new artillery pieces, before capturing the relic for yourself. Wreckers resembles a fully-fledged single-player mission, and represents the peak of what could be achieved with clever trickery instead of lua scripting.</p>
+                </div>
+            </div>
+        </div>
+        <div class="grid-item col-12 col-md-4">
+            <div class="grid-item-content card mb-3 print-avoid-page-break">
+                <img class="card-img-top d-print-none" src="/images/articles/news/workshop-rundown-new-year-6.png" alt="Audio Overhaul Mod"/>
+                <div class="card-body">
+                    <div class="pb-2">
+                        <div class="price-row">
+                            <div class="d-flex flex-row flex-md-column flex-xl-row flex-row" role="group">
+                                <a href="http://steamcommunity.com/sharedfiles/filedetails/?id=670063056" target="_blank" rel="noopener noreferrer" role="button" class="btn btn-dark d-flex align-items-center sale-btn" style="--bs-btn-border-color: #111111; --bs-btn-bg: #111111;"><span class="svg-icon"><!--#svg logo_steam --></span>
+                                    <span class="text-nowrap flex-fill text-center">
+                                        <span class="text-body-secondary">
+                                            Steam
+                                        </span>
+                                    </span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <h3 class="card-title">Audio Overhaul Mod</h3>
+                    <p class="card-text">Mofker's Audio Overhaul Mod doesn't quite replace every sound in the game just yet, but it comes damn close. Here you'll find enhanced weapon effects, impact sounds, explosions, pickup, repair and resupply sounds. All of them have been replaced by something beefier, with a little more punch; a fitting audial update to go with Battlezone 98 Redux's graphical improvements.</p>
+                    <p class="card-text">Don't ask us what that song is. We don't know.</p>
+                    <p class="card-text">Goes well with: Zoe's Improved Walker Sounds, Zoe's Improved Crash Sounds</p>
+                </div>
+            </div>
+        </div>
+        <div class="grid-item col-12 col-md-4">
+            <div class="grid-item-content card mb-3 print-avoid-page-break">
+                <img class="card-img-top d-print-none" img src="/images/articles/news/workshop-rundown-new-year-8.png" alt="The Classic HUD"/>
+                <div class="card-body">
+                    <div class="pb-2">
+                        <div class="price-row">
+                            <div class="d-flex flex-row flex-md-column flex-xl-row flex-row" role="group">
+                                <a href="http://steamcommunity.com/sharedfiles/filedetails/?id=668997489" target="_blank" rel="noopener noreferrer" role="button" class="btn btn-dark d-flex align-items-center sale-btn" style="--bs-btn-border-color: #111111; --bs-btn-bg: #111111;"><span class="svg-icon"><!--#svg logo_steam --></span>
+                                    <span class="text-nowrap flex-fill text-center">
+                                        <span class="text-body-secondary">
+                                            Steam
+                                        </span>
+                                    </span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <h3 class="card-title">The Classic HUD</h3>
+                    <p class="card-text">blue banana's Classic Hud is a throwback to the original 1998 game, and replicates its interface as closely as the new engine allows. Gone are all the fancy bells and whistles; this mod brings back the simple, sharp black shapes of Battlezone's HUD. If none of the other HUD mods scratched your itch, this one just might.</p>
+                    <p class="card-text">Goes well with: HD Reticle Pack</p>
+                </div>
+            </div>
+        </div>
+        <div class="grid-item col-12 col-md-6">
+            <div class="grid-item-content card mb-3 print-avoid-page-break">
+                <div class="card-img-top d-print-none d-flex" style="overflow: hidden;">
+                    <div style="flex: 1 1 0;"><img style="width: 100%;" src="/images/articles/news/workshop-rundown-new-year-7a.png" alt="Outpost 5"/></div>
+                    <div style="flex: 1 1 0;"><img style="width: 100%;" src="/images/articles/news/workshop-rundown-new-year-7b.png" alt="The Relic"/></div>
+                </div>
+                <div class="card-body">
+                    <div class="price-row">
+                        <div class="d-flex flex-row flex-md-column flex-xl-row flex-row" role="group">
+                            <a href="http://steamcommunity.com/sharedfiles/filedetails/?id=668704990" target="_blank" rel="noopener noreferrer" role="button" class="btn btn-dark d-flex align-items-center sale-btn" style="--bs-btn-border-color: #111111; --bs-btn-bg: #111111;"><span class="svg-icon"><!--#svg logo_steam --></span>
+                                <span class="text-nowrap flex-fill text-center">
+                                    <span class="text-body-secondary">
+                                        Outpost 5
+                                    </span>
+                                </span>
+                            </a>
+                            <a href="http://steamcommunity.com/sharedfiles/filedetails/?id=667094151" target="_blank" rel="noopener noreferrer" role="button" class="btn btn-dark d-flex align-items-center sale-btn" style="--bs-btn-border-color: #111111; --bs-btn-bg: #111111;"><span class="svg-icon"><!--#svg logo_steam --></span>
+                                <span class="text-nowrap flex-fill text-center">
+                                    <span class="text-body-secondary">
+                                        The Relic
+                                    </span>
+                                </span>
+                            </a>
+                        </div>
+                        <div class="d-flex flex-row flex-md-column flex-xl-row flex-row" role="group">
+                            <span class="sale-btn"></span>
+                            <a href="http://www.moddb.com/games/battlezone-98-redux/addons/the-relic1" target="_blank" rel="noopener noreferrer" role="button" class="btn btn-danger d-flex align-items-center sale-btn"><span class="svg-icon"><!--#svg logo_moddb --></span>
+                                <span class="text-nowrap flex-fill text-center">
+                                    <span class="text-body-secondary">
+                                        The Relic
+                                    </span>
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+                    <h3 class="card-title">Mario's IA Maps</h3>
+                    <p class="card-text">Outpost 5 puts you in the tank of an NSDF commander during the Soviet assault on the moon and forces you to defend your base against overwhelming Soviet onslaught, then hightail it across the map to extraction.</p>
+                    <p class="card-text">The Relic is Battlezone's answer to the slaughter map. Those intending to play this map should expect two things; facing seemingly insurmountable odds with a limited strike force, and seemingly endless hordes of enemy units. Players who feel comfortable with these challenges should find that The Relic provides them with an adequate challenge.</p>
+                </div>
+            </div>
+        </div>
+        <div class="grid-item col-12 col-md-6">
+            <div class="grid-item-content card mb-3 print-avoid-page-break">
+                <div class="card-img-top d-print-none d-flex" style="overflow: hidden;">
+                    <div style="flex: 1 1 0;"><img style="width: 100%;" src="/images/articles/news/workshop-rundown-new-year-9a.jpg" alt="Bully in the Playground"/></div>
+                    <div style="flex: 1 1 0;"><img style="width: 100%;" src="/images/articles/news/workshop-rundown-new-year-9b.jpg" alt="Soviet Playground"/></div>
+                </div>
+                <div class="card-body">
+                    <div class="pb-2">
+                        <div class="price-row">
+                            <div class="d-flex flex-row flex-md-column flex-xl-row flex-row" role="group">
+                                <a href="http://steamcommunity.com/sharedfiles/filedetails/?id=677530903" target="_blank" rel="noopener noreferrer" role="button" class="btn btn-dark d-flex align-items-center sale-btn" style="--bs-btn-border-color: #111111; --bs-btn-bg: #111111;"><span class="svg-icon"><!--#svg logo_steam --></span>
+                                    <span class="text-nowrap flex-fill text-center">
+                                        <span class="text-body-secondary">
+                                            Bully <span class="d-none d-sm-inline hidden-xs">in the Playground<span>
+                                        </span>
+                                    </span>
+                                </a>
+                                <a href="http://steamcommunity.com/sharedfiles/filedetails/?id=676138826" target="_blank" rel="noopener noreferrer" role="button" class="btn btn-dark d-flex align-items-center sale-btn" style="--bs-btn-border-color: #111111; --bs-btn-bg: #111111;"><span class="svg-icon"><!--#svg logo_steam --></span>
+                                    <span class="text-nowrap flex-fill text-center">
+                                        <span class="text-body-secondary">
+                                            Soviet <span class="hidden-xs">Playground</span>
+                                        </span>
+                                    </span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <h3 class="card-title">Playground Mods</h3>
+                    <p class="card-text">These two mods are of a kind we haven't really seen before; changes to The Playground. The Playground is, all things considered, a pretty useless mission unless you happen to be testing something, and these mods aim to change that.</p>
+                    <p class="card-text">The first, HyperFighter's Bully in the Playground, transforms The Playground into an intense close-quarters Instant Action battle with a CCA force. With the enemy base so close to your own you'll find yourself running into their forces on a regular basis, and will need to work much faster than you normally might to defend yourself against their attack runs.</p>
+                    <p class="card-text">The second, DeusExCeteri's Soviet Playground, does pretty much as its name implies; where the original Playground lets you acquaint yourself with the NSDF's technology, this version lets you check out the Soviets' toys. (And it's on Venus, as you might expect from the CCA.)</p>
+                    <p class="card-text">It's worth noting that these mods won't work as intended if you try to activate them at the same time.</p>
+                </div>
+            </div>
+        </div>
+        <div class="grid-item col-12 col-md-6">
+            <div class="grid-item-content card mb-3 print-avoid-page-break">
+                <img class="card-img-top d-print-none" src="/images/articles/news/workshop-rundown-new-year-a.jpg" alt="Black Dog Voice Pack"/>
+                <div class="card-body">
+                    <div class="pb-2">
+                        <div class="price-row">
+                            <div class="d-flex flex-row flex-md-column flex-xl-row flex-row" role="group">
+                                <a href="http://steamcommunity.com/sharedfiles/filedetails/?id=716724243" target="_blank" rel="noopener noreferrer" role="button" class="btn btn-dark d-flex align-items-center sale-btn" style="--bs-btn-border-color: #111111; --bs-btn-bg: #111111;"><span class="svg-icon"><!--#svg logo_steam --></span>
+                                    <span class="text-nowrap flex-fill text-center">
+                                        <span class="text-body-secondary">
+                                            Steam
+                                        </span>
+                                    </span>
+                                </a>
+                                <a href="http://www.moddb.com/games/battlezone-98-redux/addons/black-dog-voice-pack" target="_blank" rel="noopener noreferrer" role="button" class="btn btn-danger d-flex align-items-center sale-btn"><span class="svg-icon"><!--#svg logo_moddb --></span>
+                                    <span class="text-nowrap flex-fill text-center">
+                                        <span class="text-body-secondary">
+                                            ModDB
+                                        </span>
+                                    </span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <h3 class="card-title">Black Dog Voice Pack</h3>
+                    <p class="card-text">This new pack changes Black Dog units from using the standard NSDF unit voiceovers to using the Black Dog voiceovers from Battlezone: Rise of the Black Dogs. The voiceovers aren't a complete set, since Rise of the Black Dogs kept audio to a minimum to save on cartridge space, but they do provide an interesting change of character to the Black Dogs - a highly diverse and extremely unprofessional change of character.</p>
+                </div>
+            </div>
+        </div>
+        <div class="grid-item col-12 col-md-6">
+            <div class="grid-item-content card mb-3 print-avoid-page-break">
+                <img class="card-img-top d-print-none" src="/images/articles/news/workshop-rundown-new-year-b.png" alt="The Destiny Collection"/>
+                <div class="card-body">
+                    <div class="pb-2">
+                        <div class="price-row">
+                            <div class="d-flex flex-row flex-md-column flex-xl-row flex-row" role="group">
+                                <a href="http://steamcommunity.com/sharedfiles/filedetails/?id=677530903" target="_blank" rel="noopener noreferrer" role="button" class="btn btn-dark d-flex align-items-center sale-btn" style="--bs-btn-border-color: #111111; --bs-btn-bg: #111111;"><span class="svg-icon"><!--#svg logo_steam --></span>
+                                    <span class="text-nowrap flex-fill text-center">
+                                        <span class="text-body-secondary">
+                                            Steam
+                                        </span>
+                                    </span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <h3 class="card-title">The Destiny Collection</h3>
+                    <p class="card-text">The original version of Destiny caused quite the hubbub when it was released in 2014, bringing with it 24 maps converted from Battlezone II. The new version is even more expansive, and comprises the Battlezone II Soundtrack, Battlezone II-themed reticles and HUD, a grand total of forty maps and missions including the Battlezone II demo, reproductions of six alien worlds, twelve new weapons, and a massive range of multiplayer customization (including the long-awaited Team Strategy gamemode).</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
