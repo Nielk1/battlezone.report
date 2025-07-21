@@ -1,7 +1,7 @@
 <?php
 //require_once app_path('Models/Channel.php');
 //use App\Models\Channel;
-$activeNav = 'issue';
+//$activeNav = 'issue';
 
 ?>
 

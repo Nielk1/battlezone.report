@@ -7,11 +7,11 @@ use App\Models\Channel;
 use App\Models\Issue;
 use App\Models\Article;
 
-class IssueController extends Controller
+class ChronicleController extends Controller
 {
     public function index($type = null, $code = null)
     {
-        $json = file_get_contents(resource_path('data/issues.json'));
+        $json = file_get_contents(resource_path('data/chronicles.json'));
 
         $channelsRaw = json_decode($json, true);
         if (!is_array($channelsRaw)) {
@@ -36,12 +36,12 @@ class IssueController extends Controller
                 }
             }
 
-            return redirect()->route('issue', ['type' => $latestEntry->type, 'code' => $latestEntry->code], 302);
+            return redirect()->route('chronicle', ['type' => $latestEntry->type, 'code' => $latestEntry->code], 302);
         }
 
         $articles = [];
         $issue = null;
-        $filename = resource_path("data/issues/$type/$code.json");
+        $filename = resource_path("data/chronicle/$type/$code.json");
         if (file_exists($filename)) {
             $issuedata = json_decode(file_get_contents($filename), true);
             if (!is_array($issuedata)) {
@@ -50,8 +50,8 @@ class IssueController extends Controller
             $issue = Issue::fromArray($issuedata);
 
             foreach ($issue->articles as $art) {
-                $filename1 = resource_path("data/articles/$art->type/$art->code.shtml");
-                $filename2 = resource_path("data/articles/$art->type/$art->code.json");
+                $filename1 = resource_path("data/chronicle/$type/$code/$art->code.shtml");
+                $filename2 = resource_path("data/chronicle/$type/$code/$art->code.json");
                 if (file_exists($filename1) && file_exists($filename2)) {
                     $html = file_get_contents($filename1);
 
@@ -78,6 +78,6 @@ class IssueController extends Controller
             }
         }
 
-        return view('issue', ['activeNav' => 'issue', 'channels_header' => 'Issues', 'channels' => $channels, 'articles' => $articles, 'type' => $type, 'code' => $code, 'issue' => $issue]);
+        return view('issue', ['activeNav' => 'chronicle', 'channels_header' => 'Chronicles', 'channels' => $channels, 'articles' => $articles, 'type' => $type, 'code' => $code, 'issue' => $issue]);
     }
 }
