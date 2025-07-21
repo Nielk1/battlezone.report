@@ -69,23 +69,6 @@
     max-width: 430px;
 }
 
-.price-row {
-    width: 100%;
-    gap: 4px;
-    display: flex;
-    flex-direction: column;
-}
-
-.price-row > .flex-row {
-    gap: 4px;
-}
-
-.sale-btn {
-    flex: 1;
-    padding: 0.4em 0.3em !important;
-    font-size: small;
-}
-
 .screen {
     display: inherit;
 }
@@ -174,7 +157,7 @@
         {{-- {{$name}}: {{ $deal['price']['amount'] }}<br/> --}}
 
         <a href="{{ $deal['url'] }}" target="_blank" rel="noopener noreferrer" role="button" class="btn btn-dark d-flex align-items-center sale-btn">
-            <span class="svg-icon" style="height: 1em; width: auto; display: inline-flex; align-items: center; margin-right: 0.5em;">
+            <span class="svg-icon">
                 {!! File::get(resource_path('svg/logo_steam.svg')) !!}
             </span>
             <span class="text-truncate" title="{{ $name ?? $deal['shop']['name'] }}">
@@ -202,15 +185,17 @@
                                 --bs-btn-hover-border-color: #431f93;
                                 --bs-btn-active-bg: #6e45ff;
                                 --bs-btn-active-border-color: #6e45ff;">
-                                <span class="svg-icon" style="height: 1em; width: auto; display: inline-flex; align-items: center; margin-right: 0.5em;">
+                                <span class="svg-icon">
                                     {!! File::get(resource_path('svg/logo_gog.svg')) !!}
                                 </span>
                                 <?php preparePriceFragment($deal['GOG']) ?>
                             </a>
                         @endif
                         @if (isset($deal['Steam']))
-                            <a href="{{ $deal['Steam']['url'] }}" target="_blank" rel="noopener noreferrer" role="button" class="btn btn-dark d-flex align-items-center sale-btn">
-                                <span class="svg-icon" style="height: 1em; width: auto; display: inline-flex; align-items: center; margin-right: 0.5em;">
+                            <a href="{{ $deal['Steam']['url'] }}" target="_blank" rel="noopener noreferrer" role="button" class="btn btn-dark d-flex align-items-center sale-btn" style="
+                                --bs-btn-border-color: #111111;
+                                --bs-btn-bg: #111111;">
+                                <span class="svg-icon">
                                     {!! File::get(resource_path('svg/logo_steam.svg')) !!}
                                 </span>
                                 <?php preparePriceFragment($deal['Steam']) ?>

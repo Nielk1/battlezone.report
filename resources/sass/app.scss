@@ -497,6 +497,7 @@ $sidebar-width: $sidebar-icon-size + $sidebar-icons-sidepad * 2;
         white-space: pre-wrap;
         padding-top: 0.5em;
         padding-bottom: 0.5em;
+        margin: 0;
     }
 
     .date {
@@ -517,6 +518,25 @@ $sidebar-width: $sidebar-icon-size + $sidebar-icons-sidepad * 2;
         height: auto;
         border-radius: 50%;
     }
+}
+
+
+
+.price-row {
+    width: 100%;
+    gap: 4px;
+    display: flex;
+    flex-direction: column;
+}
+
+.price-row > .flex-row {
+    gap: 4px;
+}
+
+.sale-btn {
+    flex: 1;
+    padding: 0.4em 0.3em !important;
+    font-size: small;
 }
 
 

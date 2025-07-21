@@ -53,6 +53,14 @@ class IssueController extends Controller
                 $filename2 = resource_path("data/articles/$art->type/$art->code.json");
                 if (file_exists($filename1) && file_exists($filename2)) {
                     $html = file_get_contents($filename1);
+
+                    // Replace SVG logo placeholders like <!--#svg LOGO_NAME -->
+                    $html = preg_replace_callback('/<!--#svg ([a-zA-Z0-9_-]+) -->/', function($matches) {
+                        $svgName = $matches[1];
+                        $svgPath = resource_path("svg/{$svgName}.svg");
+                        return file_exists($svgPath) ? file_get_contents($svgPath) : '';
+                    }, $html);
+
                     $sdata = json_decode(file_get_contents($filename2), true);
                     if (!is_array($sdata)) {
                         continue; // skip invalid article
