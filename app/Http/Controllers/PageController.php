@@ -44,4 +44,9 @@ class PageController extends Controller
         $data = app(\App\Services\IsThereAnyDealService::class)->getV3PricesAndGroup();
         return response()->json($data);
     }
+
+    public function gamelist_bz98r()
+    {
+        return view('games.bz98r');
+    }
 }
