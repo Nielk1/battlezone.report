@@ -9,7 +9,9 @@ class Channel extends Model
     public string $name;
     public ?string $type;
     public ?string $icon;
-    public ?string $action;
+    public ?string $code;
+    public ?string $url;
+    /** @var ChannelButton[] */
     public array $buttons;
     /** @var Channel[] */
     public array $children;
@@ -18,14 +20,16 @@ class Channel extends Model
         string $name,
         ?string $type = null,
         ?string $icon = null,
-        ?string $action = null,
+        ?string $code = null,
+        ?string $url = null,
         array $buttons = [],
         array $children = []
     ) {
         $this->name = $name;
         $this->type = $type;
         $this->icon = $icon;
-        $this->action = $action;
+        $this->code = $code;
+        $this->url = $url;
         $this->buttons = $buttons;
         $this->children = $children;
     }
@@ -54,12 +58,17 @@ class Channel extends Model
                 $children[] = self::fromArray($child);
             }
         }
+        $buttons = [];
+        foreach ($data['buttons'] ?? [] as $buttonData) {
+            $buttons[] = ChannelButton::fromArray($buttonData);
+        }
         return new self(
-            $data['name'] ?? $data['code'],
+            $data['name'] ?? null,
             $data['type'] ?? null,
             $data['icon'] ?? null,
-            $data['action'] ?? null,
-            $data['buttons'] ?? [],
+            $data['code'] ?? null,
+            $data['url'] ?? null,
+            $buttons,
             $children
         );
     }

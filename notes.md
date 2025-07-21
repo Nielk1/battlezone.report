@@ -7,5 +7,6 @@ Fix:
 
 create controller `php artisan make:controller MyController`
 create view `php artisan make:view viewname`
+create model `php artisan make:model MyModel`
 
 

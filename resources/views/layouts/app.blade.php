@@ -3,6 +3,7 @@
 <head>
     <title>@yield('title', 'My App')</title>
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    <link href='https://fonts.googleapis.com/css?family=Orbitron' rel='stylesheet' type='text/css'>
 </head>
 <body class="sidebar-layout{{ request()->query('sbh') ? ' sidebar-hidden' : '' }}" id="main-layout">
     <aside class="sidebar" id="sidebar">
@@ -17,6 +18,7 @@
                 <a href="{{ route('home') }}" class="sidebar-icon-box{{ ($activeNav ?? '') === '98r' ? ' active' : '' }}"><div class="sidebar-icon">98R</div></a>
                 <a href="{{ route('home') }}" class="sidebar-icon-box{{ ($activeNav ?? '') === 'cc' ? ' active' : '' }}"><div class="sidebar-icon">CC</div></a>
             </div>
+            {{--
             <div class="sidebar-top">
                 <a href="{{ route('home') }}" class="sidebar-icon-box{{ ($activeNav ?? '') === 'home' ? ' active' : '' }}"><div class="sidebar-icon">BZ</div></a>
                 <!--<a href="{{ route('home') }}" class="sidebar-icon-box{{ request()->routeIs('home') ? ' active' : '' }}"><div class="sidebar-icon">BZ</div></a>-->
@@ -26,6 +28,7 @@
                 <a href="{{ route('home') }}" class="sidebar-icon-box{{ ($activeNav ?? '') === '98r' ? ' active' : '' }}"><div class="sidebar-icon">98R</div></a>
                 <a href="{{ route('home') }}" class="sidebar-icon-box{{ ($activeNav ?? '') === 'cc' ? ' active' : '' }}"><div class="sidebar-icon">CC</div></a>
             </div>
+            --}}
             <div class="sidebar-spacer"></div>
             <div class="sidebar-bottom">
                 <hr class="border border-secondary border-2">

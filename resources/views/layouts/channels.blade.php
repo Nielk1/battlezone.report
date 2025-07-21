@@ -1,5 +1,4 @@
 {{-- filepath: resources/views/hello.blade.php --}}
-@php($activeNav = 'issue')
 <?php
     $sidebarWidth = null;
     if (isset($_COOKIE['sidebar2_width'])) {
@@ -16,89 +15,9 @@
 @section('title', 'Issue')
 
 @section('content')
-<style>
-    .sidebar2 {
-        display: flex;
-        position: relative;
-        flex-direction: column;
-        width: 250px; /* default */
-        height: 100vh;
-        z-index: 2;
-        /*overflow: hidden;*/
-
-        transition: width 0.1s;
-        will-change: min-width, width;
-    }
-    .sidebar2-content {
-        flex: 1;
-        overflow: auto;
-    }
-    .header-bar-menu-pad {
-        padding-left: 42px;
-    }
-    .page-container {
-        width: 100%;
-        height: 100%;
-        inset: 0;
-        display: flex;
-        z-index: 0;
-    }
-    .sub-content {
-        display: flex;
-        flex: 1;
-        overflow: auto;
-        inset:0;
-        transition: margin-left 0.3s;
-        will-change: margin-left;
-        z-index: 1;
-    }
-    .resizer {
-        width: 4px;
-        top: 0;
-        right: -2px;
-        height: 100%;
-        z-index: 10;
-        cursor: ew-resize;
-        background: rgba(0,0,0,0);
-        position: absolute;
-        user-select: none;
-
-        transition: background 0.3s;
-    }
-    .resizer:hover,
-    .resizer:active {
-        background: rgba(255,255,255,1);
-    }
-    .sidebar-hidden .sidebar2 {
-        width: 0 !important;
-        overflow-x: clip;
-    }
-
-
-.sidebar2-content {
-    overflow-y: scroll; /* Always reserve scrollbar space */
-}
-.sidebar2-content::-webkit-scrollbar {
-    width: 8px;
-    background: transparent;
-}
-.sidebar2-content::-webkit-scrollbar-thumb {
-    background: transparent;
-}
-.sidebar2-content:hover::-webkit-scrollbar-thumb {
-    background: #ccc;
-    border-radius: 4px;
-    border: 2px solid transparent; /* Simulates margin around the thumb */
-    background-clip: padding-box;  /* Ensures background doesn't cover the border */
-}
-
-
-</style>
 <div class="page-container">
     <aside class="sidebar2" id="sidebar2" @if(isset($sidebarWidth)) style="width: {{ $sidebarWidth }}px;" @endif>
-        <div class="header-bar header-bar-menu-pad">
-            Header Bar
-        </div>
+        <div class="header-bar header-bar-menu-pad">{{ $channels_header ?? 'Channels' }}</div>
         <div class="sidebar2-content">
             <!-- Example HTML for a Discord-like channel list -->
             <div class="channel-list">
@@ -157,5 +76,12 @@
         document.documentElement.removeEventListener('mousemove', doDrag, false);
         document.documentElement.removeEventListener('mouseup', stopDrag, false);
     }
+
+    document.querySelectorAll('.channel-action').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            e.preventDefault();
+        });
+    });
 </script>
 @endsection

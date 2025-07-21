@@ -1,14 +1,21 @@
 {{-- filepath: resources/views/partials/channel-list.blade.php --}}
-<div class="channel-item">
+<a href="{{ $channel->url }}" class="channel-item{{ $channel->type == $type && $channel->code == $code ? ' active' : '' }}">
     @if ($channel->icon)
         <span class="svg-icon">{!! File::get(resource_path('svg/' . $channel->icon . '.svg')) !!}</span>
     @endif
     <span class="channel-name">{{ $channel->name }}</span>
+    @if (!empty($channel->buttons))
     <span class="channel-actions">
-        <span class="channel-action">{!! File::get(resource_path('svg/logo_steam.svg')) !!}</span>
-        <span class="channel-action">{!! File::get(resource_path('svg/logo_steam.svg')) !!}</span>
+        @foreach ($channel->buttons as $button)
+            <button class="channel-action" title="{{ $button->name }}"
+                @foreach($button->attr ?? [] as $attrName => $attrValue)
+                    {{ $attrName }}="{{ $attrValue }}"
+                @endforeach
+            >{!! File::get(resource_path('svg/' . $button->icon . '.svg')) !!}</button>
+        @endforeach
     </span>
-</div>
+    @endif
+</a>
 @if (!empty($channel->children))
     @php($iconFlags = $channel->childrenHaveIcon())
     <div class="channel-group{{ $channel->icon ? ' has-icon-parent' : '' }}{{ $iconFlags[0] ? ' any-icon' : '' }}{{ $iconFlags[1] ? ' all-icon' : '' }}">

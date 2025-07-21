@@ -10,59 +10,88 @@ $activeNav = 'issue';
 @section('title', 'Issue')
 
 @section('sub-content')
-<style>
-    .header-bar-menu-pad2 {
-        padding-left: 10px;
-        transition: padding-left 0.3s;
-        will-change: padding-left;
-    }
-    .sidebar3 { /*not actually a sidebar, please fix*/
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        height: 100vh;
-        overflow: hidden;
-
-        /*background-color: var(--bs-secondary-bg) !important;*/
-        background-color: var(--bs-tertiary-bg) !important;
-    }
-    .sidebar3-content {
-        flex: 1;
-        overflow: auto;
-    }
-    .sidebar-hidden .header-bar-menu-pad2 {
-        padding-left: 42px;
-    }
-
-.sidebar3-content {
-    overflow-y: scroll; /* Always reserve scrollbar space */
-}
-.sidebar3-content::-webkit-scrollbar {
-    width: 12px;
-    background: transparent;
-}
-.sidebar3-content::-webkit-scrollbar-thumb {
-    background: #ccc;
-    border-radius: 6px;
-    border: 2px solid transparent; /* Simulates margin around the thumb */
-    background-clip: padding-box;  /* Ensures background doesn't cover the border */
-}
-
-.sidebar3-content {
-    padding: 10px;
-}
-</style>
 <div class="page-container">
     <aside class="sidebar3">
         <div class="header-bar header-bar-menu-pad2">
-            Header Bar 2
+            <div class="flex-grow-1 text-truncate">{{ $issue->title ?? 'NAME MISSING' }}</div>
+            <div>{{ $issue->date ?? 'DATE MISSING' }}</div>
         </div>
-        <div class="sidebar3-content">
-            <h1>Issue Page</h1>
-            @for ($i = 0; $i < 50; $i++)
-                <p>Welcome to the issue page!</p>
-            @endfor
+        <div id="main-scrollable-content" class="sidebar3-content">
+            <div data-spy="section" class="issue_mast" id="issue_mast" style="<?php if($issue->image != null) { ?>background-image:url('/images/<?php echo $issue->image; ?>');<?php } ?>">
+                <div class="container-fluid">
+                    <h1>{{ $issue->title ?? 'NAME MISSING' }}</h1>
+                    <span class="date">{{ $issue->date ?? 'DATE MISSING' }}</span>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <a id="toc"></a>
+                        <?php foreach($articles as $article) { ?>
+                            <div class="media">
+                                <span class="float-start tocLogo">
+                                    <span class="glyphicon glyphicon-record"></span>
+                                </span>
+                                <div class="media-body">
+                                    <h4 class="media-heading"><a href="#<?php echo $article['type']; ?>/<?php echo $article['code']; ?>"><?php echo $article['article']->title; ?></a></h4>
+                                    <?php if (count($article['article']->authors) > 0) { ?>
+                                        by:
+                                    <?php } ?>
+                                    <?php
+                                    {
+                                        if($article['article']->authors) {
+                                            $comma = false;
+                                            foreach($article['article']->authors as $author) {
+                                                if($comma) echo ', ';
+                                                echo $author['name'];
+                                                $comma = true;
+                                            }
+                                        }
+                                    } ?>
+                                    <em><a class="ajaxLoaderAware" href="/article/<?php echo $article['type']; ?>/<?php echo $article['code']; ?>">(permalink)</a></em>
+                                </div>
+                            </div>
+                        <?php } ?>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            @foreach($articles as $article)
+                <div data-spy="section" class="container" id="{{ $article['type'] }}/{{ $article['code'] }}">
+                    @php
+                        $content = $article['content'];
+                    @endphp
+                    @include('partials.article', ['article' => $article['article'], 'type' => $article['type'], 'code' => $article['code'], 'content' => $content])
+                </div>
+                <hr>
+            @endforeach
         </div>
     </aside>
 </div>
+<script>
+    let lastId = '';
+    let content = document.getElementById('main-scrollable-content');
+    content.addEventListener('scroll', function() {
+        let sections = content.querySelectorAll('[data-spy="section"]');
+        let navLinks = document.querySelectorAll('.channel-item');
+        let scrollPos = content.scrollY || content.scrollTop;
+
+        let currentId = '';
+        sections.forEach(section => {
+            if (section.offsetTop <= scrollPos + 100) { // 100px offset for header
+                currentId = section.id;
+            }
+        });
+
+        navLinks.forEach(link => {
+            link.classList.toggle('spy', link.getAttribute('href') === window.location.pathname + '#' + currentId);
+        });
+
+        // Update URL hash without navigation
+        if (currentId && currentId !== lastId) {
+            history.replaceState(null, '', '#' + currentId);
+            lastId = currentId;
+        }
+    });
+</script>
 @endsection
