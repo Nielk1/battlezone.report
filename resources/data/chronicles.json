@@ -1,9 +1,14 @@
 [
     {
+        "name": "Foreward",
+        "type": "special",
+        "code": "foreward",
+        "url": "/chronicle/special/foreward"
+    },
+    {
         "name": "The First Bzooka War",
         "type": "volume",
         "code": "the-first-bzooka-war",
-        "url": "/chronicle/volume/the-first-bzooka-war",
         "children": [
             {"type": "volume", "code": "the-first-bzooka-war", "subcode": "20130315", "name": "Battle of Canyons", "url": "/chronicle/volume/the-first-bzooka-war/20130315"},
             {"type": "volume", "code": "the-first-bzooka-war", "subcode": "20130322", "name": "Invasion of Io", "url": "/chronicle/volume/the-first-bzooka-war/20130322"},
@@ -15,7 +20,6 @@
         "name": "The Trial of Mars",
         "type": "volume",
         "code": "the-trial-of-mars",
-        "url": "/chronicle/volume/the-trial-of-mars",
         "children": [
             {"type": "volume", "code": "the-trial-of-mars", "subcode": "20130926", "name": "Biblis Patera: The Savage Surprise Attack", "url": "/chronicle/volume/the-trial-of-mars/20130926"},
             {"type": "volume", "code": "the-trial-of-mars", "subcode": "20130927", "name": "S.P.O.R.K. Broadcast: Red Planet Triumphant", "url": "/chronicle/volume/the-trial-of-mars/20130927"},
@@ -29,7 +33,6 @@
         "name": "The Faner Ordeal",
         "type": "volume",
         "code": "the-faner-ordeal",
-        "url": "/chronicle/volume/the-faner-ordeal",
         "children": [
             {"type": "volume", "code": "the-faner-ordeal", "subcode": "20131021", "name": "The Imperium Responds: Unidentified Objects Detected", "url": "/chronicle/volume/the-faner-ordeal/20131021"},
             {"type": "volume", "code": "the-faner-ordeal", "subcode": "20131108", "name": "Fighting Escalates: The War on Faner", "url": "/chronicle/volume/the-faner-ordeal/20131108"},
@@ -47,7 +50,6 @@
         "name": "Cothonian's Gambit",
         "type": "volume",
         "code": "cothonians_gambit",
-        "url": "/chronicle/volume/cothonians_gambit",
         "children": [
             {"type": "volume", "code": "cothonians_gambit", "subcode": "20140402", "name": "Project: Venus", "url": "/chronicle/volume/cothonians_gambit/20140402"},
             {"type": "volume", "code": "cothonians_gambit", "subcode": "20140407", "name": "Surrounded", "url": "/chronicle/volume/cothonians_gambit/20140407"},

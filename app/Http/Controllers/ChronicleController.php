@@ -43,20 +43,39 @@ class ChronicleController extends Controller
         $filename = resource_path("data/chronicle/$type/$code.json");
         if (file_exists($filename)) {
             $issuedata = json_decode(file_get_contents($filename), true);
-            if (!is_array($issuedata) || count($issuedata['articles'] ?? []) == 0) {
+
+            if (!is_array($issuedata)) {
                 abort(404);
             }
+
             $issue = Issue::fromArray($issuedata);
 
+            $foundAlready = false;
+
             if (!$chapter) {
-                $chapter = $issue->articles[0]->code;
-                return redirect()->route('chronicle', ['type' => $type, 'code' => $code, 'chapter' => $chapter], 302);
+                $filename1 = resource_path("data/chronicle/$type/$code.shtml");
+                $filename2 = resource_path("data/chronicle/$type/$code.json");
+                if (file_exists($filename1) && file_exists($filename2)) {
+                    $foundAlready = true;
+                }
+            }
+
+            if (!$foundAlready) {
+                if (count($issuedata['articles'] ?? []) == 0) {
+                    abort(404);
+                }
+
+                if (!$chapter) {
+                    $chapter = $issue->articles[0]->code;
+                    return redirect()->route('chronicle', ['type' => $type, 'code' => $code, 'chapter' => $chapter], 302);
+                }
             }
 
             $html = null;
-
-            $filename1 = resource_path("data/chronicle/$type/$code/$chapter.shtml");
-            $filename2 = resource_path("data/chronicle/$type/$code/$chapter.json");
+            if (!$foundAlready) {
+                $filename1 = resource_path("data/chronicle/$type/$code/$chapter.shtml");
+                $filename2 = resource_path("data/chronicle/$type/$code/$chapter.json");
+            }
             if (file_exists($filename1) && file_exists($filename2)) {
                 $html = file_get_contents($filename1);
 
