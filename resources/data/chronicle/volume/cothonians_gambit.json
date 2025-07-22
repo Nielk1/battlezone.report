@@ -1,0 +1,16 @@
+{
+    "title": "Cothonian's Gambit",
+    "image": "chronicle/volume/the-first-bzooka-war/1-back.jpg",
+    "authors": [
+        { "name": "HyperFighter" },
+        { "name": "Cothonian" }
+    ],
+    "articles": [
+        { "code": "20140402" },
+        { "code": "20140407" },
+        { "code": "20140408-1" },
+        { "code": "20140408-2" },
+        { "code": "20140409" },
+        { "code": "20140415" }
+    ]
+}

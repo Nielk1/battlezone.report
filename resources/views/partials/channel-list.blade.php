@@ -1,5 +1,9 @@
 {{-- filepath: resources/views/partials/channel-list.blade.php --}}
-<a href="{{ $channel->url }}" class="channel-item{{ $channel->type == $type && $channel->code == $code ? ' active' : '' }}">
+@if ($channel->url)
+    <a href="{{ $channel->url }}" class="channel-item{{ $channel->type == $type && $channel->code == $code && $channel->subcode == ($subcode ?? null) ? ' active' : '' }}">
+@else
+    <span class="channel-item{{ $channel->type == $type && $channel->code == $code && $channel->subcode == ($subcode ?? null) ? ' active' : '' }}">
+@endif
     @if ($channel->icon)
         <span class="svg-icon">{!! File::get(resource_path('svg/' . $channel->icon . '.svg')) !!}</span>
     @endif
@@ -15,7 +19,11 @@
         @endforeach
     </span>
     @endif
-</a>
+@if ($channel->url)
+    </a>
+@else
+    </span>
+@endif
 @if (!empty($channel->children))
     @php($iconFlags = $channel->childrenHaveIcon())
     <div class="channel-group{{ $channel->icon ? ' has-icon-parent' : '' }}{{ $iconFlags[0] ? ' any-icon' : '' }}{{ $iconFlags[1] ? ' all-icon' : '' }}">

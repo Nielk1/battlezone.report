@@ -1,0 +1,19 @@
+{
+    "title": "The Faner Ordeal",
+    "image": "chronicle/volume/the-first-bzooka-war/1-back.jpg",
+    "authors": [
+        { "name": "HyperFighter" }
+    ],
+    "articles": [
+        { "code": "20131021" },
+        { "code": "20131108" },
+        { "code": "20131111" },
+        { "code": "20131130" },
+        { "code": "20131214" },
+        { "code": "20140101" },
+        { "code": "20140221" },
+        { "code": "20140304" },
+        { "code": "20140313" },
+        { "code": "20131015" }
+    ]
+}

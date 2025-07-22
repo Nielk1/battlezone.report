@@ -516,8 +516,38 @@
         <div class="header-bar header-bar-menu-pad">
             <div class="flex-grow-1 text-truncate">Battlezone 98 Redux - Multiplayer Session List</div>
             <div class="d-flex gap-1 float-end">
-                <button id="btnExtra" type="button" data-bs-toggle="button" aria-pressed="false" class="btn btn-sm btn-outline-primary">Thin</button>
-                <button id="btnRefresh" type="button" class="btn btn-sm btn-outline-primary">Refresh</button>
+                <button id="btnExtra" type="button" data-bs-toggle="button" aria-pressed="false" class="btn btn-sm btn-outline-success" style="
+                    --bs-btn-color: #4dad54;
+                    --bs-btn-border-color: #4dad54;
+                    --bs-btn-hover-color: #000000;
+                    --bs-btn-hover-bg: #4dad54;
+                    --bs-btn-hover-border-color: #4dad54;
+                    --bs-btn-focus-shadow-rgb: 25, 135, 84;
+                    --bs-btn-active-color: #000000;
+                    --bs-btn-active-bg: #4dad54;
+                    --bs-btn-active-border-color: #4dad54;
+                    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+                    --bs-btn-disabled-color: #4dad54;
+                    --bs-btn-disabled-bg: transparent;
+                    --bs-btn-disabled-border-color: #4dad54;
+                    --bs-gradient: none;
+                ">Thin</button>
+                <button id="btnRefresh" type="button" class="btn btn-sm btn-outline-success" style="
+                    --bs-btn-color: #4dad54;
+                    --bs-btn-border-color: #4dad54;
+                    --bs-btn-hover-color: #000000;
+                    --bs-btn-hover-bg: #4dad54;
+                    --bs-btn-hover-border-color: #4dad54;
+                    --bs-btn-focus-shadow-rgb: 25, 135, 84;
+                    --bs-btn-active-color: #000000;
+                    --bs-btn-active-bg: #4dad54;
+                    --bs-btn-active-border-color: #4dad54;
+                    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+                    --bs-btn-disabled-color: #4dad54;
+                    --bs-btn-disabled-bg: transparent;
+                    --bs-btn-disabled-border-color: #4dad54;
+                    --bs-gradient: none;
+                ">Refresh</button>
             </div>
         </div>
 
@@ -804,7 +834,7 @@
         <div class="player_info_box chamfer d-flex flex-row flex-nowrap ${teamed ? '' : 'mb-1'}" style="padding:2px;">
             <div class="chamfer d-flex" style="background:black;flex:100% 0 0;min-width:0;">
                 <div class="d-flex m-1" style="flex: 0 0 50px;width:50px;">
-                    <img data-path="avatar" data-source="${encodeAttr(player_avatar_source)}" data-id="${encodeAttr(player_avatar_id)}" src="${encodeAttr(plaform_avatar)}" width="150" height="150" onerror="this.src = '/img/no_steam_pfp.jpg'" class="img-fluid chamfer">
+                    <img data-path="avatar" data-source="${encodeAttr(player_avatar_source)}" data-id="${encodeAttr(player_avatar_id)}" src="${encodeAttr(plaform_avatar)}" width="150" height="150" onerror="this.src = '/images/no_steam_pfp.jpg'" class="img-fluid chamfer">
                 </div>
                 <div class="d-flex flex-column" style="flex: 0 1 100%;min-width:0;">
                     <div class="text-truncate">${escapeHtml(player.name)}</div>`;
@@ -863,7 +893,7 @@
                     if (faction) {
                         playerHtmlEntries += `
                         <div class="d-flex m-1" style="flex: 0 0 50px;width:50px;">
-                            <img data-path="faction_name" data-type="faction" data-id="${encodeAttr(faction.$id)}" title="${encodeAttr(faction.name || faction.$id)}" src="${encodeAttr(faction.block) }" width="150" height="150" onerror="this.src = '/img/no_steam_pfp.jpg'" class="img-fluid chamfer">
+                            <img data-path="faction_name" data-type="faction" data-id="${encodeAttr(faction.$id)}" title="${encodeAttr(faction.name || faction.$id)}" src="${encodeAttr(faction.block) }" width="150" height="150" onerror="this.src = '/images/no_steam_pfp.jpg'" class="img-fluid chamfer">
                         </div>`;
                     }  else {
                         playerHtmlEntries += `<div class="d-flex m-1 d-block chamfer" style="flex: 0 0 50px;width:50px;background:green;"></div>`;
@@ -871,7 +901,7 @@
                 } else {
                     playerHtmlEntries += `
                     <div class="d-flex m-1" style="flex: 0 0 50px;width:50px;">
-                        <img data-path="hero_name" data-type="hero" data-id="${encodeAttr(player.hero.$id)}" title="${encodeAttr(player.hero.name || player.hero.$id)}" src="/img/no_steam_pfp.jpg" width="150" height="150" onerror="this.src = '/img/no_steam_pfp.jpg'" class="img-fluid chamfer">
+                        <img data-path="hero_name" data-type="hero" data-id="${encodeAttr(player.hero.$id)}" title="${encodeAttr(player.hero.name || player.hero.$id)}" src="/images/no_steam_pfp.jpg" width="150" height="150" onerror="this.src = '/images/no_steam_pfp.jpg'" class="img-fluid chamfer">
                     </div>`;
                 }
             } else {
@@ -937,7 +967,7 @@
                         <div class="map_image chamfer bg-secondary mb-1">
                             <div style="background: black; left: 1px; top: 1px; height: calc(100% - 2px); width: calc(100% - 2px); position: relative;" class="chamfer">
                                 <div class="ratio ratio-1x1" style="--bs-aspect-ratio: calc(100% + 2px);top: -1px;">
-                                    <img class="chamfer" data-path="session.level.map.image" width="186" length="186" src onerror="this.src='/img/no_steam_pfp.jpg'" class="img-thumbnail" style="width:calc(100% - 12px);height:auto;margin:auto;bottom:0;top:0;left:0;right:0;">
+                                    <img class="chamfer" data-path="session.level.map.image" width="186" length="186" src onerror="this.src='/images/no_steam_pfp.jpg'" class="img-thumbnail" style="width:calc(100% - 12px);height:auto;margin:auto;bottom:0;top:0;left:0;right:0;">
                                 </div>
                             </div>
                         </div>

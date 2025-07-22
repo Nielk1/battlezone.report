@@ -26,6 +26,7 @@ class ImageController extends Controller
         $allowedDirs = [
             resource_path('data' . DIRECTORY_SEPARATOR . 'articles'),
             resource_path('data' . DIRECTORY_SEPARATOR . 'issues'),
+            resource_path('data' . DIRECTORY_SEPARATOR . 'chronicle'),
         ];
         $allowedExtensions = ['png', 'jpg', 'jpeg', 'gif', 'webp'];
 

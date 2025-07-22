@@ -14,7 +14,7 @@
                 <!--<a href="{{ route('home') }}" class="sidebar-icon-box{{ request()->routeIs('home') ? ' active' : '' }}"><div class="sidebar-icon">BZ</div></a>-->
                 <hr class="border border-primary border-2">
                 <a href="{{ route('issue') }}" class="sidebar-icon-box{{ ($activeNav ?? '') === 'issue' ? ' active' : '' }}"><div class="sidebar-icon">Isu</div></a>
-                <a href="{{ route('chronicle') }}" class="sidebar-icon-box{{ ($activeNav ?? '') === 'chronicles' ? ' active' : '' }}"><div class="sidebar-icon">Crn</div></a>
+                <a href="{{ route('chronicle') }}" class="sidebar-icon-box{{ ($activeNav ?? '') === 'chronicle' ? ' active' : '' }}"><div class="sidebar-icon">Crn</div></a>
                 <a href="{{ route('games_bz98r') }}" class="sidebar-icon-box{{ ($activeNav ?? '') === 'games_bz98r' ? ' active' : '' }}"><div class="sidebar-icon">98R</div></a>
                 <a href="{{ route('home') }}" class="sidebar-icon-box{{ ($activeNav ?? '') === 'cc' ? ' active' : '' }}"><div class="sidebar-icon">CC</div></a>
             </div>

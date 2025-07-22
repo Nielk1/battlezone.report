@@ -10,6 +10,7 @@ class Channel extends Model
     public ?string $type;
     public ?string $icon;
     public ?string $code;
+    public ?string $subcode;
     public ?string $url;
     /** @var ChannelButton[] */
     public array $buttons;
@@ -21,6 +22,7 @@ class Channel extends Model
         ?string $type = null,
         ?string $icon = null,
         ?string $code = null,
+        ?string $subcode = null,
         ?string $url = null,
         array $buttons = [],
         array $children = []
@@ -29,6 +31,7 @@ class Channel extends Model
         $this->type = $type;
         $this->icon = $icon;
         $this->code = $code;
+        $this->subcode = $subcode;
         $this->url = $url;
         $this->buttons = $buttons;
         $this->children = $children;
@@ -67,6 +70,7 @@ class Channel extends Model
             $data['type'] ?? null,
             $data['icon'] ?? null,
             $data['code'] ?? null,
+            $data['subcode'] ?? null,
             $data['url'] ?? null,
             $buttons,
             $children

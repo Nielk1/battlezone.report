@@ -6,8 +6,6 @@
         "year": "2016",
         "month": "04/25",
         "url": "/issue/report/2016-04-25#issue_mast",
-        "cover": "issues/2016-04-25-cover.png",
-        "image": "issues/2016-04-25-back.jpg",
         "children": [
             {"icon": "logo_interview", "type": "interview", "code": "interview-with-jason-kingsley", "name": "Interview with Jason Kingsley, CEO of Rebellion Developments", "url": "/issue/report/2016-04-25#interview/interview-with-jason-kingsley", "buttons": [{"icon": "logo_target", "name": "Permalink", "attr": {"onclick": "window.location.href='/acticle/news/interview-with-jason-kingsley'"}}]},
             {"icon": "logo_guide", "type": "guide", "code": "bobcat-bettys-guide-light-tanks", "name": "Bobcat Betty’s Guide to The Bobcat (Light Tanks)", "url": "/issue/report/2016-04-25#guide/bobcat-bettys-guide-light-tanks", "buttons": [{"icon": "logo_target", "name": "Permalink", "attr": {"onclick": "window.location.href='/article/guide/bobcat-bettys-guide-light-tanks'"}}]},
@@ -22,8 +20,6 @@
         "year": "2017",
         "month": "02/09",
         "url": "/issue/report/2017-02-09#issue_mast",
-        "cover": "issues/2017-02-09-cover.png",
-        "image":"issues/2017-02-09-back.jpg",
         "children":[
             {"icon": "logo_article", "type": "news", "code": "intro-feb17", "name": "Foreword", "url":"/issue/report/2017-02-09#news/intro-feb17", "buttons": [{"icon": "logo_target", "name": "Permalink", "attr": {"onclick": "window.location.href='/article/news/intro-feb17'"}}]},
             {"icon": "logo_interview", "type": "interview", "code": "interview-with-robert-waring", "name": "Interview with Robert Waring", "url":"/issue/report/2017-02-09#interview/interview-with-robert-waring", "buttons": [{"icon": "logo_target", "name": "Permalink", "attr": {"onclick": "window.location.href='/article/interview/interview-with-robert-waring'"}}]},
