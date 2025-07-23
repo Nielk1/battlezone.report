@@ -43,6 +43,18 @@ $sidebar-width: $sidebar-icon-size + $sidebar-icons-sidepad * 2;
     );
 }
 
+@import '_variables';
+
+$primary:       #60ab45;
+//$secondary:     $gray-700 !default;
+//$success:       $green !default;
+//$info:          $cyan !default;
+//$warning:       $yellow !default;
+//$danger:        $red !default;
+//$light:         $gray-500 !default;
+//$dark:          $gray-800 !default;
+$code-color:     #0e0;
+
 // Import Bootstrap's SASS source
 @import 'bootstrap/scss/bootstrap';
 
@@ -736,3 +748,53 @@ $sidebar-width: $sidebar-icon-size + $sidebar-icons-sidepad * 2;
     pointer-events: auto;
 }
 */
+
+@include media-breakpoint-up(md) {
+    .interview-line {
+        display: flex;
+        .badge {
+            &:empty {
+                display: block;
+                background-color: rgba(var(--bs-secondary-rgb), var(--bs-bg-opacity)) !important;
+            }
+        }
+        .p {
+            display: block;
+        }
+    }
+}
+
+
+.interview-line {
+    margin-bottom: 2rem !important;
+    .p {
+        display: block;
+        margin-top: 1rem;
+        &:first-child {
+            display: inline; // so that the prefix badge is on the same line and cuts into it
+            margin-top: 0; // first line should not have margin
+        }
+    }
+    .badge {
+        min-width: 100px;
+        text-align: right;
+        --bs-bg-opacity: 1;
+    }
+    &.interviewer {
+        margin-bottom: 1rem !important;
+        .badge {
+            background-color: rgba(var(--bs-primary-rgb), var(--bs-bg-opacity)) !important;
+        }
+    }
+    &.interviewee {
+        .badge {
+            background-color: rgba(var(--bs-success-rgb), var(--bs-bg-opacity)) !important;
+        }
+    }
+    /*.interviewer {
+        color: $primary;
+    }
+    .interviewee {
+        color: $success;
+    }*/
+}

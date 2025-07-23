@@ -63,7 +63,7 @@
                     @endphp
                     @include('partials.article', ['article' => $article['article'], 'type' => $article['type'], 'code' => $article['code'], 'content' => $content])
                 </div>
-                <hr>
+                <hr style="clear:both;padding-top:1rem;">
             @endforeach
         </div>
     </aside>

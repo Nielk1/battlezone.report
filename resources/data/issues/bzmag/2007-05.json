@@ -1,0 +1,8 @@
+{
+    "title":"Battlezone Magazine: Issue 2",
+    "image":"issues/2007-05-back.png",
+    "date":"2007-05",
+    "articles":[
+        {"type":"interview","code":"battlezone-i-the-programmer"}
+    ]
+}

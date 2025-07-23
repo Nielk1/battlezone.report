@@ -1,0 +1,15 @@
+<div class="row">
+    <div class="col-md-6">
+        <div class="grid-item-content card mb-3 print-avoid-page-break" style="--bs-card-border-color:#ff9900;">
+            <img class="card-img-top d-print-none" src="/images/articles/news/2006-09-ship-intelligence-1.png" alt="Leviathan"/>
+            <div class="card-body">
+                <p class="card-text">
+                    <b>Name:</b> Leviathan<br/>
+                    <b>Race:</b> Scion Collective<br/>
+                    <b>Mod:</b> Rise of the Jenova<br/>
+                    <b>About:</b> The Leviathan was created to respond to the more numerous scion rebels that had been launching attacks against outposts of the Collective. Instead of deploying more attack units in these lesser defended areas, the Leviathan was created to help the smaller sentries combat the attackers.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

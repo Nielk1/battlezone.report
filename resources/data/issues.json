@@ -1,5 +1,32 @@
 [
     {
+        "name": "Battlezone Magazine: Issue 1",
+        "type": "bzmag",
+        "code": "2006-09",
+        "year": "2006",
+        "month": "09",
+        "url": "/issue/bzmag/2006-09#issue_mast",
+        "children": [
+            {"icon": "logo_interview", "type": "interview", "code": "battlezone-ii-the-programmer", "name": "Battlezone II: The Programmer", "url": "/issue/bzmag/2006-09#interview/battlezone-ii-the-programmer", "buttons": [{"icon": "logo_target", "name": "Permalink", "attr": {"onclick": "window.location.href='/article/interview/battlezone-ii-the-programmer'"}}]},
+            {"icon": "logo_tools", "type": "modding", "code": "wug-aip-scripting-part-1", "name": "AIP Scripting Part I", "url": "/issue/bzmag/2006-09#modding/wug-aip-scripting-part-1", "buttons": [{"icon": "logo_target", "name": "Permalink", "attr": {"onclick": "window.location.href='/article/modding/wug-aip-scripting-part-1'"}}]},
+            {"icon": "logo_article", "type": "news", "code": "2006-09-mods", "name": "Mods", "url": "/issue/bzmag/2006-09#news/2006-09-mods", "buttons": [{"icon": "logo_target", "name": "Permalink", "attr": {"onclick": "window.location.href='/article/news/2006-09-mods'"}}]},
+            {"icon": "logo_book", "type": "story", "code": "schrodingers-rat", "name": "Schrodinger’s Rat", "url": "/issue/bzmag/2006-09#story/schrodingers-rat", "buttons": [{"icon": "logo_target", "name": "Permalink", "attr": {"onclick": "window.location.href='/article/story/schrodingers-rat'"}}]},
+            {"icon": "logo_article", "type": "news", "code": "2006-09-ship-intelligence", "name": "Ship Intelligence", "url": "/issue/bzmag/2006-09#news/2006-09-ship-intelligence", "buttons": [{"icon": "logo_target", "name": "Permalink", "attr": {"onclick": "window.location.href='/article/news/2006-09-ship-intelligence'"}}]},
+            {"icon": "logo_article", "type": "news", "code": "2006-09-letter-from-the-editor", "name": "Letter from the Editor", "url": "/issue/bzmag/2006-09#news/2006-09-letter-from-the-editor", "buttons": [{"icon": "logo_target", "name": "Permalink", "attr": {"onclick": "window.location.href='/article/news/2006-09-letter-from-the-editor'"}}]}
+        ]
+    },
+    {
+        "name": "Battlezone Magazine: Issue 2",
+        "type": "bzmag",
+        "code": "2007-05",
+        "year": "2007",
+        "month": "05",
+        "url": "/issue/bzmag/2007-05#issue_mast",
+        "children": [
+            {"icon": "logo_interview", "type": "interview", "code": "battlezone-i-the-programmer", "name": "Battlezone I: The Programmer", "url": "/issue/bzmag/2007-05#interview/battlezone-i-the-programmer", "buttons": [{"icon": "logo_target", "name": "Permalink", "attr": {"onclick": "window.location.href='/article/interview/battlezone-i-the-programmer'"}}]}
+        ]
+    },
+    {
         "name": "Field Report: Battlezone '98 Redux",
         "type": "report",
         "code": "2016-04-25",

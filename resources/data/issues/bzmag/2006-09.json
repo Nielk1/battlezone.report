@@ -1,0 +1,13 @@
+{
+    "title":"Battlezone Magazine: Issue 1",
+    "image":"issues/2006-09-back.png",
+    "date":"2006-09",
+    "articles":[
+        {"type":"interview","code":"battlezone-ii-the-programmer"},
+        {"type":"modding","code":"wug-aip-scripting-part-1"},
+        {"type":"news","code":"2006-09-mods"},
+        {"type":"story","code":"schrodingers-rat"},
+        {"type":"news","code":"2006-09-ship-intelligence"},
+        {"type":"news","code":"2006-09-letter-from-the-editor"}
+    ]
+}

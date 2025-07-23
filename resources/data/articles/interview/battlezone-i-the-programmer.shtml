@@ -1,0 +1,217 @@
+<div class="interview">
+    <div class="interview-line">
+        <span class="badge me-2"></span>
+        <span>
+            <span class="p">All legends start somewhere and the Battlezone series is no exception. Originally published in 1998, this action packed game has seen publication three times with the original release, the gold edition, and the Xplosive edition.</span>
+            <span class="p">In this issue of Battlezone Magazine, we will be interviewing the lead code developer behind the Secret Cold War and a behind the scenes look at the game itself.</span>
+        </span>
+    </div>
+    <div class="interview-line interviewer">
+        <span class="badge me-2">Snyder</span>
+        <span>
+            <span class="p">What got you interested in game programming?</span>
+        </span>
+    </div>
+    <div class="interview-line interviewee">
+        <span class="badge me-2">Pickering</span>
+        <span>
+            <span class="p">I've always loved games of all kinds: chess, Stratego, rummycube, baseball, soccer, water polo, asteroids, missile command, hard hat Mac, etc. My mom was a computer programmer for Burroughs (now Unisys) and I was pretty good at Math, so I took to programming pretty quickly when I finally got access to development tools late in high school. I dabbled in game programming with a simple artillery game and later with a snakebyte clone. Neither one was anywhere near commercial quality. I didn't get to do any real game programming until I was hired at Activision.</span>
+        </span>
+    </div>
+    <div class="interview-line interviewer">
+        <span class="badge me-2">Snyder</span>
+        <span>
+            <span class="p">What was the first game you ever worked on?</span>
+        </span>
+    </div>
+    <div class="interview-line interviewee">
+        <span class="badge me-2">Pickering</span>
+        <span>
+            <span class="p">I was hired on at Activision to work on shared technology for 'Spycraft - the Great game', 'Muppets Treasure Island', and 'Zork - The Grand Inqusitor'. Only 'Spycraft' ended up using the technology. Andrew Goldman was the Director on 'Spycraft' and when that project was finished he made me lead programmer on his next project, which started out as Spycraft 2 and ended up as Battlezone.</span>
+        </span>
+    </div>
+    <div class="interview-line interviewer">
+        <span class="badge me-2">Snyder</span>
+        <span>
+            <span class="p">When Battlezone was presented to you what was your opinion about it?</span>
+        </span>
+    </div>
+    <div class="interview-line interviewee">
+        <span class="badge me-2">Pickering</span>
+        <span>
+            <span class="p">The Battlezone game play was not really 'presented' to me, it grew out of the desires of Andrew Goldman, George Collins, and myself to make a game that mixed the strategy elements of Command and Conquer/Warcraft with an action game like Quake or Interstate 76/Mech Warrior II. This game play was refined over time by the whole team. The 'Battlezone' license came on fairly late in the process. I didn't think the Battlezone name would hurt so I was not opposed to it. In hindsight I am happy with where the Battlezone license lead our story and environment, but I suspect the association with a 20-year-old coin op arcade game hurt the game in the market.</span>
+        </span>
+    </div>
+    <div class="interview-line interviewer">
+        <span class="badge me-2">Snyder</span>
+        <span>
+            <span class="p">What part of the game did you work on and program?</span>
+        </span>
+    </div>
+    <div class="interview-line interviewee">
+        <span class="badge me-2">Pickering</span>
+        <span>
+            <span class="p">I mostly worked on AI: path planning, path following, target selection, weapon selection, aiming, firing, etc. The team was pretty small so I did other stuff too like audio and load/save.</span>
+        </span>
+    </div>
+    <div class="interview-line interviewer">
+        <span class="badge me-2">Snyder</span>
+        <span>
+            <span class="p">What about Battlezone did you like the most?</span>
+        </span>
+    </div>
+    <div class="interview-line interviewee">
+        <span class="badge me-2">Pickering</span>
+        <span>
+            <span class="p">I liked the 3D mini map, linked weapons, and first person interface for building stuff.</span>
+        </span>
+    </div>
+    <div class="interview-line interviewer">
+        <span class="badge me-2">Snyder</span>
+        <span>
+            <span class="p">How long was Battlezone in development before the 1.0 release?</span>
+        </span>
+    </div>
+    <div class="interview-line interviewee">
+        <span class="badge me-2">Pickering</span>
+        <span>
+            <span class="p">I think it was about 18 months.</span>
+        </span>
+    </div>
+    <div class="interview-line interviewer">
+        <span class="badge me-2">Snyder</span>
+        <span>
+            <span class="p">How much did Battlezone cost to make?</span>
+        </span>
+    </div>
+    <div class="interview-line interviewee">
+        <span class="badge me-2">Pickering</span>
+        <span>
+            <span class="p">I have no idea. I would guess 1 to 2 million.</span>
+        </span>
+    </div>
+    <div class="interview-line interviewer">
+        <span class="badge me-2">Snyder</span>
+        <span>
+            <span class="p">How many copies were sold?</span>
+        </span>
+    </div>
+    <div class="interview-line interviewee">
+        <span class="badge me-2">Pickering</span>
+        <span>
+            <span class="p">I don't know how many copies were sold but I do know we at least made our development money back. Many of the copies were sold through bundling with video card so the retail sales are probably much lower than the number of people who played the game. Activision must have made some money because they had us make a sequel.</span>
+        </span>
+    </div>
+    <div class="interview-line interviewer">
+        <span class="badge me-2">Snyder</span>
+        <span>
+            <span class="p">Would you do anything differently if you were building the game today?</span>
+        </span>
+    </div>
+    <div class="interview-line interviewee">
+        <span class="badge me-2">Pickering</span>
+        <span>
+            <span class="p">I would try to make the transition from quake play to BZ play a little more gradual. Maybe start with a more quake like soldier, then introduce vehicles, then purchasing, then base building, then resource collection. I think Tribes and Battlefield 1942 have done a good job at adding depth to the shooter genre without getting overwhelming.</span>
+        </span>
+    </div>
+    <div class="interview-line interviewer">
+        <span class="badge me-2">Snyder</span>
+        <span>
+            <span class="p">Do you still sometimes play BZ? If not, when did you play it last?</span>
+        </span>
+    </div>
+    <div class="interview-line interviewee">
+        <span class="badge me-2">Pickering</span>
+        <span>
+            <span class="p">I install it probably once a year and play a few missions then I get busy with other stuff. I also like to show my son his baby picture, which is an Easter egg in the game. He is 10 now but there is a picture of him as a 1 yr old. At the mission success screen type <code>W</code>, <code>E</code>, <code>S</code>, <code>L</code>, <code>E</code>, <code>Y</code>, <code>&lt;SPACE&gt;</code>, <code>&lt;SPACE&gt;</code>, <code>&lt;SPACE&gt;</code>, <code>&lt;SPACE&gt;</code></span>
+        </span>
+    </div>
+    <div class="interview-line interviewer">
+        <span class="badge me-2">Snyder</span>
+        <span>
+            <span class="p">Under which name, and are/were you good at it?</span>
+        </span>
+    </div>
+    <div class="interview-line interviewee">
+        <span class="badge me-2">Pickering</span>
+        <span>
+            <span class="p">I didn't play online much. I thought I was pretty good, but I'm pretty sure that within a few days after release there were people much better than I. I usually play as 'Drone' or 'BZ-Drone' in most games.</span>
+        </span>
+    </div>
+    <div class="interview-line interviewer">
+        <span class="badge me-2">Snyder</span>
+        <span>
+            <span class="p">Who is/was the best in playing BZ1?</span>
+        </span>
+    </div>
+    <div class="interview-line interviewee">
+        <span class="badge me-2">Pickering</span>
+        <span>
+            <span class="p">I don't remember for sure but I think it was Will Stahl.</span>
+        </span>
+    </div>
+    <div class="interview-line interviewer">
+        <span class="badge me-2">Snyder</span>
+        <span>
+            <span class="p">The storyline to Battlezone is among the most unique of Cold War style stories. Where did the idea of a secret war in space come from?</span>
+        </span>
+    </div>
+    <div class="interview-line interviewee">
+        <span class="badge me-2">Pickering</span>
+        <span>
+            <span class="p">I wasn't involved very much in the design side so I'm not sure on the details of how we came up with Cold War in space. I know that the idea for Action RTS and "scrap" as a resource came well before the idea of the Cold War. I believe we were looking for factions that were easy to relate to without having to tell a lot of back-story.</span>
+        </span>
+    </div>
+    <div class="interview-line interviewer">
+        <span class="badge me-2">Snyder</span>
+        <span>
+            <span class="p">Did you have any concerns with Battlezone?</span>
+        </span>
+    </div>
+    <div class="interview-line interviewee">
+        <span class="badge me-2">Pickering</span>
+        <span>
+            <span class="p">Not at the time. I thought what we were doing was great, the Next Big Thing. I thought the basic RTS popularity was waning and that people would be looking for more action in their RTS or more strategy in their shooter. But StarCraft came out at the same time and is a great game and Quake / Unreal games kept doing well with not much change to the basic game play.</span>
+        </span>
+    </div>
+    <div class="interview-line interviewer">
+        <span class="badge me-2">Snyder</span>
+        <span>
+            <span class="p">Even after nine years since the game hit the shelves, a small band of fans continue to hold on and play this game. Did you think that Battlezone would continue to live on after the "normal" life expectancy of a game?</span>
+        </span>
+    </div>
+    <div class="interview-line interviewee">
+        <span class="badge me-2">Pickering</span>
+        <span>
+            <span class="p">I hoped that battlezone would have a shelf life similar to quake or command & conquer. We tried to give it re-playability with some mod tools and multiplayer support. I wasn't thinking 9 years into the future but I'm sure if I had I would not predict that people would still be playing bz1. I would probably hope they were playing bz5 though.</span>
+        </span>
+    </div>
+    <div class="interview-line interviewer">
+        <span class="badge me-2">Snyder</span>
+        <span>
+            <span class="p">Summing up everything, what is your overall opinion on the whole Battlezone Series?</span>
+        </span>
+    </div>
+    <div class="interview-line interviewee">
+        <span class="badge me-2">Pickering</span>
+        <span>
+            <span class="p">BZ was a great idea that didn't live up to its potential. The marketing, technical, and design mistakes kept it from becoming a massively successful series. I'd love to make BZ3 even now but I think publishers will stay away from this genre because neither BZ nor Uprising did well commercially.</span>
+        </span>
+    </div>
+    <div class="interview-line interviewer">
+        <span class="badge me-2">Snyder</span>
+        <span>
+            <span class="p">Thanks for your time, Mr. Pickering. This has been fun! ♠</span>
+        </span>
+    </div>
+</div>
+
+<!-- Red box that also had Pandemic Studio logo -->
+<p>Brad Pickering is a programmer and game developer at Pandemic Studios.</p>
+<p>Other games by Pandemic are:</p>
+<ul>
+    <li>Destroy All Humans I & II</li>
+    <li>Star Wars Battlefront I & II</li>
+    <li>Full Spectrum Warrior</li>
+    <li>Mercenaries</li>
+</ul>

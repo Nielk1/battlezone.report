@@ -1,0 +1,252 @@
+<div class="interview">
+    <div class="interview-line">
+        <span class="badge me-2"></span>
+        <span>
+            <span class="p">In 1999 Pandemic Studios and Activision came out with Battlezone II: Combat Commander. A Game that was based on the critical acclaimed Battlezone and placed the player in the seat of a futuristic tank and battled unknown aliens across the galaxy.</span>
+            <span class="p">The game has been available to the public for 7 years and a tenacious band of players still keep the multiplayer buzzing and modders keep bringing new worlds and new adventures to the gamers. But the question, what about the programmers, the men behind the creation of the game itself? So, Ken Miller, one of 5 programmers on the original Battlezone II graciously agreed to sit down for an interview. Here is his story:</span>
+        </span>
+    </div>
+    <div class="interview-line interviewer">
+        <span class="badge me-2">Snyder</span>
+        <span>
+            <span class="p">So Ken, what first originally got you interested in programming games?</span>
+        </span>
+    </div>
+    <div class="interview-line interviewee">
+        <span class="badge me-2">Miller</span>
+        <span>
+            <span class="p">I've wanted to make games since I first encountered a video arcade in the early 1980s, and Pac Man in particular. I was about 8 or so at the time. I wanted to play arcade games every time I got a chance, even though I wasn’t very good. I even had Pac Man bed sheets until they wore out. At home, I would draw out game concepts, usually clones of existing arcade games.</span>
+        </span>
+    </div>
+    <div class="interview-line interviewer">
+        <span class="badge me-2">Snyder</span>
+        <span>
+            <span class="p">When you started working for Activision what game was the first that you got to be a part of?</span>
+        </span>
+    </div>
+    <div class="interview-line interviewee">
+        <span class="badge me-2">Miller</span>
+        <span>
+            <span class="p">Battlezone 1. I worked on Planetfall 3D for about a month before it got cancelled, then moved onto a project called "Badlands", which became "Warriors of the Wasteland", which became "Lost Brigade", which became "Battlezone". The action-strategy hybrid was a constant, even as the theme changed.</span>
+            <span class="p">“Badlands” and “Warriors of the Wasteland” featured a lot of absurd and even comical elements, beginning with the protagonist’s name: Slade Vengeance. It got sillier from there. However, the Scavenger and Recycler units originated at this time, as did the concept of salvaging destroyed units for resources.</span>
+            <span class="p">“Lost Brigade” played things fairly straight, with a science fiction World War 2 theme; the titular Brigade and its Axis counterpart were abducted en masse during a battle, dumped on an alien planet, and then faced off against each other while trying to get back to Earth. Unfortunately, Swastikas and Iron Crosses were banned in Germany, so we switched over to the popular Cold War theme. Somehow, we hit upon licensing the Battlezone name, and the rest is history; in retrospect, the name probably hurt as much as it helped.</span>
+        </span>
+    </div>
+    <div class="interview-line interviewer">
+        <span class="badge me-2">Snyder</span>
+        <span>
+            <span class="p">I see. So when Battlezone II rolled around, what were your thoughts?</span>
+        </span>
+    </div>
+    <div class="interview-line interviewee">
+        <span class="badge me-2">Miller</span>
+        <span>
+            <span class="p">I was all for it, which was why I came along when Pandemic split off from Activision. I liked the first game, I liked the team I was on, and we got a sweetheart deal from Activision to spin off into an external studio.</span>
+            <span class="p">Based on that deal, I predicted that Activision planned to shut down their internal studio, though Andrew Goldman disagreed. I definitely glad I had spun off when my prediction came true. On the plus side, we did pick up some good people from Activision as a result, Julio Jerez in particular.</span>
+        </span>
+    </div>
+    <div class="interview-line interviewer">
+        <span class="badge me-2">Snyder</span>
+        <span>
+            <span class="p">But what brought around the idea of a sequel to Battlezone? Did someone in Activision like it and think a sequel was a possibility?</span>
+        </span>
+    </div>
+    <div class="interview-line interviewee">
+        <span class="badge me-2">Miller</span>
+        <span>
+            <span class="p">While not a huge seller, the first Battlezone was well-received by critics and (later) regarded as one of the “best games no one played”. The sequel was originally intended as an attempt to convert some of that regard into sales by making it more approachable. Obviously, it diverged from that concept over time, becoming even more hardcore than the original, but that was the thought.</span>
+        </span>
+    </div>
+    <div class="interview-line interviewer">
+        <span class="badge me-2">Snyder</span>
+        <span>
+            <span class="p">I've noticed in the ODF files while modding that a lot of old functions were left in from the original Battlezone. How much of the old code did you bring over in to the game?</span>
+        </span>
+    </div>
+    <div class="interview-line interviewee">
+        <span class="badge me-2">Miller</span>
+        <span>
+            <span class="p">All of it. We took the BZ1 1.31 code base with us when we split off in June 1998. The first thing I did after that was perform an engine transplant onto the Dark Reign 2 libraries. Conceptual work began well before that, but actual development started there. We finished in December 1999, a little over a year and a half later, and that was after pushing back the ship date by several months.</span>
+        </span>
+    </div>
+    <div class="interview-line interviewer">
+        <span class="badge me-2">Snyder</span>
+        <span>
+            <span class="p">It took that little time to program? How many people were working on it?</span>
+        </span>
+    </div>
+    <div class="interview-line interviewee">
+        <span class="badge me-2">Miller</span>
+        <span>
+            <span class="p">I think it was 5 programmers, 4 artists, and 3 designers. That was small for a development team even then, but leveraging Dark Reign 2’s engine helped immensely.</span>
+        </span>
+    </div>
+    <div class="interview-line interviewer">
+        <span class="badge me-2">Snyder</span>
+        <span>
+            <span class="p">What did you do get to program? Multiplayer Code, Single player, etc?</span>
+        </span>
+    </div>
+    <div class="interview-line interviewee">
+        <span class="badge me-2">Miller</span>
+        <span>
+            <span class="p">I ended up being what I called the "acting lead programmer" as no one else filled that role, and I was a generalist that knew how everything generally worked. I didn't do any managing, though, as the programming team consisted of only me, Julio Jerez, Nathan Mates, Brad Pickering, and George Sutty, with John Lemberger from Intel helping with SSE code. Team roles were somewhat blurred, as we didn't have particularly strict notions of code ownership.. Hilarity sometimes ensued... :)</span>
+            <span class="p">While I did a lot of little things everywhere, I was mostly responsible for game play code. I created the hover physics; most of the building types; weapon, ordnance, and explosion classes; the effects system; a lot of the in-game interfaces (reticule, command, radar, status); the input binding interface; and most of the in-game editor. That makes it sound like I wrote most of the game all by myself, but that's not true at all; I just happened to be responsible for some of the more visible parts.</span>
+        </span>
+    </div>
+    <div class="interview-line interviewer">
+        <span class="badge me-2">Snyder</span>
+        <span>
+            <span class="p">Many things did change in the game play. I was fortunate to find a copy of the original Battlezone on the Internet and the first thing I noticed was that there weren't any bio-metal pools to deploy my scavengers on. When did Bio-metal pools get introduced?</span>
+        </span>
+    </div>
+    <div class="interview-line interviewee">
+        <span class="badge me-2">Miller</span>
+        <span>
+            <span class="p">That was Will Stahl's idea, I think, as he was the lead designer. We always had a problem with Scavengers getting stuck or doing dumb things, so we decided to put in some sort of "scrap mine" you could harvest continuously without depending on a mobile unit. Extractors also served as exposed targets, encouraging battles away from the main base.</span>
+        </span>
+    </div>
+    <div class="interview-line interviewer">
+        <span class="badge me-2">Snyder</span>
+        <span>
+            <span class="p">Oh, yes. Yesterday I was playing an unpatched version of Battlezone II and the physics were completely different. Why did Pandemic patch them and change it?</span>
+        </span>
+    </div>
+    <div class="interview-line interviewee">
+        <span class="badge me-2">Miller</span>
+        <span>
+            <span class="p">Battlezone players did not like the Battlezone 2 physics! The handling characteristics of vehicles drifted away from their BZ1 equivalents over time, as designers tested them against each other and not the first game. Die-hard Battlezone players expected a continuation of their favorite game, and reacted very negatively when everything changed. We received extensive complaints about that on the message board, so we corrected the physics parameters to made things act more like people expected.</span>
+        </span>
+    </div>
+    <div class="interview-line interviewer">
+        <span class="badge me-2">Snyder</span>
+        <span>
+            <span class="p">Who came up with the idea of in-game screens - like the satellite view and vehicle upgrade panel? IMHO, that greatly added to the game's immersiveness.</span>
+        </span>
+    </div>
+    <div class="interview-line interviewee">
+        <span class="badge me-2">Miller</span>
+        <span>
+            <span class="p">I think that may have been Wil Stahl, the lead designer. The idea was to place the interface for specific buildings inside the buildings themselves, as the main interface was already fairly "busy". It was added relatively late in development, so we couldn't add it to as many places as we would have liked.</span>
+            <span class="p">Along those lines, I think we should have made interfacing with a building more like piloting a vehicle, providing a secure environment for the player character instead of leaving them exposed. That would have make RTS players a lot more comfortable, as they could play the game more like a "traditional" RTS. It might also have provided a use for buildings that otherwise served only as prerequisites for other things (like the Tech Center).</span>
+        </span>
+    </div>
+    <div class="interview-line interviewer">
+        <span class="badge me-2">Snyder</span>
+        <span>
+            <span class="p">Ever since the game came out it has had a fan base. Even today 7 years later. Did you ever think that it would catch on like that?</span>
+        </span>
+    </div>
+    <div class="interview-line interviewee">
+        <span class="badge me-2">Miller</span>
+        <span>
+            <span class="p">I didn't really think about that kind of thing too much, as it was only the second game I had ever worked on. Battlezone 1 was a sleeper hit, critically acclaimed but not very strong-selling. Battlezone 2 was that extra bit more "hardcore", even though we had originally intended to simplify it. It was also a bit unpolished in places, and didn't have the novelty factor any more. Still, it's nice having a dedicated (if small) fan base.</span>
+        </span>
+    </div>
+    <div class="interview-line interviewer">
+        <span class="badge me-2">Snyder</span>
+        <span>
+            <span class="p">You and Nathan Mates began working on the 1.3 patch a couple of years ago. What started that?</span>
+        </span>
+    </div>
+    <div class="interview-line interviewee">
+        <span class="badge me-2">Miller</span>
+        <span>
+            <span class="p">Nathan figured out that there was a particular string of characters you could type into the chat window to crash everyone in the game, so when he told me about it, I figured out what caused the problem fairly quickly. That was the beginning of the 1.3 patch, and the very first entry in the change log (now censored to prevent exploits). While we were at it, we delved into a number of other serious problems that needed fixing, and it spiraled out of control from there. It became a classic case of runaway software development, eventually getting to the point where I was causing more problems than I was fixing. We (for sufficiently “Nathan" values of "we") eventually reigned in most of the excesses to appease the hardcore 1.2 players, which is where we are today.</span>
+            <span class="p">I ended up taking a year (or two?) hiatus after getting tired of it, but Nathan kept plugging away. I came back for a little while recently, but didn't get all that much accomplished. The project is starting to wind down, as Nathan got married in August and no longer has much time to work on it.</span>
+        </span>
+    </div>
+    <div class="interview-line interviewer">
+        <span class="badge me-2">Snyder</span>
+        <span>
+            <span class="p">So, what's your favorite thing about this game?</span>
+        </span>
+    </div>
+    <div class="interview-line interviewee">
+        <span class="badge me-2">Miller</span>
+        <span>
+            <span class="p">As a game: its unique nature. Action-RTS games are fairly rare, especially vehicle-based ones. As a project: the impact of my contribution. In BZ2, I could strongly influence (or outright create) so many visible elements. In later games with larger teams, my contribution was relatively smaller.</span>
+        </span>
+    </div>
+    <div class="interview-line interviewer">
+        <span class="badge me-2">Snyder</span>
+        <span>
+            <span class="p">My Friend Wug created a list of things he wanted to ask. His question is what you think of the state of PC games.</span>
+        </span>
+    </div>
+    <div class="interview-line interviewee">
+        <span class="badge me-2">Miller</span>
+        <span>
+            <span class="p">I'm not necessarily the best judge of that, as I came somewhat late to the PC game party; I started with an Atari 800 computer in 1983, switched over to an Amiga 500 in the late 1980s, an Amiga 3000 in 1991, and only got a PC at home five years ago (1.4GHz Athlon, GeForce 3, 768MB of RAM), followed by a desktop-replacement laptop (2.8GHz Pentium 4, Radeon Mobility 9000, 1GB of RAM). I do play PC games, though mostly by default because the only console I have is a Dreamcast I bought off of someone at work. I primarily do "retrogaming" via emulation, MAME for arcade games, WinUAE for Amiga games, with occasional Vectrex and Atari.</span>
+            <span class="p">Based on both observation and experience, PC games have become remarkably advanced graphically, with some great advances in AI and physics as well. However, they have also fallen into the "realism trap", sometimes acting more like simulations than games. Gameplay, seems to be stuck in the same few niches: shooter, action, sports, and strategy primarily, with occasional sim, RPG, or adventure game. Just check Metacritic's PC games page (http://www.metacritic.com/games/pc/) to see what I mean. As development cost has escalated, and the industry matured, games have become more "safe". Every now and then, you'll get something truly innovative, though novel take on a traditional genre are more common and welcome enough.</span>
+            <span class="p">The main problem with my judgement is that it's mostly based on second-hand knowledge; I haven't gotten a chance to play many of the pinnacles of PC game development.</span>
+        </span>
+    </div>
+    <div class="interview-line interviewer">
+        <span class="badge me-2">Snyder</span>
+        <span>
+            <span class="p">Do you think Vista will hurt or help PC games?</span>
+        </span>
+    </div>
+    <div class="interview-line interviewee">
+        <span class="badge me-2">Miller</span>
+        <span>
+            <span class="p">It will help in the long run, as Microsoft started placing more emphasis on games now that it's an active player with the Xbox and Xbox 360. Vista elevates Games to the same level as Documents, Pictures, and Music in the Start menu, a huge change over the general Program Files dumping ground. The new Vista driver model should enhance stability (drivers run in user mode, not kernel mode) and eventually performance (by reducing overhead).</span>
+            <span class="p">Microsoft plans to offer a performance testing and rating system that should simplify game system requirements. Beyond that, Windows Live will likely offer many of the advantages of Xbox live and possibly even Valve's Steam (of which I'm a big fan)</span>
+            <span class="p">Few games will take advantage of Vista and DirectX 10 at first, as graphics hardware (ATI R600 and NVIDIA G80 series) won't be out until next year, and will likely be very expensive. Many people will take a "wait and see" attitude for a while, just as they did with Windows XP, so games attempting to capitalize on Vista-only or DX10-only features will have a very small user base.</span>
+            <span class="p">Eventually, however, things will work out, and I think Vista will be nothing but good for PC gaming.</span>
+        </span>
+    </div>
+    <div class="interview-line interviewer">
+        <span class="badge me-2">Snyder</span>
+        <span>
+            <span class="p">Does Ken think the generation raised on Playstations and Xboxes are more or less sophosticated gamers?</span>
+        </span>
+    </div>
+    <div class="interview-line interviewee">
+        <span class="badge me-2">Miller</span>
+        <span>
+            <span class="p">They're not "less sophisticated", just "different". Though console gamers and PC gamers overlap somewhat, they are fairly distinct gamer populations for the most part. Part of it comes from the differences in the hardware: consoles cost a few hundred dollars, connect to a television, and use a dedicated game controller; PCs cost a couple thousand dollars, connect to a high-resolution monitor, and use a mouse and keyboard primarily. By their very nature, consoles and their games are more "mass market" and skew towards somewhat younger gamers. PC and their games tend to be more "niche" and skew toward somewhat older gamers. Beyond that, the two have very different "cultures". Consoles had to rely on pure gameplay because of their weaker hardware and more limited input, while PCs could focus more on simulation because of their stronger hardware and complex input. Unfortunately, too many PC game developers seem to forget that games are supposed to be fun...</span>
+        </span>
+    </div>
+    <div class="interview-line interviewer">
+        <span class="badge me-2">Snyder</span>
+        <span>
+            <span class="p">Could a hybrid game like Battlezone I/II ever appeal to wider gaming audience?</span>
+        </span>
+    </div>
+    <div class="interview-line interviewee">
+        <span class="badge me-2">Miller</span>
+        <span>
+            <span class="p">BZ2 was meant to do that at first, but headed in the opposite direction. The problem is that mixedgenre games only attract players that like BOTH genres (the intersection) as opposed to EITHER genre (the union). It mainly comes down to learning curve. Action/shooter gamers can pick up just about any action/shooter game on the market and play it in short order, as almost all of them use the same control scheme and feature similar gameplay conventions. Similarly, strategy gamers can pick up just about any strategy game on the market and play it, although strategy games tend to differ from each other more than action games. Confronting an action/shooter gamer with strategy or a strategy player with with action tends to force them outside their genre "comfort zone" and requires a steeper learning curve. My pithiest, if somewhat unfair, summation is this: "FPS players don't want to think; RTS players don't want to die."</span>
+        </span>
+    </div>
+    <div class="interview-line interviewer">
+        <span class="badge me-2">Snyder</span>
+        <span>
+            <span class="p">Or would the hybrid be required to be too watered down?</span>
+        </span>
+    </div>
+    <div class="interview-line interviewee">
+        <span class="badge me-2">Miller</span>
+        <span>
+            <span class="p">I think three things would make such a genre hybrid palatable: a good interface, flexible gameplay, and controlled workload.</span>
+            <span class="p">A good interface makes performing tasks easy, and gets out of the way. BZ1 and BZ2 tried to build a real-time strategy game from a vehicle-action foundation, and provided only a minimal set of tools necessary to control the strategic elements. Base and unit management, the two most important tasks in the game, required lots of keypresses to get anything done. The firstperson perspective didn't help, either, but the more natural overhead perspective required a special building and made the player vulnerable to attack.</span>
+            <span class="p">Flexible gameplay should allow players to do what they WANT to do instead of forcing them to do what they DON'T WANT to do; games are meant to be fun, not work! BZ1 and BZ2 required players to participate in both vehicle-action and strategy in order to succeed, often simultaneously, and did not offer AI control for parts of the game they didn't want to play. Strategy players had to actively participate in combat to assist their often-ineffectual units. Action-shooter players had to perform base-management duties because no one else could. This frequently put each type of player well outside their comfort zone.</span>
+            <span class="p">A controlled workload should prevent the game from becoming overwhelming. BZ1 and BZ2 clearly failed in this area, forcing players to do keep track of too many things at once. The formidable workload made the games very intimidating, limiting their audience to a few hardcore players. Self-reliant units and buildings would go a long way towards fixing that, as would AI support in the tactical and strategic parts of the game.</span>
+            <span class="p">I think these three things together would make a Battlezone-type game more tractable to a general audience.</span>
+        </span>
+    </div>
+    <div class="interview-line interviewer">
+        <span class="badge me-2">Snyder</span>
+        <span>
+            <span class="p">I agree with you. It's a rare type of game that, even for me, I haven't gotten tired of it after a year of playing it. Some people even on the few forums left still enjoy the game! Thanks for your time in doing this interview, Ken. I really appreciate it.</span>
+        </span>
+    </div>
+    <div class="interview-line interviewee">
+        <span class="badge me-2">Miller</span>
+        <span>
+            <span class="p">Glad I could help. ♠</span>
+        </span>
+    </div>
+</div>
