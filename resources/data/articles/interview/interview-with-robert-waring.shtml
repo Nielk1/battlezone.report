@@ -1,18 +1,15 @@
 <hr>
 <div class="d-flex align-items-center mb-3">
-    <div class="flex-shrink-0">
-        <img src="/images/articles/interview/robert_waring.jpg"
-             alt="Robert Waring"
-             class="rounded"
-             style="max-width: 120px; max-height: 120px; aspect-ratio: 1 / 1; object-fit: cover;">
+    <div class="flex-shrink-0 me-3">
+        <img src="/images/articles/interview/robert_waring.jpg" alt="Robert Waring" class="rounded interview-image">
     </div>
-    <div class="ms-3">
+    <div>
         <h4 class="mb-1">Robert Waring<br>
             <small class="text-muted">Producer of Battlezone: The Red Odyssey</small>
         </h4>
-        <a href="https://twitter.com/Robert_Waring" target="_blank" class="btn btn-social btn-twitter" title="Twitter">
-            <i class="fa fa-twitter fa-2x"></i>
-        </a>
+        <div class="d-flex align-items-center social-buttons">
+            <a href="https://twitter.com/Robert_Waring" target="_blank" class="btn btn-twitter" title="Twitter"><i class="bi bi-twitter-x"></i></a>
+        </div>
     </div>
 </div>
 <hr>

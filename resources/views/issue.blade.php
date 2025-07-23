@@ -24,36 +24,29 @@
                 </div>
             </div>
             <div class="container">
-                <div class="row">
-                    <div class="col-xs-12">
-                        <a id="toc"></a>
-                        <?php foreach($articles as $article) { ?>
-                            <div class="media">
-                                <span class="float-start tocLogo">
-                                    <span class="glyphicon glyphicon-record"></span>
-                                </span>
-                                <div class="media-body">
-                                    <h4 class="media-heading"><a href="#<?php echo $article['type']; ?>/<?php echo $article['code']; ?>"><?php echo $article['article']->title; ?></a></h4>
-                                    <?php if (count($article['article']->authors) > 0) { ?>
-                                        by:
-                                    <?php } ?>
-                                    <?php
-                                    {
-                                        if($article['article']->authors) {
-                                            $comma = false;
-                                            foreach($article['article']->authors as $author) {
-                                                if($comma) echo ', ';
-                                                echo $author['name'];
-                                                $comma = true;
-                                            }
+                <?php foreach($articles as $article) { ?>
+                    <div class="article-title-with-permalink">
+                        <a href="/article/{{ $article['type'] }}/{{ $article['code']; }}" class="article-permalink btn btn-primary" aria-label="Permalink">
+                            <span class="svg-icon">{!! File::get(resource_path('svg/logo_target.svg')) !!}</span>
+                        </a>
+                        <div>
+                            <h4><a href="#{{ $article['type'] }}/{{ $article['code'] }}">{{ $article['article']->title }}</a></h4>
+                            @if (count($article['article']->authors) > 0)
+                                by:
+                                @php
+                                    if($article['article']->authors) {
+                                        $comma = false;
+                                        foreach($article['article']->authors as $author) {
+                                            if($comma) echo ', ';
+                                            echo $author['name'];
+                                            $comma = true;
                                         }
-                                    } ?>
-                                    <em><a class="ajaxLoaderAware" href="/article/<?php echo $article['type']; ?>/<?php echo $article['code']; ?>">(permalink)</a></em>
-                                </div>
-                            </div>
-                        <?php } ?>
+                                    }
+                                @endphp
+                            @endif
+                        </div>
                     </div>
-                </div>
+                <?php } ?>
             </div>
             <hr>
             @foreach($articles as $article)

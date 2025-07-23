@@ -12,7 +12,9 @@
             Header Bar 2
         </div>
         <div class="sidebar3-content">
-            @include('partials.article', ['article' => $article, 'type' => $type, 'code' => $code, 'content' => $content])
+            <div class="container">
+                @include('partials.article', ['article' => $article, 'type' => $type, 'code' => $code, 'content' => $content])
+            </div>
         </div>
     </aside>
 </div>

@@ -1,3 +1,18 @@
+<hr>
+<div class="d-flex align-items-center mb-3">
+    <!--<div class="flex-shrink-0">
+        <img src="/images/articles/interview/ken_miller.jpg" alt="Ken Miller" class="rounded interview-image">
+    </div>-->
+    <div>
+        <h4 class="mb-1">Ken Miller<br>
+            <small class="text-muted">Developer on Battlezone II: Combat Commander</small>
+        </h4>
+        <div class="d-flex align-items-center social-buttons">
+            <a href="https://twitter.com/kennethdmiller3" target="_blank" class="btn btn-twitter" title="Twitter"><i class="bi bi-twitter-x"></i></a>
+        </div>
+    </div>
+</div>
+<hr>
 <div class="interview">
     <div class="interview-line">
         <span class="badge me-2"></span>

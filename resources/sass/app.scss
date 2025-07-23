@@ -761,6 +761,44 @@ $code-color:     #0e0;
         .p {
             display: block;
         }
+        //&.interviewer {
+        //    .badge {
+        //        // strikes after masked area at top
+        //        background-image:
+        //            linear-gradient(
+        //                to bottom,
+        //                rgba(var(--bs-primary-rgb), 1) 0,           // solid color at top
+        //                rgba(var(--bs-primary-rgb), 1) 1.5em,       // solid color for first 1.5em
+        //                rgba(var(--bs-primary-rgb), 0) 3em          // fade to transparent by 3em
+        //            ),
+        //            repeating-linear-gradient(
+        //                135deg,
+        //                rgba(255,255,255,0.15) 0,
+        //                rgba(255,255,255,0.15) 8px,
+        //                transparent 8px,
+        //                transparent 16px
+        //            );
+        //    }
+        //}
+        &.interviewee {
+            .badge {
+                // strikes after masked area at top
+                background-image:
+                    linear-gradient(
+                        to bottom,
+                        rgba(var(--bs-success-rgb), 1) 0,           // solid color at top
+                        rgba(var(--bs-success-rgb), 1) 1.5em,       // solid color for first 1.5em
+                        rgba(var(--bs-success-rgb), 0) 3em          // fade to transparent by 3em
+                    ),
+                    repeating-linear-gradient(
+                        135deg,
+                        rgba(255,255,255,0.15) 0,
+                        rgba(255,255,255,0.15) 8px,
+                        transparent 8px,
+                        transparent 16px
+                    );
+            }
+        }
     }
 }
 
@@ -778,17 +816,16 @@ $code-color:     #0e0;
     .badge {
         min-width: 100px;
         text-align: right;
-        --bs-bg-opacity: 1;
     }
     &.interviewer {
         margin-bottom: 1rem !important;
         .badge {
-            background-color: rgba(var(--bs-primary-rgb), var(--bs-bg-opacity)) !important;
+            background-color: rgba(var(--bs-primary-rgb), 1) !important;
         }
     }
     &.interviewee {
         .badge {
-            background-color: rgba(var(--bs-success-rgb), var(--bs-bg-opacity)) !important;
+            background-color: rgba(var(--bs-success-rgb), 1) !important;
         }
     }
     /*.interviewer {
@@ -797,4 +834,52 @@ $code-color:     #0e0;
     .interviewee {
         color: $success;
     }*/
+}
+
+.interview-image {
+    max-width: 120px;
+    max-height: 120px;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+}
+
+.btn-twitter {
+    @include button-variant(
+        #000, #000,
+        $hover-background: lighten(#000, 20%),
+        $active-background: lighten(#000, 30%),
+        $hover-border: lighten(#000, 20%),
+        $active-border: lighten(#000, 30%)
+    );
+}
+
+
+.social-buttons {
+    gap: 0.5em;
+
+    .btn {
+        padding:0;
+        width:48px;
+        height:48px;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+
+        .bi {
+            font-size:2rem;
+        }
+    }
+}
+
+.article-title-with-permalink {
+    display: flex;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    .article-permalink {
+        margin-right: 0.5em;
+        align-content: center;
+    }
+    h1 {
+        margin-bottom: 0;
+    }
 }
