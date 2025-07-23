@@ -754,7 +754,7 @@ $code-color:     #0e0;
         .badge {
             &:empty {
                 display: block;
-                background-color: rgba(var(--bs-secondary-rgb), var(--bs-bg-opacity)) !important;
+                background-color: rgba(var(--bs-secondary-rgb), 1) !important;
             }
         }
         .p {
