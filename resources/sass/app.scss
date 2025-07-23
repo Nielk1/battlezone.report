@@ -363,9 +363,6 @@ $code-color:     #0e0;
 
 
 
-
-
-
     .sidebar2 {
         display: flex;
         position: relative;
@@ -377,6 +374,8 @@ $code-color:     #0e0;
 
         transition: width 0.1s;
         will-change: min-width, width;
+
+        background-color: var(--bs-body-bg);
     }
     .sidebar2-content {
         flex: 1;
@@ -881,5 +880,13 @@ $code-color:     #0e0;
     }
     h1 {
         margin-bottom: 0;
+    }
+}
+
+
+@include media-breakpoint-down(md) {
+    .sidebar2 {
+        position:fixed;
+        border-right: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color) !important;
     }
 }
