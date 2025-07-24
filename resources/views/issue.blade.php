@@ -77,6 +77,13 @@
             }
         });
 
+        // Special case: if at (or near) the bottom, force last section active
+        if (content.scrollTop + content.clientHeight >= content.scrollHeight - 2) {
+            if (sections.length > 0) {
+                currentId = sections[sections.length - 1].id;
+            }
+        }
+
         navLinks.forEach(link => {
             link.classList.toggle('spy', link.getAttribute('href') === window.location.pathname + '#' + currentId);
         });
