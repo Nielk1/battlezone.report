@@ -10,7 +10,7 @@
     }
 ?>
 
-@extends('layouts.app')
+@extends(request()->query('ajax') ? 'layouts.ajax' : 'layouts.app')
 
 @section('title', 'Battlezone Field Report')
 

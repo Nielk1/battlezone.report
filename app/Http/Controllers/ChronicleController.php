@@ -9,7 +9,7 @@ use App\Models\Article;
 
 class ChronicleController extends Controller
 {
-    public function index($type = null, $code = null, $chapter = null)
+    public function index(Request $request, $type = null, $code = null, $chapter = null)
     {
         $json = file_get_contents(resource_path('data/chronicles.json'));
 
@@ -36,7 +36,18 @@ class ChronicleController extends Controller
                 }
             }
 
-            return redirect()->route('chronicle', ['type' => $earliestEntry->type, 'code' => $earliestEntry->code], 302);
+            if ($request->query('ajax')) {
+                return response()->json([
+                    'redirect' => route('chronicle', [
+                        'type' => $earliestEntry->type,
+                        'code' => $earliestEntry->code
+                    ])
+                ]);
+            }
+            return redirect()->route('chronicle', [
+                'type' => $earliestEntry->type,
+                'code' => $earliestEntry->code
+            ], 302);
         }
 
         $issue = null;
@@ -67,7 +78,20 @@ class ChronicleController extends Controller
 
                 if (!$chapter) {
                     $chapter = $issue->articles[0]->code;
-                    return redirect()->route('chronicle', ['type' => $type, 'code' => $code, 'chapter' => $chapter], 302);
+                    if ($request->query('ajax')) {
+                        return response()->json([
+                            'redirect' => route('chronicle', [
+                                'type' => $type,
+                                'code' => $code,
+                                'chapter' => $chapter
+                            ])
+                        ]);
+                    }
+                    return redirect()->route('chronicle', [
+                        'type' => $type,
+                        'code' => $code,
+                        'chapter' => $chapter
+                    ], 302);
                 }
             }
 

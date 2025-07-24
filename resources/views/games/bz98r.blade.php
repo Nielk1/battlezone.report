@@ -1,8 +1,8 @@
 {{-- filepath: resources/views/hello.blade.php --}}
 @php($activeNav = 'games_bz98r')
-@extends('layouts.app')
+@extends(request()->query('ajax') ? 'layouts.ajax' : 'layouts.app')
 
-@section('title', 'Home')
+@section('title', 'Battlezone 98 Redux - Multiplayer Session List')
 
 @section('content')
     <style>

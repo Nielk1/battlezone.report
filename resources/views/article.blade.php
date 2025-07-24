@@ -1,6 +1,6 @@
 {{-- filepath: resources/views/hello.blade.php --}}
 
-@extends('layouts.app')
+@extends(request()->query('ajax') ? 'layouts.ajax' : 'layouts.app')
 
 {{-- @section('title', 'Issue') --}}
 @section('title', 'Battlezone Field Report - Article - ' . ($article->title ?? "No Title"))

@@ -1,6 +1,6 @@
 {{-- filepath: resources/views/hello.blade.php --}}
 @php($activeNav = 'home')
-@extends('layouts.app')
+@extends(request()->query('ajax') ? 'layouts.ajax' : 'layouts.app')
 
 @section('title', 'Home')
 
@@ -155,31 +155,5 @@
         </div>
     </div>
 </div>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Find all price-row elements
-    document.querySelectorAll('.price-row[id^="price-cluster-"]').forEach(function(row) {
-        const id = row.id; // e.g., "price-cluster-BZCC"
-        const code = id.replace('price-cluster-', '');
-
-        fetch(`/price-cluster/${encodeURIComponent(code)}`)
-            .then(response => response.text())
-            .then(html => {
-                // Create a temporary container to parse the HTML
-                const temp = document.createElement('div');
-                temp.innerHTML = html.trim();
-                const newRow = temp.querySelector('.price-row');
-                if (newRow) {
-                    row.replaceWith(newRow);
-                }
-            })
-            .catch(err => {
-                // Optionally handle errors (e.g., network issues)
-                console.error(`Failed to update price cluster for ${code}:`, err);
-            });
-    });
-});
-</script>
 
 @endsection

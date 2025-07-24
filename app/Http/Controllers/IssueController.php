@@ -9,7 +9,7 @@ use App\Models\Article;
 
 class IssueController extends Controller
 {
-    public function index($type = null, $code = null)
+    public function index(Request $request, $type = null, $code = null)
     {
         $json = file_get_contents(resource_path('data/issues.json'));
 
@@ -36,7 +36,18 @@ class IssueController extends Controller
                 }
             }
 
-            return redirect()->route('issue', ['type' => $latestEntry->type, 'code' => $latestEntry->code], 302);
+            if ($request->query('ajax')) {
+                return response()->json([
+                    'redirect' => route('issue', [
+                        'type' => $latestEntry->type,
+                        'code' => $latestEntry->code
+                    ])
+                ]);
+            }
+            return redirect()->route('issue', [
+                'type' => $latestEntry->type,
+                'code' => $latestEntry->code
+            ], 302);
         }
 
         $articles = [];

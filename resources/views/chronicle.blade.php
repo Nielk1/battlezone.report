@@ -6,6 +6,7 @@
 ?>
 
 @extends('layouts.channels')
+{{--@extends(request()->query('ajax') ? 'layouts.ajax' : 'layouts.channels')--}}
 
 @section('title', 'Battlezone Field Report - Chronicle - ' . ($issue->title ?? "No Volume") . ' - ' . ($article->title ?? "No Title"))
 

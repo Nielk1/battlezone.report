@@ -12,12 +12,12 @@
         <div class="sidebar-toggle" onclick="toggleSidebar()">☰</div>
         <div class="sidebar-scroll">
             <div class="sidebar-top" data-cluster-id="custom">
-                <a href="{{ route('home') }}" class="sidebar-icon-box{{ ($activeNav ?? '') === 'home' ? ' active' : '' }}"><div class="sidebar-icon">BZ</div></a>
+                <a data-nav="home" data-ajaxnav="true" href="{{ route('home') }}" class="sidebar-icon-box{{ ($activeNav ?? '') === 'home' ? ' active' : '' }}"><div class="sidebar-icon">BZ</div></a>
                 <!--<a href="{{ route('home') }}" class="sidebar-icon-box{{ request()->routeIs('home') ? ' active' : '' }}"><div class="sidebar-icon">BZ</div></a>-->
                 <hr class="border border-primary border-2">
-                <a href="{{ route('issue') }}" class="sidebar-icon-box{{ ($activeNav ?? '') === 'issue' ? ' active' : '' }}"><div class="sidebar-icon">ISU</div></a>
-                <a href="{{ route('chronicle') }}" class="sidebar-icon-box{{ ($activeNav ?? '') === 'chronicle' ? ' active' : '' }}"><div class="sidebar-icon">CRN</div></a>
-                <a href="{{ route('games_bz98r') }}" class="sidebar-icon-box{{ ($activeNav ?? '') === 'games_bz98r' ? ' active' : '' }}"><div class="sidebar-icon">98R</div></a>
+                <a data-nav="issue" data-ajaxnav="true" href="{{ route('issue') }}" class="sidebar-icon-box{{ ($activeNav ?? '') === 'issue' ? ' active' : '' }}"><div class="sidebar-icon">ISU</div></a>
+                <a data-nav="chronicle" data-ajaxnav="true" href="{{ route('chronicle') }}" class="sidebar-icon-box{{ ($activeNav ?? '') === 'chronicle' ? ' active' : '' }}"><div class="sidebar-icon">CRN</div></a>
+                <a data-nav="games_bz98r" href="{{ route('games_bz98r') }}" class="sidebar-icon-box{{ ($activeNav ?? '') === 'games_bz98r' ? ' active' : '' }}"><div class="sidebar-icon">98R</div></a>
                 <a href="{{ route('home') }}" class="sidebar-icon-box{{ ($activeNav ?? '') === 'cc' ? ' active' : '' }}"><div class="sidebar-icon">CC</div></a>
             </div>
             {{--
@@ -42,6 +42,7 @@
     </aside>
     <main class="main-content">
         @yield('content')
+        @include('partials.nav-data')
     </main>
     <script type="text/javascript">
         function setQueryParam(key, value) {

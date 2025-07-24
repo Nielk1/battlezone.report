@@ -6,6 +6,7 @@
 ?>
 
 @extends('layouts.channels')
+{{--@extends(request()->query('ajax') ? 'layouts.ajax' : 'layouts.channels')--}}
 
 @section('title', 'Battlezone Field Report - Issue - ' . ($issue->title ?? "No Title"))
 
@@ -62,37 +63,4 @@
         </div>
     </aside>
 </div>
-<script>
-    let lastId = '';
-    let content = document.getElementById('main-scrollable-content');
-    content.addEventListener('scroll', function() {
-        let sections = content.querySelectorAll('[data-spy="section"]');
-        let navLinks = document.querySelectorAll('.channel-item');
-        let scrollPos = content.scrollY || content.scrollTop;
-
-        let currentId = '';
-        sections.forEach(section => {
-            if (section.offsetTop <= scrollPos + 100) { // 100px offset for header
-                currentId = section.id;
-            }
-        });
-
-        // Special case: if at (or near) the bottom, force last section active
-        if (content.scrollTop + content.clientHeight >= content.scrollHeight - 2) {
-            if (sections.length > 0) {
-                currentId = sections[sections.length - 1].id;
-            }
-        }
-
-        navLinks.forEach(link => {
-            link.classList.toggle('spy', link.getAttribute('href') === window.location.pathname + '#' + currentId);
-        });
-
-        // Update URL hash without navigation
-        if (currentId && currentId !== lastId) {
-            history.replaceState(null, '', '#' + currentId);
-            lastId = currentId;
-        }
-    });
-</script>
 @endsection
