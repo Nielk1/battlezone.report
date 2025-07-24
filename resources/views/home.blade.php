@@ -111,127 +111,6 @@
 }
 </style>
 
-<?php
-    function preparePriceFragment($deal) {
-        $is_best = $deal
-                && isset($deal['price']['amountInt'], $deal['storeLow']['amountInt'])
-                && $deal['price']['amountInt'] <= $deal['storeLow']['amountInt'];
-        ?>
-
-        @if($deal['cut'] > 0)
-            <span class="text-nowrap flex-fill text-end">
-                {{-- On sale: show old price struck through, new price, and sale % --}}
-                <span class="text-body-tertiary text-decoration-line-through">
-                    ${{ number_format($deal['regular']['amount'], 2) }}
-                </span>
-                <span class="text-danger">
-                    ${{ number_format($deal['price']['amount'], 2) }}
-                </span>
-                @if($is_best)
-                    <span class="badge text-bg-primary" title="Best price at this store.">
-                        -{{ $deal['cut'] }}%
-                    </span>
-                @else
-                    <span class="badge text-bg-success">
-                        -{{ $deal['cut'] }}%
-                    </span>
-                @endif
-            </span>
-        @else
-            {{-- Not on sale: show regular price --}}
-            <span class="text-nowrap flex-fill text-end">
-                <span class="text-body-secondary">
-                    ${{ number_format($deal['price']['amount'], 2) }}
-                </span>
-            </span>
-        @endif
-
-        <?php
-    }
-
-    function preparePrice($deal, $name, $must_be_under = 999999) {
-        if (!isset($deal)) return false;
-        if (!isset($deal['price']['amount'])) return false;
-        if ($deal['price']['amount'] >= $must_be_under) return false;
-?>
-        {{-- {{$name}}: {{ $deal['price']['amount'] }}<br/> --}}
-
-        <a href="{{ $deal['url'] }}" target="_blank" rel="noopener noreferrer" role="button" class="btn btn-dark d-flex align-items-center sale-btn">
-            <span class="svg-icon">
-                {!! File::get(resource_path('svg/logo_steam.svg')) !!}
-            </span>
-            <span class="text-truncate" title="{{ $name ?? $deal['shop']['name'] }}">
-                {{ $name ?? $deal['shop']['name'] }}
-            </span>
-            <?php preparePriceFragment($deal) ?>
-        </a>
-<?php
-        return true;
-    }
-
-    function preparePrices($deal) {
-        if (!isset($deal)) return;
-        $price_gog = $price_steam = $deal['GOG']['price']['amount'] ?? null;
-        $price_steam = $price_steam = $deal['Steam']['price']['amount'] ?? null;
-        ?>
-            <div class="price-row">
-                @if (isset($deal['GOG']) || isset($deal['Steam']))
-                    <div class="d-flex flex-row flex-md-column flex-xl-row flex-row" role="group">
-                        @if (isset($deal['GOG']))
-                            <a href="{{ $deal['GOG']['url'] }}" target="_blank" rel="noopener noreferrer" role="button" class="btn btn-primary d-flex align-items-center sale-btn" style="
-                                --bs-btn-border-color: #292253;
-                                --bs-btn-bg: #292253;
-                                --bs-btn-hover-bg: #431f93;
-                                --bs-btn-hover-border-color: #431f93;
-                                --bs-btn-active-bg: #6e45ff;
-                                --bs-btn-active-border-color: #6e45ff;">
-                                <span class="svg-icon">
-                                    {!! File::get(resource_path('svg/logo_gog.svg')) !!}
-                                </span>
-                                <?php preparePriceFragment($deal['GOG']) ?>
-                            </a>
-                        @endif
-                        @if (isset($deal['Steam']))
-                            <a href="{{ $deal['Steam']['url'] }}" target="_blank" rel="noopener noreferrer" role="button" class="btn btn-dark d-flex align-items-center sale-btn" style="
-                                --bs-btn-border-color: #111111;
-                                --bs-btn-bg: #111111;">
-                                <span class="svg-icon">
-                                    {!! File::get(resource_path('svg/logo_steam.svg')) !!}
-                                </span>
-                                <?php preparePriceFragment($deal['Steam']) ?>
-                            </a>
-                        @endif
-                    </div>
-                @endif
-                <div class="d-flex flex-column" style="width: 100%;">
-                <?php
-                    $found = false;
-                    foreach ($deal as $key => $d) {
-                        foreach ($d['drm'] ?? [] as $drm) {
-                            if (($drm['name'] ?? null) == "Steam") {
-                                $found |= preparePrice($d, $key, $price_steam);
-                                break;
-                            }
-                        }
-                    }
-                    if (!$found) {
-                        ?>
-                        <div class="d-flex flex-column" style="width: 100%;">
-                            <span role="button" class="btn btn-dark disabled d-flex align-items-center sale-btn">
-                                <span class="text-truncate text-nowrap flex-fill text-center">
-                                    No cheaper Steam Key found
-                                </span>
-                            </span>
-                        </div>
-                        <?php
-                    }
-                ?>
-                </div>
-            </div>
-        <?php
-    }
-?>
-
 <div class="logo-container">
     <img src="/images/logo.png" alt="Logo" class="logo-img dark screen">
     <img src="/images/logo_print.png" alt="Logo" class="logo-img light print">
@@ -239,15 +118,15 @@
     <div class="row row-cols-1 row-cols-md-3 mt-4 logos-row">
         <div class="logos-container">
             <img src="/images/logo_bz98r_custom.png" alt="Logo" class="logo-img">
-            <?php preparePrices($prices['BZ98R']); ?>
+            @include('partials.price-cluster', ['code' => 'BZ98R', 'deal' => $prices['BZ98R']])
         </div>
         <div class="logos-container">
             <img src="/images/logo_tror_custom.png" alt="Logo" class="logo-img">
-            <?php preparePrices($prices['TROR']); ?>
+            @include('partials.price-cluster', ['code' => 'TROR', 'deal' => $prices['TROR']])
         </div>
         <div class="logos-container">
             <img src="/images/logo_bzcc_custom.png" alt="Logo" class="logo-img">
-            <?php preparePrices($prices['BZCC']); ?>
+            @include('partials.price-cluster', ['code' => 'BZCC', 'deal' => $prices['BZCC']])
         </div>
     </div>
 
@@ -258,7 +137,7 @@
                 <h1>+</h1>
                 <img src="/images/logo_tror_custom.png" alt="Logo" class="logo-img">
             </div>
-            <?php preparePrices($prices['BZ98R|TROR']); ?>
+            @include('partials.price-cluster', ['code' => 'BZ98R|TROR', 'deal' => $prices['BZ98R|TROR']])
         </div>
         <div class="logos-container">
             <div class="logo-img-pair">
@@ -266,16 +145,41 @@
                 <h1>+</h1>
                 <img src="/images/logo_bzcc_custom.png" alt="Logo" class="logo-img">
             </div>
-            <?php preparePrices($prices['BZ98R|BZCC']); ?>
+            @include('partials.price-cluster', ['code' => 'BZ98R|BZCC', 'deal' => $prices['BZ98R|BZCC']])
         </div>
         <div class="logos-container">
             <div class="logo-img-pair">
                 <img src="/images/logo_bzvr.png" alt="Logo" class="logo-img">
             </div>
-            <?php preparePrices($prices['BZVR']); ?>
+            @include('partials.price-cluster', ['code' => 'BZVR', 'deal' => $prices['BZVR']])
         </div>
     </div>
-
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Find all price-row elements
+    document.querySelectorAll('.price-row[id^="price-cluster-"]').forEach(function(row) {
+        const id = row.id; // e.g., "price-cluster-BZCC"
+        const code = id.replace('price-cluster-', '');
+
+        fetch(`/price-cluster/${encodeURIComponent(code)}`)
+            .then(response => response.text())
+            .then(html => {
+                // Create a temporary container to parse the HTML
+                const temp = document.createElement('div');
+                temp.innerHTML = html.trim();
+                const newRow = temp.querySelector('.price-row');
+                if (newRow) {
+                    row.replaceWith(newRow);
+                }
+            })
+            .catch(err => {
+                // Optionally handle errors (e.g., network issues)
+                console.error(`Failed to update price cluster for ${code}:`, err);
+            });
+    });
+});
+</script>
 
 @endsection

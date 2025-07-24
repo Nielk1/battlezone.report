@@ -13,30 +13,34 @@ class PageController extends Controller
 
     public function index()
     {
-        $pricedat = app(\App\Services\IsThereAnyDealService::class)->getV3PricesAndGroup();
+        $pricedat = app(\App\Services\IsThereAnyDealService::class)->getV3PricesAndGroup(true);
 
         $prices = [];
         foreach ($pricedat['sale'] as $code => $value) {
-            //$steam = false;
-            //$gog = false;
             foreach ($value['deals'] as $value) {
-                /*if ($value['shop']['id'] != 61) { // 61 is Steam
-                    $prices[$code][$value['shop']['name']] = self::preparePrice($value);
-                    //$steam = true;
-                    continue;
-                }
-                if ($value['shop']['id'] != 35) { // 35 is GOG
-                    $prices[$code][$value['shop']['name']] = self::preparePrice($value);
-                    //$gog = true;
-                    continue;
-                }*/
-                //if ($steam && $gog) break;
-
                 $prices[$code][$value['shop']['name']] = self::preparePrice($value);
             }
         }
 
-        return view('home', compact('pricedat', 'prices'));
+        return view('home', compact('prices'));
+    }
+
+    public function priceCluster($game)
+    {
+        $pricedat = app(\App\Services\IsThereAnyDealService::class)->getV3PricesAndGroup(false);
+
+        $deal = null;
+        foreach ($pricedat['sale'] as $code => $value) {
+            if ($code !== $game) continue;
+            $deal = [];
+            foreach ($value['deals'] as $value) {
+                $deal[$value['shop']['name']] = self::preparePrice($value);
+            }
+            break;
+        }
+        $code = $game;
+
+        return view('partials.price-cluster', compact('code', 'deal'));
     }
 
     public function test()

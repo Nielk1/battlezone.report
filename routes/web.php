@@ -10,6 +10,7 @@ use App\Http\Controllers\ImageController;
 use App\Http\Controllers\GamesApiController;
 
 Route::get('/', [PageController::class, 'index'])->name('home');
+Route::get('/price-cluster/{game}', [PageController::class, 'priceCluster']);
 Route::get('/test', [PageController::class, 'test']);
 
 Route::get('/issue/{type?}/{code?}', [IssueController::class, 'index'])->name('issue');
