@@ -335,7 +335,7 @@ $code-color:     #0e0;
     will-change: margin-left;
 }
 
-.sub-content {
+#sub-content {
     border-left: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color) !important;
 }
 
@@ -349,7 +349,7 @@ $code-color:     #0e0;
         //border-top-left-radius: 0 !important;
         border-left: none !important;
     }
-    .sub-content {
+    #sub-content {
         border-left: none !important;
     }
     .sidebar-toggle {
@@ -391,7 +391,7 @@ $code-color:     #0e0;
         display: flex;
         z-index: 0;
     }
-    .sub-content {
+    #sub-content {
         display: flex;
         flex: 1;
         overflow: auto;

@@ -1,6 +1,6 @@
 {{-- filepath: resources/views/partials/channel-list.blade.php --}}
 @if ($channel->url)
-    <a href="{{ $channel->url }}" class="channel-item{{ $channel->type == $type && $channel->code == $code && $channel->subcode == ($subcode ?? null) ? ' active' : '' }}">
+    <a data-ajaxnav="2" data-ajaxnav-target="#sub-content" href="{{ $channel->url }}" class="channel-item{{ $channel->type == $type && $channel->code == $code && $channel->subcode == ($subcode ?? null) ? ' active' : '' }}">
 @else
     <span class="channel-item{{ $channel->type == $type && $channel->code == $code && $channel->subcode == ($subcode ?? null) ? ' active' : '' }}">
 @endif

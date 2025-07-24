@@ -2,7 +2,7 @@ import './bootstrap';
 //import 'bootstrap';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
-let active_main_nav_code = null;
+var active_main_nav_code = null;
 function setMainNav(code) {
     const sidebar = document.querySelector('#sidebar');
     if (!sidebar) return;
@@ -12,16 +12,36 @@ function setMainNav(code) {
     active_main_nav_code = code;
 }
 
-let last_nav_url = null;
-let scroll_spy_hash_debounce = '';
-let scroll_spy_content = null;
+function navDepthChange(prevPath, currPath) {
+    if (prevPath == null) return 1;
+    const prev = prevPath.split('/').filter(Boolean);
+    const curr = currPath.split('/').filter(Boolean);
+    const len = Math.max(prev.length, curr.length);
+    for (let i = 0; i < len; i++) {
+        if (prev[i] !== curr[i]) {
+            return i + 1; // 1-based index for depth of change
+        }
+    }
+    return 0; // No change
+}
+
+var last_nav_url = null;
+var scroll_spy_hash_debounce = '';
+var scroll_spy_content = null;
 function initPage() {
     // initialization for the page
     // this function will get called on first load and any ajax nav so be sure to not duplicate event listeners or other work
 
     // might be worth doing a fresh-nav array for URL depths, since we might only want to auto-scroll if the length 1 change occured
-    let freshNav = last_nav_url?.pathname != window.location.pathname;
-    last_nav_url = window.location;
+    console.log('------------');
+    let freshNav = last_nav_url != window.location.pathname;
+    if (freshNav)
+        freshNav = navDepthChange(last_nav_url, window.location.pathname);
+    console.log("freshNav:", freshNav);
+    console.log(last_nav_url);
+    console.log(window.location.pathname);
+    console.log('------------');
+    last_nav_url = window.location.pathname;
 
     // page nav data
     {
@@ -57,8 +77,20 @@ function initPage() {
         });
     }
 
+    // correct active subnav item on any subitem load
+    if (freshNav > 0) {
+        console.log("freshNav");
+        // level 2 or higher
+        let navLinks = document.querySelectorAll('.channel-item');
+        navLinks.forEach(link => {
+            link.classList.toggle('active', link.getAttribute('href') === window.location.pathname
+                                         || link.getAttribute('href') === window.location.pathname + "#issue_mast"); // todo: do this better, maybe a data attribute
+        });
+    }
+
     // Scroll down to active subnav item on first load of this page
-    if (freshNav) {
+    if (freshNav == 1) {
+        // level 1 for sure
         const activeNav = document.querySelector('.sidebar2-content .channel-list .active');
         if (activeNav) {
             activeNav.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -67,41 +99,43 @@ function initPage() {
 
     // Scroll Spy Section
     {
+        function scrollHandler() {
+            let sections = scroll_spy_content.querySelectorAll('[data-spy="section"]');
+            let navLinks = document.querySelectorAll('.channel-item');
+            let scrollPos = scroll_spy_content.scrollY || scroll_spy_content.scrollTop;
+
+            let currentId = '';
+            sections.forEach(section => {
+                if (section.offsetTop <= scrollPos + 100) { // 100px offset for header
+                    currentId = section.id;
+                }
+            });
+
+            // Special case: if at (or near) the bottom, force last section active
+            if (scroll_spy_content.scrollTop + scroll_spy_content.clientHeight >= scroll_spy_content.scrollHeight - 2) {
+                if (sections.length > 0) {
+                    currentId = sections[sections.length - 1].id;
+                }
+            }
+
+            navLinks.forEach(link => {
+                link.classList.toggle('spy', link.getAttribute('href') === window.location.pathname + '#' + currentId);
+            });
+
+            // Update URL hash without navigation
+            if (currentId && currentId !== scroll_spy_hash_debounce) {
+                history.replaceState(null, '', '#' + currentId);
+                scroll_spy_hash_debounce = currentId;
+            }
+        }
+
         let old_scroll_spy_content = scroll_spy_content;
         scroll_spy_content = document.getElementById('main-scrollable-content');
         if (old_scroll_spy_content && old_scroll_spy_content !== scroll_spy_content) {
-            old_scroll_spy_content.removeEventListener('scroll', scroll_spy_content.scrollHandler);
+            old_scroll_spy_content.removeEventListener('scroll', scrollHandler);
         }
         if (scroll_spy_content) {
-            scroll_spy_content.addEventListener('scroll', function() {
-                let sections = scroll_spy_content.querySelectorAll('[data-spy="section"]');
-                let navLinks = document.querySelectorAll('.channel-item');
-                let scrollPos = scroll_spy_content.scrollY || scroll_spy_content.scrollTop;
-
-                let currentId = '';
-                sections.forEach(section => {
-                    if (section.offsetTop <= scrollPos + 100) { // 100px offset for header
-                        currentId = section.id;
-                    }
-                });
-
-                // Special case: if at (or near) the bottom, force last section active
-                if (scroll_spy_content.scrollTop + scroll_spy_content.clientHeight >= scroll_spy_content.scrollHeight - 2) {
-                    if (sections.length > 0) {
-                        currentId = sections[sections.length - 1].id;
-                    }
-                }
-
-                navLinks.forEach(link => {
-                    link.classList.toggle('spy', link.getAttribute('href') === window.location.pathname + '#' + currentId);
-                });
-
-                // Update URL hash without navigation
-                if (currentId && currentId !== scroll_spy_hash_debounce) {
-                    history.replaceState(null, '', '#' + currentId);
-                    scroll_spy_hash_debounce = currentId;
-                }
-            });
+            scroll_spy_content.addEventListener('scroll', scrollHandler);
         }
     }
 }
@@ -109,10 +143,10 @@ function initPage() {
 document.addEventListener('DOMContentLoaded', initPage);
 
 // After AJAX navigation:
-function ajaxNavigate(url, targetSelector) {
+function ajaxNavigate(url, targetSelector, depth = 1) {
     // Parse the URL and add ajax=1 to the query string
     const u = new URL(url, window.location.origin);
-    u.searchParams.set('ajax', '1');
+    u.searchParams.set('ajax', depth.toString());
 
     //fetch(u.toString(), { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
     fetch(u.toString())
@@ -125,7 +159,7 @@ function ajaxNavigate(url, targetSelector) {
         })
         .then(result => {
             if (result.json && result.json.redirect) {
-                ajaxNavigate(result.json.redirect, targetSelector);
+                ajaxNavigate(result.json.redirect, targetSelector, depth);
             } else if (result.text) {
                 document.querySelector(targetSelector).innerHTML = result.text;
                 // Push the URL **without** the ajax param for history
@@ -152,8 +186,16 @@ function setupAjaxNavLinks() {
             e.preventDefault();
             //endPage(); // so we can clean up any event handlers we created
             const url = link.getAttribute('href');
+            let level = link.getAttribute('data-ajaxnav');
+            if (level === 'true') {
+                level = 1;
+            } else if (level === 'false') {
+                level = 0;
+            } else {
+                level = parseInt(level, 10) || 1; // default to 1 if not a number
+            }
             const target = link.getAttribute('data-ajaxnav-target') || '.main-content'; // fallback selector
-            ajaxNavigate(url, target);
+            ajaxNavigate(url, target, level);
         }
     });
 }

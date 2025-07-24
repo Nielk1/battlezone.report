@@ -30,7 +30,7 @@
         </div>
         <div class="resizer" id="resizer"></div>
     </aside>
-    <div class="sub-content">
+    <div id="sub-content">
         @yield('sub-content')
     </div>
 </div>
