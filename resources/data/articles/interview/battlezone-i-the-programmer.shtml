@@ -1,9 +1,40 @@
+<hr>
+<div class="d-flex align-items-center mb-3">
+    <!--<div class="flex-shrink-0">
+        <img src="/images/articles/interview/ken_miller.jpg" alt="Ken Miller" class="rounded interview-image">
+    </div>-->
+    <div>
+        <h4 class="mb-1">Brad Pickering<br>
+            <small class="text-muted">Lead Code Developer for Battlezone (1998)</small>
+        </h4>
+        <div class="d-flex align-items-center social-buttons">
+            <!--<a href="https://twitter.com/???" target="_blank" class="btn btn-twitter" title="Twitter"><i class="bi bi-twitter-x"></i></a>-->
+        </div>
+    </div>
+</div>
+<hr>
 <div class="interview">
     <div class="interview-line">
         <span class="badge me-2"></span>
         <span>
             <span class="p">All legends start somewhere and the Battlezone series is no exception. Originally published in 1998, this action packed game has seen publication three times with the original release, the gold edition, and the Xplosive edition.</span>
             <span class="p">In this issue of Battlezone Magazine, we will be interviewing the lead code developer behind the Secret Cold War and a behind the scenes look at the game itself.</span>
+        </span>
+    </div>
+    <div class="interview-line">
+        <span class="badge me-2"></span>
+        <span>
+            <!-- Red box that also had Pandemic Studio logo -->
+            <span class="p">Brad Pickering <small class="text-danger">(at time of writing)</small> is a programmer and game developer at Pandemic Studios.</span>
+            <span class="p">
+                Other games by Pandemic are:
+                <ul style="margin-bottom:0;">
+                    <li>Destroy All Humans I & II</li>
+                    <li>Star Wars Battlefront I & II</li>
+                    <li>Full Spectrum Warrior</li>
+                    <li>Mercenaries</li>
+                </ul>
+            </span>
         </span>
     </div>
     <div class="interview-line interviewer">
@@ -205,13 +236,3 @@
         </span>
     </div>
 </div>
-
-<!-- Red box that also had Pandemic Studio logo -->
-<p>Brad Pickering is a programmer and game developer at Pandemic Studios.</p>
-<p>Other games by Pandemic are:</p>
-<ul>
-    <li>Destroy All Humans I & II</li>
-    <li>Star Wars Battlefront I & II</li>
-    <li>Full Spectrum Warrior</li>
-    <li>Mercenaries</li>
-</ul>

@@ -3,6 +3,12 @@
     "image":"issues/2007-05-back.png",
     "date":"2007-05",
     "articles":[
-        {"type":"interview","code":"battlezone-i-the-programmer"}
+        {"type":"stub","code":"bzmag"},
+        {"type":"interview","code":"battlezone-i-the-programmer"},
+        {"type":"news","code":"2007-05-mods"},
+        {"type":"story","code":"hidden-enemy"},
+        {"type":"story","code":"glory-of-the-revolution"},
+        {"type":"news","code":"2007-05-letter-from-the-editor"},
+        {"type":"gamelog", "code":"the-strangest-battle"}
     ]
 }

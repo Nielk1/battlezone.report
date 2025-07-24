@@ -11,7 +11,6 @@
             {"icon": "logo_tools", "type": "modding", "code": "wug-aip-scripting-part-1", "name": "AIP Scripting Part I", "url": "/issue/bzmag/2006-09#modding/wug-aip-scripting-part-1", "buttons": [{"icon": "logo_target", "name": "Permalink", "attr": {"onclick": "window.location.href='/article/modding/wug-aip-scripting-part-1'"}}]},
             {"icon": "logo_article", "type": "news", "code": "2006-09-mods", "name": "Mods", "url": "/issue/bzmag/2006-09#news/2006-09-mods", "buttons": [{"icon": "logo_target", "name": "Permalink", "attr": {"onclick": "window.location.href='/article/news/2006-09-mods'"}}]},
             {"icon": "logo_book", "type": "story", "code": "schrodingers-rat", "name": "Schrodinger’s Rat", "url": "/issue/bzmag/2006-09#story/schrodingers-rat", "buttons": [{"icon": "logo_target", "name": "Permalink", "attr": {"onclick": "window.location.href='/article/story/schrodingers-rat'"}}]},
-            {"icon": "logo_article", "type": "news", "code": "2006-09-ship-intelligence", "name": "Ship Intelligence", "url": "/issue/bzmag/2006-09#news/2006-09-ship-intelligence", "buttons": [{"icon": "logo_target", "name": "Permalink", "attr": {"onclick": "window.location.href='/article/news/2006-09-ship-intelligence'"}}]},
             {"icon": "logo_article", "type": "news", "code": "2006-09-letter-from-the-editor", "name": "Letter from the Editor", "url": "/issue/bzmag/2006-09#news/2006-09-letter-from-the-editor", "buttons": [{"icon": "logo_target", "name": "Permalink", "attr": {"onclick": "window.location.href='/article/news/2006-09-letter-from-the-editor'"}}]}
         ]
     },
@@ -23,7 +22,12 @@
         "month": "05",
         "url": "/issue/bzmag/2007-05#issue_mast",
         "children": [
-            {"icon": "logo_interview", "type": "interview", "code": "battlezone-i-the-programmer", "name": "Battlezone I: The Programmer", "url": "/issue/bzmag/2007-05#interview/battlezone-i-the-programmer", "buttons": [{"icon": "logo_target", "name": "Permalink", "attr": {"onclick": "window.location.href='/article/interview/battlezone-i-the-programmer'"}}]}
+            {"icon": "logo_interview", "type": "interview", "code": "battlezone-i-the-programmer", "name": "Battlezone I: The Programmer", "url": "/issue/bzmag/2007-05#interview/battlezone-i-the-programmer", "buttons": [{"icon": "logo_target", "name": "Permalink", "attr": {"onclick": "window.location.href='/article/interview/battlezone-i-the-programmer'"}}]},
+            {"icon": "logo_article", "type": "news", "code": "2007-05-mods", "name": "Mods", "url": "/issue/bzmag/2007-05#news/2007-05-mods", "buttons": [{"icon": "logo_target", "name": "Permalink", "attr": {"onclick": "window.location.href='/article/news/2007-05-mods'"}}]},
+            {"icon": "logo_book", "type": "story", "code": "hidden-enemy", "name": "Hidden Enemy", "url": "/issue/bzmag/2007-05#story/hidden-enemy", "buttons": [{"icon": "logo_target", "name": "Permalink", "attr": {"onclick": "window.location.href='/article/story/hidden-enemy'"}}]},
+            {"icon": "logo_book", "type": "story", "code": "glory-of-the-revolution", "name": "Glory of the Revolution", "url": "/issue/bzmag/2007-05#story/glory-of-the-revolution", "buttons": [{"icon": "logo_target", "name": "Permalink", "attr": {"onclick": "window.location.href='/article/story/glory-of-the-revolution'"}}]},
+            {"icon": "logo_article", "type": "news", "code": "2007-05-letter-from-the-editor", "name": "Letter from the Editor", "url": "/issue/bzmag/2007-05#news/2007-05-letter-from-the-editor", "buttons": [{"icon": "logo_target", "name": "Permalink", "attr": {"onclick": "window.location.href='/article/news/2007-05-letter-from-the-editor'"}}]},
+            {"icon": "logo_clipboard", "type": "gamelog", "code": "the-strangest-battle", "name": "The Strangest Battle", "url": "/issue/bzmag/2007-05#gamelog/the-strangest-battle", "buttons": [{"icon": "logo_target", "name": "Permalink", "attr": {"onclick": "window.location.href='/article/gamelog/the-strangest-battle'"}}]}
         ]
     },
     {

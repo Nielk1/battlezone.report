@@ -821,12 +821,29 @@ $code-color:     #0e0;
         .badge {
             background-color: rgba(var(--bs-primary-rgb), 1) !important;
         }
+        //.p {
+        //    //color: var(--bs-body-color);
+        //    //color: rgba(var(--bs-primary-rgb), 1) !important;
+        //    //color: color-mix(in srgb, var(--bs-primary), var(--bs-body-color));
+        //    color: mix($primary, $body-color, 25%);
+        //}
     }
     &.interviewee {
         .badge {
             background-color: rgba(var(--bs-success-rgb), 1) !important;
         }
+        //.p {
+        //    //color: var(--bs-body-color);
+        //    //color: rgba(var(--bs-primary-rgb), 1) !important;
+        //    //color: color-mix(in srgb, var(--bs-success), var(--bs-body-color));
+        //    color: mix($success, $body-color, 25%);
+        //}
     }
+    //&.note {
+    //    .badge {
+    //        background-color: rgba(var(--bs-info-rgb), 1) !important;
+    //    }
+    //}
     /*.interviewer {
         color: $primary;
     }
@@ -888,5 +905,14 @@ $code-color:     #0e0;
     .sidebar2 {
         position:fixed;
         border-right: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color) !important;
+    }
+}
+
+.alert {
+    .alert-icon {
+        margin-right: 0.5rem !important;
+        font-size: 2em;
+        margin-top: -0.5em;
+        margin-bottom: -0.5em;
     }
 }
