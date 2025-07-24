@@ -5,10 +5,11 @@
     </div>-->
     <div>
         <h4 class="mb-1">Brad Pickering<br>
-            <small class="text-muted">Lead Code Developer for Battlezone (1998)</small>
+            <small class="text-muted">Lead Programmer on Battlezone (1998)</small>
         </h4>
         <div class="d-flex align-items-center social-buttons">
             <!--<a href="https://twitter.com/???" target="_blank" class="btn btn-twitter" title="Twitter"><i class="bi bi-twitter-x"></i></a>-->
+            <a href="https://www.mobygames.com/person/2297/brad-pickering/" target="_blank" class="btn btn-w2 btn-mobygames" title="MobyGames"><img src="/images/icons/brand_mobygames.svg" alt="MobyGames"></a>
         </div>
     </div>
 </div>

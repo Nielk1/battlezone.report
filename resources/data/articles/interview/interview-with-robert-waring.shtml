@@ -9,6 +9,7 @@
         </h4>
         <div class="d-flex align-items-center social-buttons">
             <a href="https://twitter.com/Robert_Waring" target="_blank" class="btn btn-twitter" title="Twitter"><i class="bi bi-twitter-x"></i></a>
+            <a href="https://www.mobygames.com/person/79532/robert-e-waring/" target="_blank" class="btn btn-w2 btn-mobygames" title="MobyGames"><img src="/images/icons/brand_mobygames.svg" alt="MobyGames"></a>
         </div>
     </div>
 </div>

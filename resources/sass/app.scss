@@ -863,26 +863,69 @@ $code-color:     #0e0;
     @include button-variant(
         #000, #000,
         $hover-background: lighten(#000, 20%),
-        $active-background: lighten(#000, 30%),
         $hover-border: lighten(#000, 20%),
+        $active-background: lighten(#000, 30%),
         $active-border: lighten(#000, 30%)
     );
 }
 
+.btn-mobygames {
+    @include button-variant(#003366, #003366);
+}
+
+.btn-steam {
+    @include button-variant(
+        #111, #111,
+        $hover-background: lighten(#111, 10%),
+        $hover-border: lighten(#111, 10%),
+        $active-background: lighten(#111, 20%),
+        $active-border: lighten(#111, 20%)
+    );
+}
+
+.btn-gog {
+    @include button-variant(
+        #292253, #292253,
+        $hover-background: #431f93,
+        $hover-border: #431f93,
+        $active-background: #6e45ff,
+        $active-border: #6e45ff
+    );
+}
 
 .social-buttons {
-    gap: 0.5em;
+    --social-button-gap: 0.5em;
+    --social-button-size: 48px;
+    gap: var(--social-button-gap);
 
     .btn {
-        padding:0;
-        width:48px;
-        height:48px;
-        display:flex;
-        align-items:center;
-        justify-content:center;
+        padding: 0;
+        width: var(--social-button-size);
+        height: var(--social-button-size);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        @mixin btn-width($slots: 1) {
+            width: calc(var(--social-button-size) * #{$slots} + var(--social-button-gap) * #{$slots - 1});
+        }
+        &.btn-w2 {
+            @include btn-width(2);
+        }
+        &.btn-w3 {
+            @include btn-width(3);
+        }
 
         .bi {
             font-size:2rem;
+        }
+
+        img {
+            display: block;
+            max-width: 70%;
+            max-height: 70%;
+            margin: auto;
+            aspect-ratio: auto;
         }
     }
 }
