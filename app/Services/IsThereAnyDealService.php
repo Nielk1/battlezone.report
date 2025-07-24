@@ -77,29 +77,36 @@ class IsThereAnyDealService
      * @param array $gamePlains Array of game plain IDs (e.g. ['doom', 'halflife'])
      * @return array|null
      */
-    public function getCurrentSales(array $gamePlains)
-    {
-        $response = Http::get($this->endpoint . 'game/prices/', [
-            'key' => $this->apiKey,
-            'plains' => implode(',', $gamePlains),
-        ]);
+    //public function getCurrentSales(array $gamePlains)
+    //{
+    //    $response = Http::get($this->endpoint . 'game/prices/', [
+    //        'key' => $this->apiKey,
+    //        'plains' => implode(',', $gamePlains),
+    //    ]);
+    //
+    //    if ($response->successful()) {
+    //        return $response->json()['data'] ?? null;
+    //    }
+    //
+    //    return null;
+    //}
 
-        if ($response->successful()) {
-            return $response->json()['data'] ?? null;
-        }
-
-        return null;
-    }
-
-    public function getV3PricesAndGroup()
+    public function getV3PricesAndGroup($acceptOlderData = true)
     {
         $guids = $this->getAllGuidsForApi();
         $cacheKey = 'itad_v3prices_' . md5(json_encode($guids));
+        $cacheTimestampKey = $cacheKey . '_timestamp';
+
+        $maxAge = $acceptOlderData ? 5 * 60 * 60 : 5 * 60; // 5 hours or 5 minutes, in seconds
 
         // Try to get from cache first
         $cached = Cache::get($cacheKey);
-        if ($cached !== null) {
-            return $cached;
+        $cachedTimestamp = Cache::get($cacheTimestampKey);
+
+        if ($cached !== null && $cachedTimestamp !== null) {
+            if ((time() - $cachedTimestamp) <= $maxAge) {
+                return $cached;
+            }
         }
 
         // Use a lock to prevent stampede
@@ -109,22 +116,33 @@ class IsThereAnyDealService
             if ($lock->get()) {
                 // Double-check cache after acquiring lock
                 $cached = Cache::get($cacheKey);
-                if ($cached !== null) {
-                    return $cached;
+                $cachedTimestamp = Cache::get($cacheTimestampKey);
+                if ($cached !== null && $cachedTimestamp !== null) {
+                    if ((time() - $cachedTimestamp) <= $maxAge) {
+                        return $cached;
+                    }
                 }
 
                 $response = Http::post($this->endpoint . 'games/prices/v3?key=' . urlencode($this->apiKey), $guids);
 
                 if ($response->successful()) {
                     $results = $this->groupResultsByLogicalGame($response->json());
-                    Cache::put($cacheKey, $results, 600);
+                    Cache::put($cacheKey, $results, 5 * 60 * 60); // 5 hours
+                    Cache::put($cacheTimestampKey, time(), 5 * 60 * 60); // 5 hours
                     return $results;
                 }
 
                 return null;
             } else {
-                // Wait for the lock to be released and return the cached value
-                return Cache::get($cacheKey);
+                // Wait for the lock to be released and return the cached value if it's within maxAge
+                $cached = Cache::get($cacheKey);
+                $cachedTimestamp = Cache::get($cacheTimestampKey);
+                if ($cached !== null && $cachedTimestamp !== null) {
+                    if ((time() - $cachedTimestamp) <= $maxAge) {
+                        return $cached;
+                    }
+                }
+                return null;
             }
         } finally {
             optional($lock)->release();
