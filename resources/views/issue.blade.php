@@ -7,7 +7,7 @@
 
 @extends('layouts.channels')
 
-@section('title', 'Issue')
+@section('title', 'Battlezone Field Report - Issue - ' . ($issue->title ?? "No Title"))
 
 @section('sub-content')
 <div class="page-container">

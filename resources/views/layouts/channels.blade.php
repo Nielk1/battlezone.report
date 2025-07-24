@@ -12,7 +12,7 @@
 
 @extends('layouts.app')
 
-@section('title', 'Issue')
+@section('title', 'Battlezone Field Report')
 
 @section('content')
 <div class="page-container">
