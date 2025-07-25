@@ -228,10 +228,11 @@ function initPage() {
     // Size Dragger
     {
         const sidebar = document.getElementById('sidebar2');
-
-        // Restore width
-        const savedWidth = getCookie('sidebar2_width');
-        if (savedWidth) sidebar.style.width = savedWidth + 'px';
+        if (sidebar) {
+            // Restore width
+            const savedWidth = getCookie('sidebar2_width');
+            if (savedWidth) sidebar.style.width = savedWidth + 'px';
+        }
     }
 
     // attach the resizer (and remove any existing event handlers just in case)

@@ -8,12 +8,14 @@ class ChannelButton extends Model
 {
     public string $icon;
     public string $name;
+    public ?string $href;
     public array $attr;
 
-    public function __construct(string $icon, string $name, array $attr)
+    public function __construct(string $icon, string $name, ?string $href, array $attr)
     {
         $this->icon = $icon;
         $this->name = $name;
+        $this->href = $href;
         $this->attr = $attr;
     }
 
@@ -25,6 +27,7 @@ class ChannelButton extends Model
         return new self(
             $data['icon'] ?? '',
             $data['name'] ?? '',
+            $data['href'] ?? null,
             $data['attr'] ?? []
         );
     }

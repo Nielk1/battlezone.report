@@ -27,7 +27,7 @@
                 <?php foreach($articles as $article) { ?>
                     <?php if($article['article']->hidenav) continue; ?>
                     <div class="article-title-with-permalink">
-                        <a href="/article/{{ $article['type'] }}/{{ $article['code']; }}" class="article-permalink btn btn-primary" aria-label="Permalink">
+                        <a href="/article/{{ $article['type'] }}/{{ $article['code']; }}" data-ajaxnav="1" class="article-permalink btn btn-primary" aria-label="Permalink" title="Permalink">
                             <span class="svg-icon">{!! File::get(resource_path('svg/logo_target.svg')) !!}</span>
                         </a>
                         <div>

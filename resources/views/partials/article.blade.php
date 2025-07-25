@@ -3,7 +3,7 @@
     @if(!$article->hidepermlink || $article->title)
     <div class="article-title-with-permalink">
         @if(!$article->hidepermlink)
-        <a href="/article/{{ $type }}/{{ $code }}" class="article-permalink btn btn-primary" aria-label="Permalink">
+        <a href="/article/{{ $type }}/{{ $code }}" data-ajaxnav="1" class="article-permalink btn btn-primary" aria-label="Permalink" title="Permalink">
             <span class="svg-icon">{!! File::get(resource_path('svg/logo_target.svg')) !!}</span>
         </a>
         @endif

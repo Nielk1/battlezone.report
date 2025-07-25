@@ -17,7 +17,7 @@
     @if (!empty($channel->buttons))
         <span class="channel-actions">
             @foreach ($channel->buttons as $button)
-                <a href="#"class="channel-action" title="{{ $button->name }}"
+                <a href="{{ $button->href ?? '#' }}" class="channel-action" title="{{ $button->name }}"
                     @foreach($button->attr ?? [] as $attrName => $attrValue)
                         {{ $attrName }}="{{ $attrValue }}"
                     @endforeach
