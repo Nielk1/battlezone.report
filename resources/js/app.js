@@ -33,14 +33,9 @@ function initPage() {
     // this function will get called on first load and any ajax nav so be sure to not duplicate event listeners or other work
 
     // might be worth doing a fresh-nav array for URL depths, since we might only want to auto-scroll if the length 1 change occured
-    console.log('------------');
     let freshNav = last_nav_url != window.location.pathname;
     if (freshNav)
         freshNav = navDepthChange(last_nav_url, window.location.pathname);
-    console.log("freshNav:", freshNav);
-    console.log(last_nav_url);
-    console.log(window.location.pathname);
-    console.log('------------');
     last_nav_url = window.location.pathname;
 
     // page nav data
@@ -79,7 +74,6 @@ function initPage() {
 
     // correct active subnav item on any subitem load
     if (freshNav > 0) {
-        console.log("freshNav");
         // level 2 or higher
         let navLinks = document.querySelectorAll('.channel-item');
         navLinks.forEach(link => {
@@ -162,20 +156,45 @@ function ajaxNavigate(url, targetSelector, depth = 1) {
                 ajaxNavigate(result.json.redirect, targetSelector, depth);
             } else if (result.text) {
                 document.querySelector(targetSelector).innerHTML = result.text;
+                if (u.hash) {
+                    // Remove the '#' and find the element
+                    const el = document.getElementById(u.hash.slice(1));
+                    if (el) {
+                        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                }
                 // Push the URL **without** the ajax param for history
                 const cleanUrl = u;
                 cleanUrl.searchParams.delete('ajax');
-                window.history.pushState({}, '', cleanUrl.pathname + cleanUrl.search);
+                window.history.pushState({}, '', cleanUrl.pathname + cleanUrl.search + cleanUrl.hash);
                 initPage();
             }
         });
 }
 
+var last_nav_url = window.location.toString(); // Initialize with the current path
 // let's just make history navigation always do full page loads
 window.addEventListener('popstate', function(e) {
     // Reload the content for the current URL
     //ajaxNavigate(window.location.pathname + window.location.search, '.main-content');
-    window.location = window.location.href; // This will reload the page
+
+    const oldUrl = new URL(last_nav_url, window.location.origin);
+    if (oldUrl.pathname == window.location.pathname && oldUrl.search == window.location.search)
+    {
+        // URLs are the same aside from maybe the hash
+        if (oldUrl.hash) {
+            // we have a hash so scroll
+            // Remove the '#' and find the element
+            const el = document.getElementById(oldUrl.hash.slice(1));
+            if (el) {
+                el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+    }else{
+        window.location = window.location.toString(); // Reload the page with the current URL
+    }
+
+    last_nav_url = window.location.toString();
 });
 
 function setupAjaxNavLinks() {
@@ -183,19 +202,32 @@ function setupAjaxNavLinks() {
         // Find the closest ancestor with data-ajaxnav (handles clicks on child elements)
         const link = e.target.closest('a[data-ajaxnav]');
         if (link) {
-            e.preventDefault();
-            //endPage(); // so we can clean up any event handlers we created
             const url = link.getAttribute('href');
-            let level = link.getAttribute('data-ajaxnav');
-            if (level === 'true') {
-                level = 1;
-            } else if (level === 'false') {
-                level = 0;
+            const urlObj = new URL(url, window.location.origin);
+            if (urlObj.pathname !== window.location.pathname && urlObj.search == window.location.search)
+            {
+                e.preventDefault();
+                let level = link.getAttribute('data-ajaxnav');
+                if (level === 'true') {
+                    level = 1;
+                } else if (level === 'false') {
+                    level = 0;
+                } else {
+                    level = parseInt(level, 10) || 1; // default to 1 if not a number
+                }
+                const target = link.getAttribute('data-ajaxnav-target') || '.main-content'; // fallback selector
+                ajaxNavigate(url, target, level);
             } else {
-                level = parseInt(level, 10) || 1; // default to 1 if not a number
+                if (urlObj.hash) {
+                    e.preventDefault();
+                    // Remove the '#' and find the element
+                    const el = document.getElementById(urlObj.hash.slice(1));
+                    if (el) {
+                        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                    window.history.pushState({}, '', urlObj.pathname + urlObj.search + urlObj.hash);
+                }
             }
-            const target = link.getAttribute('data-ajaxnav-target') || '.main-content'; // fallback selector
-            ajaxNavigate(url, target, level);
         }
     });
 }
