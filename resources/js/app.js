@@ -242,13 +242,13 @@ function initPage() {
 document.addEventListener('DOMContentLoaded', initPage);
 
 // After AJAX navigation:
-function ajaxNavigate(url, targetSelector, depth = 1,) {
+function ajaxNavigate(url, targetSelector, depth = 1, historyNavigation = false) {
     // Parse the URL and add ajax=1 to the query string
     const u = new URL(url, window.location.origin);
 
     // if the path is the same, abort the load attempt.
     // note that the caller, if the top level handler, currently filters these out and triggers normal event handling
-    if (u.pathname == window.location.pathname && u.search == window.location.search) {
+    if (!historyNavigation && u.pathname == window.location.pathname && u.search == window.location.search) {
         // abort load
         document.querySelector(targetSelector).classList.remove('loading');
         //console.warn('Aborting AJAX navigation: URL is the same as current.');
@@ -284,7 +284,8 @@ function ajaxNavigate(url, targetSelector, depth = 1,) {
                 // Push the URL **without** the ajax param for history
                 const cleanUrl = u;
                 cleanUrl.searchParams.delete('ajax');
-                window.history.pushState({}, '', cleanUrl.pathname + cleanUrl.search + cleanUrl.hash);
+                if (!historyNavigation) // noHistory is used when navigating existing history
+                    window.history.pushState({}, '', cleanUrl.pathname + cleanUrl.search + cleanUrl.hash);
                 initPage();
                 //document.querySelector(targetSelector).style.opacity = 1;
                 document.querySelector(targetSelector).classList.remove('loading');
@@ -293,7 +294,6 @@ function ajaxNavigate(url, targetSelector, depth = 1,) {
 }
 
 var last_nav_url = window.location.toString(); // Initialize with the current path
-// let's just make history navigation always do full page loads
 window.addEventListener('popstate', function(e) {
     // Reload the content for the current URL
     //ajaxNavigate(window.location.pathname + window.location.search, '#main-content');
@@ -302,16 +302,32 @@ window.addEventListener('popstate', function(e) {
     if (oldUrl.pathname == window.location.pathname && oldUrl.search == window.location.search)
     {
         // URLs are the same aside from maybe the hash
-        if (oldUrl.hash) {
+        if (window.location.hash) {
             // we have a hash so scroll
             // Remove the '#' and find the element
-            const el = document.getElementById(oldUrl.hash.slice(1));
+            const el = document.getElementById(window.location.hash.slice(1));
             if (el) {
                 el.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
         }
-    }else{
-        window.location = window.location.toString(); // Reload the page with the current URL
+    } else {
+        //window.location = window.location.toString(); // Reload the page with the current URL
+        //ajaxNavigate(window.location.pathname + window.location.search + window.location.hash, '#main-content', 1, true);
+
+        // Determine ajax depth and target
+        const oldSegments = oldUrl.pathname.split('/').filter(Boolean);
+        const newSegments = window.location.pathname.split('/').filter(Boolean);
+
+        let depth = 1;
+        let target = '#main-content';
+
+        // If both start with 'issue' and have at least 3 segments, use depth 2 and #sub-content
+        if (oldSegments[0] === newSegments[0]) {
+            depth = 2;
+            target = '#sub-content';
+        }
+
+        ajaxNavigate(window.location.pathname + window.location.search + window.location.hash, target, depth, true);
     }
 
     last_nav_url = window.location.toString();
