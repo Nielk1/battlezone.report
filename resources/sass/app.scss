@@ -539,6 +539,9 @@ $code-color:     #0e0;
     gap: 4px;
     display: flex;
     flex-direction: column;
+    .d-flex {
+        gap: 4px;
+    }
 }
 
 .sale-btn {

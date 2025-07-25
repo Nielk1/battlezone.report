@@ -1,7 +1,7 @@
 {{-- price-cluster.blade.php --}}
 <div class="price-row" id="price-cluster-{{ $code ?? 'UNK' }}">
     @if (isset($deal['GOG']) || isset($deal['Steam']))
-        <div class="d-flex flex-row flex-md-column flex-xl-row flex-row" role="group">
+        <div class="d-flex flex-row flex-md-column flex-xl-row" role="group">
             @if (isset($deal['GOG']))
                 <a href="{{ $deal['GOG']['url'] }}" target="_blank" rel="noopener noreferrer" role="button" class="btn btn-gog d-flex align-items-center sale-btn">
                     <span class="svg-icon">
