@@ -951,7 +951,7 @@ $code-color:     #0e0;
 
 #main-content,
 #sub-content {
-    position: relative; // <-- Add this line
+    position: relative;
     &>* {
         transition: opacity 0.3s;
         will-change: opacity;
