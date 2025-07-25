@@ -25,6 +25,22 @@ function navDepthChange(prevPath, currPath) {
     return 0; // No change
 }
 
+function getScrollableParent(element) {
+    let parent = element.parentElement;
+    while (parent) {
+        const style = getComputedStyle(parent);
+        const overflowY = style.overflowY;
+        const overflowX = style.overflowX;
+        const isScrollableY = (overflowY === 'auto' || overflowY === 'scroll') && parent.scrollHeight > parent.clientHeight;
+        const isScrollableX = (overflowX === 'auto' || overflowX === 'scroll') && parent.scrollWidth > parent.clientWidth;
+        if (isScrollableY || isScrollableX) {
+            return parent;
+        }
+        parent = parent.parentElement;
+    }
+    return null; // No scrollable parent found
+}
+
 var last_nav_url = null;
 var scroll_spy_hash_debounce = '';
 var scroll_spy_content = null;
@@ -87,7 +103,29 @@ function initPage() {
         // level 1 for sure
         const activeNav = document.querySelector('.sidebar2-content .channel-list .active');
         if (activeNav) {
-            activeNav.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            let parentContainer = getScrollableParent(activeNav);
+            if (!parentContainer) {
+                // element is in the main document, check if it needs scrolling
+                const rect = activeNav.getBoundingClientRect();
+                if (
+                    rect.top < 0 ||
+                    rect.left < 0 ||
+                    rect.bottom > (window.innerHeight || document.documentElement.clientHeight) ||
+                    rect.right > (window.innerWidth || document.documentElement.clientWidth)
+                ) {
+                    activeNav.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            } else {
+                // element is in a scrollable container, check if it needs scrolling
+                const elRect = activeNav.getBoundingClientRect();
+                const containerRect = parentContainer.getBoundingClientRect();
+                if (
+                    elRect.top < containerRect.top ||
+                    elRect.bottom > containerRect.bottom
+                ) {
+                    activeNav.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }
         }
     }
 
@@ -146,6 +184,7 @@ function ajaxNavigate(url, targetSelector, depth = 1,) {
     if (u.pathname == window.location.pathname && u.search == window.location.search) {
         // abort load
         document.querySelector(targetSelector).classList.remove('loading');
+        //console.warn('Aborting AJAX navigation: URL is the same as current.');
         return;
     }
 
@@ -218,8 +257,21 @@ function setupAjaxNavLinks() {
         if (link) {
             const url = link.getAttribute('href');
             const urlObj = new URL(url, window.location.origin);
-            if (urlObj.pathname !== window.location.pathname && urlObj.search == window.location.search)
+            let localNav = false;
+            if (urlObj.pathname == window.location.pathname && urlObj.search == window.location.search && urlObj.hash)
             {
+                // our URL is the same except for the hash, so this is a local nav
+                localNav = true;
+            }
+            if (localNav) {
+                e.preventDefault();
+                // Remove the '#' and find the element
+                const el = document.getElementById(urlObj.hash.slice(1));
+                if (el) {
+                    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+                window.history.pushState({}, '', urlObj.pathname + urlObj.search + urlObj.hash);
+            } else {
                 e.preventDefault();
                 let level = link.getAttribute('data-ajaxnav');
                 if (level === 'true') {
@@ -231,16 +283,6 @@ function setupAjaxNavLinks() {
                 }
                 const target = link.getAttribute('data-ajaxnav-target') || '#main-content'; // fallback selector
                 ajaxNavigate(url, target, level);
-            } else {
-                if (urlObj.hash) {
-                    e.preventDefault();
-                    // Remove the '#' and find the element
-                    const el = document.getElementById(urlObj.hash.slice(1));
-                    if (el) {
-                        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }
-                    window.history.pushState({}, '', urlObj.pathname + urlObj.search + urlObj.hash);
-                }
             }
         }
     });
