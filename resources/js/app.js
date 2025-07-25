@@ -1,6 +1,7 @@
 import './bootstrap';
 //import 'bootstrap';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import { LoadGameListBZ98R } from '/resources/js/gamelist_bz98r.js';
 
 
 var active_main_nav_code = null;
@@ -237,6 +238,12 @@ function initPage() {
 
     // attach the resizer (and remove any existing event handlers just in case)
     initSidebarResizer();
+
+    if (window.location.pathname.startsWith('/games/bz98r')) {
+        if (LoadGameListBZ98R) {
+            LoadGameListBZ98R();
+        }
+    }
 }
 
 document.addEventListener('DOMContentLoaded', initPage);

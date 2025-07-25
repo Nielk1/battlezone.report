@@ -274,7 +274,7 @@ $code-color:     #0e0;
         bottom: 8px;
     }
 }
-.sidebar-toggle {
+#sidebar-toggle {
     position: absolute;
     //top: 8px;
     top: 0;
@@ -352,7 +352,7 @@ $code-color:     #0e0;
     #sub-content {
         border-left: none !important;
     }
-    .sidebar-toggle {
+    #sidebar-toggle {
         opacity: 0.25;
 
         &:hover {
@@ -541,7 +541,8 @@ $code-color:     #0e0;
     flex-direction: column;
 }
 
-.price-row > .flex-row {
+.price-row > .flex-row,
+.price-row > .flex-column {
     gap: 4px;
 }
 

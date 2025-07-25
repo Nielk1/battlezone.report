@@ -1,27 +1,26 @@
 {{-- price-cluster.blade.php --}}
 <div class="price-row" id="price-cluster-{{ $code ?? 'UNK' }}">
-    @if (isset($deal['GOG']) || isset($deal['Steam']))
-        <div class="d-flex flex-row flex-md-column flex-xl-row flex-row" role="group">
-            @if (isset($deal['GOG']))
-                <a href="{{ $deal['GOG']['url'] }}" target="_blank" rel="noopener noreferrer" role="button" class="btn btn-gog d-flex align-items-center sale-btn">
-                    <span class="svg-icon">
-                        {!! File::get(resource_path('svg/logo_gog.svg')) !!}
-                    </span>
-                    @include('partials.price-number', ['deal' => $deal['GOG']])
-                </a>
-            @endif
-            @if (isset($deal['Steam']))
-                <a href="{{ $deal['Steam']['url'] }}" target="_blank" rel="noopener noreferrer" role="button" class="btn btn-steam d-flex align-items-center sale-btn">
-                    <span class="svg-icon">
-                        {!! File::get(resource_path('svg/logo_steam.svg')) !!}
-                    </span>
-                    @include('partials.price-number', ['deal' => $deal['Steam']])
-                </a>
-            @endif
-        </div>
-    @endif
-
     <div class="d-flex flex-column" style="width: 100%;">
+        @if (isset($deal['GOG']) || isset($deal['Steam']))
+            <div class="d-flex flex-row flex-md-column flex-xl-row flex-row" role="group">
+                @if (isset($deal['GOG']))
+                    <a href="{{ $deal['GOG']['url'] }}" target="_blank" rel="noopener noreferrer" role="button" class="btn btn-gog d-flex align-items-center sale-btn">
+                        <span class="svg-icon">
+                            {!! File::get(resource_path('svg/logo_gog.svg')) !!}
+                        </span>
+                        @include('partials.price-number', ['deal' => $deal['GOG']])
+                    </a>
+                @endif
+                @if (isset($deal['Steam']))
+                    <a href="{{ $deal['Steam']['url'] }}" target="_blank" rel="noopener noreferrer" role="button" class="btn btn-steam d-flex align-items-center sale-btn">
+                        <span class="svg-icon">
+                            {!! File::get(resource_path('svg/logo_steam.svg')) !!}
+                        </span>
+                        @include('partials.price-number', ['deal' => $deal['Steam']])
+                    </a>
+                @endif
+            </div>
+        @endif
         @php $found = false; @endphp
         @foreach ($deal as $key => $d)
             @if (isset($d['drm']))
