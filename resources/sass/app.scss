@@ -316,7 +316,7 @@ $code-color:     #0e0;
     padding: 0 10px;
 }
 
-.main-content {
+#main-content {
     display: flex;
     flex: 1;
     //padding: 2rem;
@@ -328,23 +328,23 @@ $code-color:     #0e0;
 
     //--bs-border-width: 10px;
     //border-top-left-radius: 6px !important;
-    border-left: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color) !important;
+    //border-left: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color) !important;
     //border-top: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color) !important;
 
     transition: margin-left 0.3s;
     will-change: margin-left;
 }
 
-#sub-content {
-    border-left: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color) !important;
-}
+//#sub-content {
+//    border-left: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color) !important;
+//}
 
 
 .sidebar-hidden {
     .sidebar {
         transform: translateX(#{-$sidebar-width});
     }
-    .main-content {
+    #main-content {
         margin-left: #{-$sidebar-width};
         //border-top-left-radius: 0 !important;
         border-left: none !important;
@@ -944,10 +944,68 @@ $code-color:     #0e0;
 }
 
 
+
+#sidebar, .sidebar2 {
+    border-right: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color) !important;
+}
+
+#main-content,
+#sub-content {
+    position: relative; // <-- Add this line
+    &>* {
+        transition: opacity 0.3s;
+        will-change: opacity;
+        opacity: 1;
+    }
+    &::after {
+        content: '';
+        position: absolute;
+        top: 50%; left: 50%;
+        // Use min() to ensure spinner fits the container
+        width: min(40px, 60%);
+        height: min(40px, 60%);
+        margin-left: calc(-1 * min(20px, 30%));
+        margin-top: calc(-1 * min(20px, 30%));
+        border: 4px solid #ccc;
+        border-top: 4px solid #333;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        z-index: 1001;
+        box-sizing: border-box;
+        pointer-events: none; // Prevent interaction with the spinner
+        opacity: 0;
+        transition: opacity 0.3s;
+        transition-delay: 0s;
+    }
+    &.loading {
+        &>* {
+            opacity: 0;
+        }
+        &::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.2); // subtle overlay
+            z-index: 1000;
+        }
+        &::after {
+            opacity: 1;
+            transition-delay: 0s; // Instant fade-in
+        }
+    }
+    &:not(.loading)::after {
+        opacity: 0;
+        transition-delay: 0.3s; // Delayed fade-out
+    }
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
 @include media-breakpoint-down(md) {
     .sidebar2 {
         position:fixed;
-        border-right: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color) !important;
     }
 }
 

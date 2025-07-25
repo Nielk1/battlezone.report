@@ -40,7 +40,7 @@
             <div class="scroll-arrow down" id="scrollDown" onclick="scrollSidebar(100)" style="display: none;">▼</div>
         </div>
     </aside>
-    <main class="main-content">
+    <main id="main-content">
         @yield('content')
         @include('partials.nav-data')
     </main>

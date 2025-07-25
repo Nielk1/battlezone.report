@@ -137,10 +137,21 @@ function initPage() {
 document.addEventListener('DOMContentLoaded', initPage);
 
 // After AJAX navigation:
-function ajaxNavigate(url, targetSelector, depth = 1) {
+function ajaxNavigate(url, targetSelector, depth = 1,) {
     // Parse the URL and add ajax=1 to the query string
     const u = new URL(url, window.location.origin);
+
+    // if the path is the same, abort the load attempt.
+    // note that the caller, if the top level handler, currently filters these out and triggers normal event handling
+    if (u.pathname == window.location.pathname && u.search == window.location.search) {
+        // abort load
+        document.querySelector(targetSelector).classList.remove('loading');
+        return;
+    }
+
     u.searchParams.set('ajax', depth.toString());
+    //document.querySelector(targetSelector).style.opacity = 0;
+    document.querySelector(targetSelector).classList.add('loading');
 
     //fetch(u.toString(), { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
     fetch(u.toString())
@@ -160,7 +171,8 @@ function ajaxNavigate(url, targetSelector, depth = 1) {
                     // Remove the '#' and find the element
                     const el = document.getElementById(u.hash.slice(1));
                     if (el) {
-                        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        //el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        el.scrollIntoView({ behavior: 'auto', block: 'start' });
                     }
                 }
                 // Push the URL **without** the ajax param for history
@@ -168,6 +180,8 @@ function ajaxNavigate(url, targetSelector, depth = 1) {
                 cleanUrl.searchParams.delete('ajax');
                 window.history.pushState({}, '', cleanUrl.pathname + cleanUrl.search + cleanUrl.hash);
                 initPage();
+                //document.querySelector(targetSelector).style.opacity = 1;
+                document.querySelector(targetSelector).classList.remove('loading');
             }
         });
 }
@@ -176,7 +190,7 @@ var last_nav_url = window.location.toString(); // Initialize with the current pa
 // let's just make history navigation always do full page loads
 window.addEventListener('popstate', function(e) {
     // Reload the content for the current URL
-    //ajaxNavigate(window.location.pathname + window.location.search, '.main-content');
+    //ajaxNavigate(window.location.pathname + window.location.search, '#main-content');
 
     const oldUrl = new URL(last_nav_url, window.location.origin);
     if (oldUrl.pathname == window.location.pathname && oldUrl.search == window.location.search)
@@ -215,7 +229,7 @@ function setupAjaxNavLinks() {
                 } else {
                     level = parseInt(level, 10) || 1; // default to 1 if not a number
                 }
-                const target = link.getAttribute('data-ajaxnav-target') || '.main-content'; // fallback selector
+                const target = link.getAttribute('data-ajaxnav-target') || '#main-content'; // fallback selector
                 ajaxNavigate(url, target, level);
             } else {
                 if (urlObj.hash) {
