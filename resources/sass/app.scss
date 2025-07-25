@@ -672,7 +672,9 @@ $code-color:     #0e0;
 .channel-item {
     display: flex;
     align-items: center;
-    padding: 5px 5px;
+    //padding: 5px 5px;
+    //padding: 0 5px 0 0;
+    padding: 0 5px;
     gap: 0.5rem;
     //color: var(--bs-tertiary-color);
     color: color-mix(in srgb, rgb(var(--bs-tertiary-color-rgb)), var(--bs-body-bg));
@@ -684,6 +686,19 @@ $code-color:     #0e0;
     text-decoration: none;
 
     //transition: background 0.2s, color 0.2s;
+
+    .channel-link {
+        display: flex;
+        flex: 1 1 auto !important;
+        //white-space: nowrap;
+        overflow: hidden;
+        //text-overflow: ellipsis;
+        //width: 100%;
+        text-decoration: none;
+        padding: 5px 0;
+        color: inherit;
+        gap: 0.5rem;
+    }
 
     .channel-icon {
         font-size: 1.2em;

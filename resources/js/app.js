@@ -2,7 +2,13 @@ import './bootstrap';
 //import 'bootstrap';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
+
 var active_main_nav_code = null;
+var last_nav_url = null;
+var scroll_spy_hash_debounce = '';
+var scroll_spy_content = null;
+
+
 function setMainNav(code) {
     const sidebar = document.querySelector('#sidebar');
     if (!sidebar) return;
@@ -41,9 +47,51 @@ function getScrollableParent(element) {
     return null; // No scrollable parent found
 }
 
-var last_nav_url = null;
-var scroll_spy_hash_debounce = '';
-var scroll_spy_content = null;
+// Restore sidebar width from cookie
+function getCookie(name) {
+    let match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+    if (match) return match[2];
+}
+function setCookie(name, value, days = 365) {
+    let expires = "";
+    if (days) {
+        let date = new Date();
+        date.setTime(date.getTime() + (days*24*60*60*1000));
+        expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + value + expires + "; path=/";
+}
+
+// Size Dragger
+function initSidebarResizer() {
+    const resizer = document.getElementById('resizer');
+    const sidebar = document.getElementById('sidebar2');
+    if (!resizer || !sidebar) return;
+
+    // Remove any previous mousedown handler to avoid duplicates
+    resizer.onmousedown = null;
+
+    resizer.onmousedown = function(e) {
+        let startX = e.clientX;
+        let startWidth = parseInt(document.defaultView.getComputedStyle(sidebar).width, 10);
+
+        function doDrag(e) {
+            let newWidth = startWidth + e.clientX - startX;
+            newWidth = Math.max(250, Math.min(newWidth, window.innerWidth * 0.8));
+            sidebar.style.width = newWidth + 'px';
+        }
+
+        function stopDrag(e) {
+            setCookie('sidebar2_width', parseInt(sidebar.style.width, 10));
+            document.documentElement.removeEventListener('mousemove', doDrag, false);
+            document.documentElement.removeEventListener('mouseup', stopDrag, false);
+        }
+
+        document.documentElement.addEventListener('mousemove', doDrag, false);
+        document.documentElement.addEventListener('mouseup', stopDrag, false);
+    };
+}
+
 function initPage() {
     // initialization for the page
     // this function will get called on first load and any ajax nav so be sure to not duplicate event listeners or other work
@@ -93,8 +141,14 @@ function initPage() {
         // level 2 or higher
         let navLinks = document.querySelectorAll('.channel-item');
         navLinks.forEach(link => {
-            link.classList.toggle('active', link.getAttribute('href') === window.location.pathname
-                                         || link.getAttribute('href') === window.location.pathname + "#issue_mast"); // todo: do this better, maybe a data attribute
+            let url = link.querySelector('.channel-link').getAttribute('href');
+            if (!url) {
+                link.classList.toggle('active', false);
+                return;
+            }
+            if (url.endsWith('#issue_mast')) { url = url.slice(0, -11); }
+            else if (url.endsWith('#top')) { url = url.slice(0, -4); }
+            link.classList.toggle('active', url === window.location.pathname);
         });
     }
 
@@ -151,7 +205,7 @@ function initPage() {
             }
 
             navLinks.forEach(link => {
-                link.classList.toggle('spy', link.getAttribute('href') === window.location.pathname + '#' + currentId);
+                link.classList.toggle('spy', link.querySelector('.channel-link').getAttribute('href') === window.location.pathname + '#' + currentId);
             });
 
             // Update URL hash without navigation
@@ -170,6 +224,18 @@ function initPage() {
             scroll_spy_content.addEventListener('scroll', scrollHandler);
         }
     }
+
+    // Size Dragger
+    {
+        const sidebar = document.getElementById('sidebar2');
+
+        // Restore width
+        const savedWidth = getCookie('sidebar2_width');
+        if (savedWidth) sidebar.style.width = savedWidth + 'px';
+    }
+
+    // attach the resizer (and remove any existing event handlers just in case)
+    initSidebarResizer();
 }
 
 document.addEventListener('DOMContentLoaded', initPage);
@@ -288,5 +354,3 @@ function setupAjaxNavLinks() {
     });
 }
 setupAjaxNavLinks();
-
-
