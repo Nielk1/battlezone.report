@@ -84,11 +84,6 @@
         position: relative;
     }
 
-    .all-sessions-button i {
-        position: absolute;
-        right: 8px;
-    }
-
     :root,
     [data-bs-theme=light] {
         .logo-container {
@@ -147,7 +142,7 @@
         </div>
         <div class="logos-container">
             <a href="{{ route('games_bzcc') }}" data-ajaxnav="true" class="logo-img-wrapper"><img src="/images/logo_bzcc_custom.png" alt="Logo" class="logo-img"></a>
-            <a href="{{ route('games_bzcc') }}" data-ajaxnav="true" class="btn btn-primary mx-auto mb-3 all-sessions-button">See All Sessions<i class="bi bi-box-arrow-up-right"></i></a>
+            <a href="{{ route('games_bzcc') }}" data-ajaxnav="true" class="btn btn-primary mx-auto mb-3 all-sessions-button">See All Sessions</a>
             <ul class="list-unstyled" style="width:100%">
                 <li class="d-flex align-items-center mb-2">
                     <span class="fw-bold text-end pe-3 border-end" style="width:100%">Sessions</span>
