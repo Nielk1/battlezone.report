@@ -52,4 +52,9 @@ class PageController extends Controller
     {
         return view('games.bz98r');
     }
+
+    public function gamelist_bzcc()
+    {
+        return view('games.bzcc');
+    }
 }

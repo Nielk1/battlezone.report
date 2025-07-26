@@ -1,7 +1,10 @@
 import './bootstrap';
 //import 'bootstrap';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import { LoadGameListGames } from '/resources/js/gamelist_games.js';
 import { LoadGameListBZ98R } from '/resources/js/gamelist_bz98r.js';
+import { LoadGameListBZCC } from '/resources/js/gamelist_bzcc.js';
+
 
 
 var active_main_nav_code = null;
@@ -119,6 +122,13 @@ function initPage() {
         if (pageData) {
             const activeNav = pageData.getAttribute('data-active-nav');
             setMainNav(activeNav);
+
+            const activeTitle = pageData.getAttribute('data-title');
+            if (activeTitle) {
+                document.title = activeTitle;
+            } else {
+                document.title = 'Battlezone Field Report';
+            }
         }
     }
 
@@ -257,9 +267,24 @@ function initPage() {
         }
     }
 
-    if (window.location.pathname.startsWith('/games/bz98r')) {
+
+    function getMainPathSegment(path) {
+       return path.split('/').filter(Boolean)[0] || '';
+    }
+    const mainSegment = getMainPathSegment(window.location.pathname);
+    if (mainSegment === 'games') {
+        if (LoadGameListGames) {
+            LoadGameListGames();
+        }
+    }
+    if (window.location.pathname.split('/').filter(Boolean).join('/') === 'games/bz98r') {
         if (LoadGameListBZ98R) {
             LoadGameListBZ98R();
+        }
+    }
+    if (window.location.pathname.split('/').filter(Boolean).join('/') === 'games/bzcc') {
+        if (LoadGameListBZCC) {
+            LoadGameListBZCC();
         }
     }
 }
@@ -271,18 +296,25 @@ function ajaxNavigate(url, targetSelector, depth = 1, historyNavigation = false)
     // Parse the URL and add ajax=1 to the query string
     const u = new URL(url, window.location.origin);
 
+    let target = document.querySelector(targetSelector);
+    if (!target) {
+        targetSelector = '#main-content';
+        target = document.querySelector(targetSelector);
+        depth = 1;
+    }
+
     // if the path is the same, abort the load attempt.
     // note that the caller, if the top level handler, currently filters these out and triggers normal event handling
     if (!historyNavigation && u.pathname == window.location.pathname && u.search == window.location.search) {
         // abort load
-        document.querySelector(targetSelector).classList.remove('loading');
+        target.classList.remove('loading');
         //console.warn('Aborting AJAX navigation: URL is the same as current.');
         return;
     }
 
     u.searchParams.set('ajax', depth.toString());
     //document.querySelector(targetSelector).style.opacity = 0;
-    document.querySelector(targetSelector).classList.add('loading');
+    target.classList.add('loading');
 
     //fetch(u.toString(), { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
     fetch(u.toString())
@@ -297,7 +329,7 @@ function ajaxNavigate(url, targetSelector, depth = 1, historyNavigation = false)
             if (result.json && result.json.redirect) {
                 ajaxNavigate(result.json.redirect, targetSelector, depth);
             } else if (result.text) {
-                document.querySelector(targetSelector).innerHTML = result.text;
+                target.innerHTML = result.text;
                 if (u.hash) {
                     // Remove the '#' and find the element
                     const el = document.getElementById(u.hash.slice(1));
@@ -313,7 +345,7 @@ function ajaxNavigate(url, targetSelector, depth = 1, historyNavigation = false)
                     window.history.pushState({}, '', cleanUrl.pathname + cleanUrl.search + cleanUrl.hash);
                 initPage();
                 //document.querySelector(targetSelector).style.opacity = 1;
-                document.querySelector(targetSelector).classList.remove('loading');
+                target.classList.remove('loading');
             }
         });
 }
