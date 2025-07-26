@@ -621,6 +621,8 @@ export function LoadGameListBZ98R() {
         // +---------------+
         // |    Version    |
         // +---------------+
+        // |               |
+        // +---------------+
         // |    Balance    |
         // +---------------+
         // |      Mod      |
@@ -643,6 +645,9 @@ export function LoadGameListBZ98R() {
                 if (game_version != null)
                     htmlEntries += `<div class="rule_game_version chamfer d-flex flex-row mb-1" style="white-space:pre;" title="Game Version ${encodeAttr(game_version)}"><div class="icon"><i class="fa-solid fa-gamepad"></i></div><div class="flex-grow-1 text-center">${escapeHtml(game_version)}</div></div>`;
             }
+
+            // un-populated for patch feature
+            htmlEntries += `<div class="rule_balance chamfer d-flex flex-row mb-1 disabled" style="white-space:pre;"></div>`;
 
             // Session Game Balance
             {

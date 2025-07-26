@@ -538,7 +538,6 @@
             </div>
     </aside>
 </div>
-<script src="https://kit.fontawesome.com/bf75e31b39.js" crossorigin="anonymous"></script>
 
     {{--<script src="/lib/jquery/dist/jquery.min.js"></script>--}}
     <!--<script src="/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>-->
