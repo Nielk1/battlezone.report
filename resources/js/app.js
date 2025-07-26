@@ -10,6 +10,16 @@ var scroll_spy_hash_debounce = '';
 var scroll_spy_content = null;
 
 
+function toggleSidebar() {
+    const layout = document.getElementById('main-layout');
+    const isHidden = layout.classList.toggle('sidebar-hidden');
+    if (isHidden) {
+        setQueryParam('sbh', '1');
+    } else {
+        removeQueryParam('sbh');
+    }
+};
+
 function setMainNav(code) {
     const sidebar = document.querySelector('#sidebar');
     if (!sidebar) return;
@@ -147,8 +157,7 @@ function initPage() {
                 link.classList.toggle('active', false);
                 return;
             }
-            if (url.endsWith('#issue_mast')) { url = url.slice(0, -11); }
-            else if (url.endsWith('#top')) { url = url.slice(0, -4); }
+            if (url.endsWith('#top')) { url = url.slice(0, -4); }
             link.classList.toggle('active', url === window.location.pathname);
         });
     }
@@ -239,6 +248,15 @@ function initPage() {
     // attach the resizer (and remove any existing event handlers just in case)
     initSidebarResizer();
 
+    // sidebar toggle button
+    {
+        let sidebar_toggle = document.getElementById('sidebar-toggle');
+        if (sidebar_toggle) {
+            sidebar_toggle.removeEventListener('click', toggleSidebar); // Remove any existing handler
+            sidebar_toggle.addEventListener('click', toggleSidebar); // Add the new handler
+        }
+    }
+
     if (window.location.pathname.startsWith('/games/bz98r')) {
         if (LoadGameListBZ98R) {
             LoadGameListBZ98R();
@@ -309,13 +327,15 @@ window.addEventListener('popstate', function(e) {
     if (oldUrl.pathname == window.location.pathname && oldUrl.search == window.location.search)
     {
         // URLs are the same aside from maybe the hash
-        if (window.location.hash) {
-            // we have a hash so scroll
-            // Remove the '#' and find the element
-            const el = document.getElementById(window.location.hash.slice(1));
-            if (el) {
-                el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
+        let hash = window.location.hash;
+        if (!hash || hash === '' || hash === '#') {
+            hash = "#top"; // Default to top if no hash
+        }
+        // we have a hash so scroll
+        // Remove the '#' and find the element
+        const el = document.getElementById(hash.slice(1));
+        if (el) {
+            el.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
     } else {
         //window.location = window.location.toString(); // Reload the page with the current URL

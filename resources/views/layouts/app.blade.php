@@ -9,7 +9,7 @@
 </head>
 <body class="sidebar-layout{{ request()->query('sbh') ? ' sidebar-hidden' : '' }}" id="main-layout">
     <aside class="sidebar" id="sidebar">
-        <div id="#sidebar-toggle" onclick="toggleSidebar()">☰</div>
+        <div id="sidebar-toggle">☰</div>
         <div class="sidebar-scroll">
             <div class="sidebar-top" data-cluster-id="custom">
                 <a data-nav="home" data-ajaxnav="true" href="{{ route('home') }}" class="sidebar-icon-box{{ ($activeNav ?? '') === 'home' ? ' active' : '' }}"><div class="sidebar-icon">BZ</div></a>
@@ -54,16 +54,6 @@
             const url = new URL(window.location);
             url.searchParams.delete(key);
             window.history.replaceState({}, '', url);
-        }
-
-        function toggleSidebar() {
-            const layout = document.getElementById('main-layout');
-            const isHidden = layout.classList.toggle('sidebar-hidden');
-            if (isHidden) {
-                setQueryParam('sbh', '1');
-            } else {
-                removeQueryParam('sbh');
-            }
         }
 
         function scrollSidebar(amount) {

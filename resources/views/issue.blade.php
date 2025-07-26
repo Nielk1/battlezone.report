@@ -17,7 +17,7 @@
             <div>{{ $issue->date ?? 'DATE MISSING' }}</div>
         </div>
         <div id="main-scrollable-content" class="sidebar3-content">
-            <div data-spy="section" class="issue_mast" id="issue_mast" style="<?php if($issue->image != null) { ?>background-image:url('/images/<?php echo $issue->image; ?>');<?php } ?>">
+            <div data-spy="section" class="issue_mast" id="top" style="<?php if($issue->image != null) { ?>background-image:url('/images/<?php echo $issue->image; ?>');<?php } ?>">
                 <div class="container-fluid">
                     <h1>{{ $issue->title ?? 'NAME MISSING' }}</h1>
                     <span class="date">{{ $issue->date ?? 'DATE MISSING' }}</span>

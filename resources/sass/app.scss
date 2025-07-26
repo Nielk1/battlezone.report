@@ -1,5 +1,6 @@
 
-$sidebar-icon-size: 42px; // icon size
+//$sidebar-icon-size: 42px; // icon size
+$sidebar-icon-size: 48px; // icon size
 $sidebar-folder-padding: 4px; // padding around the folder border
 $sidebar-icon-spacing: 8px; // spacing between icons
 $sidebar-padding: 8px; // padding of the entire sidebar (mostly affects top/bottom)
@@ -147,6 +148,9 @@ $code-color:     #0e0;
 
             --bs-bg-opacity: 1;
             background-color: rgba(var(--bs-secondary-rgb), var(--bs-bg-opacity)) !important;
+
+            width: 100%;
+            height: 100%;
         }
         // end special chamfer customization
 
