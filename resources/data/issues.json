@@ -27,7 +27,7 @@
             {"icon": "logo_book", "type": "story", "code": "hidden-enemy", "name": "Hidden Enemy", "url": "/issue/bzmag/2007-05#story/hidden-enemy", "buttons": [{"icon": "logo_target", "name": "Permalink", "href": "/article/story/hidden-enemy", "attr": {"data-ajaxnav": "1"}}]},
             {"icon": "logo_book", "type": "story", "code": "glory-of-the-revolution", "name": "Glory of the Revolution", "url": "/issue/bzmag/2007-05#story/glory-of-the-revolution", "buttons": [{"icon": "logo_target", "name": "Permalink", "href": "/article/story/glory-of-the-revolution", "attr": {"data-ajaxnav": "1"}}]},
             {"icon": "logo_article", "type": "news", "code": "2007-05-letter-from-the-editor", "name": "Letter from the Editor", "url": "/issue/bzmag/2007-05#news/2007-05-letter-from-the-editor", "buttons": [{"icon": "logo_target", "name": "Permalink", "href": "/article/news/2007-05-letter-from-the-editor", "attr": {"data-ajaxnav": "1"}}]},
-            {"icon": "logo_clipboard", "type": "gamelog", "code": "the-strangest-battle", "name": "The Strangest Battle", "url": "/issue/bzmag/2007-05#gamelog/the-strangest-battle", "buttons": [{"icon": "logo_target", "name": "Permalink", "href": "/article/gamelog/the-strangest-battle", "attr": {"data-ajaxnav": "1"}}]}
+            {"icon": "logo_tank", "type": "warstory", "code": "the-strangest-battle", "name": "The Strangest Battle", "url": "/issue/bzmag/2007-05#warstory/the-strangest-battle", "buttons": [{"icon": "logo_target", "name": "Permalink", "href": "/article/warstory/the-strangest-battle", "attr": {"data-ajaxnav": "1"}}]}
         ]
     },
     {
