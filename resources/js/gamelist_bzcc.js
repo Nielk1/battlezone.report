@@ -375,8 +375,14 @@ export function LoadGameListBZCC() {
         if (session.game?.mod || (session.game?.mods?.length ?? 0) > 0) {
             if (session.game?.mod) {
                 game_mods.push(session.game.mod);
+                if (Array.isArray(session.game.mods)) {
+                    for (let mod of session.game.mods) {
+                        game_mods.push(mod);
+                    }
+                }
             }
-            else {
+            else
+            {
                 game_mods = session.game.mods;
             }
         }
@@ -479,7 +485,7 @@ export function LoadGameListBZCC() {
         // |  Snip | Splnt |
         // +-------+-------+
         let sessionRulesElem = sessionDom2.querySelector(`[data-path="session.level.rules"]`);
-        if (session.level.rules) {
+        {
             let htmlEntries = '';
 
             // Game Version
@@ -603,9 +609,6 @@ export function LoadGameListBZCC() {
             }
 
             sessionRulesElem.innerHTML = htmlEntries;
-
-        } else {
-            sessionRulesElem.innerHTML = '';
         }
 
 

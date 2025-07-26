@@ -507,7 +507,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container-fluid">
-            &copy; 2025 - MultiplayerSessionList
+            &copy; {{ date('Y') }} - MultiplayerSessionList
         </div>
     </footer>
             </div>

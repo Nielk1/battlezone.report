@@ -371,21 +371,21 @@ export function LoadGameListBZ98R() {
                 break;
         }
 
-        let game_mods = [];
-        if (session.game?.mod || (session.game?.mods?.length ?? 0) > 0) {
-            if (session.game?.mod) {
-                game_mods.push(session.game.mod);
-            }
-            else {
-                game_mods = session.game.mods;
+        let main_mod = null;
+        if ((session.game?.mods?.major?.length ?? 0) > 0) {
+            for(let mod_wrapper of session.game.mods.major) {
+                if (mod_wrapper.role == "main") {
+                    main_mod = mod_wrapper.mod;
+                    break;
+                }
             }
         }
-        if (game_mods.length > 0) {
+        if (main_mod) {
             sessionDom.querySelector('[data-path="session.game.mod.off"]').style.display = "none";
             let modIconDom = sessionDom.querySelector('[data-path="session.game.mod"]');
             modIconDom.style.display = "block";
-            modIconDom.setAttribute('title', game_mods[0].name);
-            modIconDom.setAttribute('href', game_mods[0].url);
+            modIconDom.setAttribute('title', main_mod.name);
+            modIconDom.setAttribute('href', main_mod.url);
         }
         else
         {
@@ -479,7 +479,7 @@ export function LoadGameListBZ98R() {
         // |  Snip | Splnt |
         // +-------+-------+
         let sessionRulesElem = sessionDom2.querySelector(`[data-path="session.level.rules"]`);
-        if (session.level.rules) {
+        {
             let htmlEntries = '';
 
             // Game Version
@@ -514,9 +514,7 @@ export function LoadGameListBZ98R() {
 
             // game mod(s)
             {
-                for (let mod of game_mods) {
-                    htmlEntries += `<a href="${encodeAttr(mod.url)}" target="_blank" rel="noopener noreferrer" class="text-decoration-none rule_game_mod chamfer d-flex flex-row mb-1" style="white-space:pre;" title="${encodeAttr(mod?.abbr ?? mod?.name ?? mod?.$id)}"><div class="icon"><i class="fa-solid fa-screwdriver-wrench"></i></div><div class="flex-grow-1 text-center text-truncate"><span class="text-truncate" data-path="session.name">${escapeHtml(mod?.abbr ?? mod?.name ?? mod?.$id)}</span></div></a>`;
-                }
+                htmlEntries += `<a href="${encodeAttr(main_mod.url)}" target="_blank" rel="noopener noreferrer" class="text-decoration-none rule_game_mod chamfer d-flex flex-row mb-1" style="white-space:pre;" title="${encodeAttr(main_mod?.abbr ?? main_mod?.name ?? main_mod?.$id)}"><div class="icon"><i class="fa-solid fa-screwdriver-wrench"></i></div><div class="flex-grow-1 text-center text-truncate"><span class="text-truncate" data-path="session.name">${escapeHtml(main_mod?.abbr ?? main_mod?.name ?? main_mod?.$id)}</span></div></a>`;
             }
 
             // lives and kill_limit
@@ -603,9 +601,6 @@ export function LoadGameListBZ98R() {
             }
 
             sessionRulesElem.innerHTML = htmlEntries;
-
-        } else {
-            sessionRulesElem.innerHTML = '';
         }
 
 
