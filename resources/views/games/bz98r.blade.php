@@ -15,41 +15,6 @@
             --section-mode-extra-left: calc(var(--section-icons-width) + var(--section-mode-width) + ((var(--section-icons-count) - 1) * 4px))
         }
 
-        /* This class will be more useful once we have a way to know if items are done or not */
-        .loading::before {
-            animation-duration: 2s;
-            animation-fill-mode: forwards;
-            animation-iteration-count: infinite;
-            animation-name: placeHolderShimmer;
-            animation-timing-function: linear;
-            background-color: #f6f7f8;
-            background: linear-gradient(to right, #00000000 8%, #bbbbbb 18%, #00000000 33%);
-            background-size: 800px 104px;
-            content: "";
-            content: "";
-            width: 100vw;
-            height: 100vh;
-            position: fixed;
-            top: 0;
-            left: 0;
-        }
-
-        @keyframes placeHolderShimmer {
-            0% {
-                background-position: -800px 0;
-            }
-
-            100% {
-                background-position: 800px 0;
-            }
-        }
-
-        @media screen and (max-width: 768px) {
-            :root {
-                --section-mode-width: 25px;
-            }
-        }
-
         /*
          * Custom Icon: Rifle
          * Formed by cropping the soldier glyph to only show the rifle portion, then rotating it 45 deg.
@@ -264,7 +229,10 @@
             padding: .2rem .2rem;
         }*/
         /*.gamelist.table>:not(caption)>*>* {*/
-        .gamelist>:not(caption)>*>* {
+        /*.gamelist>:not(caption)>*>* {
+            color: #00ff00;
+        }*/
+        #lobbyList>:not(caption)>* {
             color: #00ff00;
         }
 
@@ -509,14 +477,25 @@
                 display: block;
             }
         }
+
+        #lobbyListLoading {
+            transition: opacity 0.3s;
+            will-change: opacity;
+            opacity: 1;
+        }
+        #lobbyListHeader:not(.loading) #lobbyListLoading {
+            opacity: 0;
+            transition-delay: 0.5s; // Delayed fade-out
+        }
     </style>
 
 <div class="page-container">
     <aside class="sidebar3" style="background-color: black !important;">
 
-        <div class="header-bar header-bar-menu-pad">
+        <div id="lobbyListHeader" class="header-bar header-bar-menu-pad">
             <div class="flex-grow-1 text-truncate">Battlezone 98 Redux - Multiplayer Session List</div>
             <div class="d-flex gap-1 float-end">
+                <i id="lobbyListLoading" class="text-primary fa fa-circle-o-notch fa-spin fa-2x fa-fw"></i>
                 <button id="btnExtra" type="button" data-bs-toggle="button" aria-pressed="false" class="btn btn-sm btn-outline-primary">Thin</button>
                 <button id="btnRefresh" type="button" class="btn btn-sm btn-outline-primary">Refresh</button>
             </div>
@@ -524,11 +503,7 @@
 
         <div class="sidebar3-content" style="display: flex; flex-direction: column;">
 
-    <div class="container-fluid mt-2 flex-fill">
-        <div class="gamelist">
-            <div id="lobbyList" class="show_extra"></div>
-        </div>
-    </div>
+        <div id="lobbyList" class="container-fluid mt-2 flex-fill show_extra"></div>
 
     <footer class="border-top footer text-muted">
         <div class="container-fluid">
