@@ -44,8 +44,6 @@ $sidebar-width: $sidebar-icon-size + $sidebar-icons-sidepad * 2;
     );
 }
 
-@import '_variables';
-
 $primary:       #60ab45;
 //$secondary:     $gray-700 !default;
 //$success:       $green !default;
@@ -55,6 +53,7 @@ $primary:       #60ab45;
 //$light:         $gray-500 !default;
 //$dark:          $gray-800 !default;
 $code-color:     #0e0;
+@import '_variables';
 
 // Import Bootstrap's SASS source
 @import 'bootstrap/scss/bootstrap';
@@ -146,11 +145,35 @@ $code-color:     #0e0;
             //cursor: pointer;
             //user-select: none;
 
-            --bs-bg-opacity: 1;
-            background-color: rgba(var(--bs-secondary-rgb), var(--bs-bg-opacity)) !important;
-
             width: 100%;
             height: 100%;
+
+            --bs-bg-opacity: 1;
+            background-color: rgba(var(--bs-secondary-rgb), var(--bs-bg-opacity));
+            color: rgba(var(--bs-link-color-rgb), var(--bs-link-opacity, 1));
+            //background-color: $secondary;
+            //color: $link-color;
+
+            transition: background-color 0.15s;
+        }
+
+        //&:hover .sidebar-icon {
+        //    //color: rgba(var(--bs-link-hover-color-rgb), var(--bs-link-hover-opacity, 1));
+        //    //background-color: rgba(var(--bs-secondary-rgb), 0.8);
+        //    //background-color: rgba(var(--bs-link-color-rgb), var(--bs-link-opacity, 1)) !important;
+        //    background-color: $link-color !important;
+        //    //background-color: $primary !important;
+        //    //color: rgba(var(--bs-secondary-rgb), var(--bs-bg-opacity)) !important;
+        //    color: $secondary !important;
+        //    //color: rgba(var(--bs-link-hover-color-rgb), var(--bs-link-hover-opacity, 1));
+        //}
+
+        &:hover .sidebar-icon,
+        &.active .sidebar-icon {
+            //background-color: rgba(var(--bs-primary-rgb), var(--bs-link-opacity, 1));
+            background-color: $primary;
+            //color: var(--bs-btn-color);
+            color: color-contrast($primary);
         }
         // end special chamfer customization
 
@@ -172,7 +195,7 @@ $code-color:     #0e0;
         }
 
         &.active::after {
-            height: #{$sidebar-icon-size} !important;
+            height: #{$sidebar-icon-size};
             opacity: 1;
         }
 
@@ -223,8 +246,8 @@ $code-color:     #0e0;
                 //cursor: pointer;
                 //user-select: none;
 
-                --bs-bg-opacity: 1;
-                background-color: rgba(var(--bs-secondary-rgb), var(--bs-bg-opacity)) !important;
+                //--bs-bg-opacity: 1;
+                //background-color: rgba(var(--bs-secondary-rgb), var(--bs-bg-opacity)) !important;
             }
             // end special chamfer customization
 
