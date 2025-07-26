@@ -1,5 +1,5 @@
 {{-- filepath: resources/views/hello.blade.php --}}
-@php($activeNav = 'games_bz98r')
+@php($activeNav = 'games')
 @extends(request()->query('ajax') ? 'layouts.ajax' : 'layouts.app')
 
 @section('title', 'Battlezone 98 Redux - Multiplayer Session List')
@@ -517,38 +517,8 @@
         <div class="header-bar header-bar-menu-pad">
             <div class="flex-grow-1 text-truncate">Battlezone 98 Redux - Multiplayer Session List</div>
             <div class="d-flex gap-1 float-end">
-                <button id="btnExtra" type="button" data-bs-toggle="button" aria-pressed="false" class="btn btn-sm btn-outline-success" style="
-                    --bs-btn-color: #4dad54;
-                    --bs-btn-border-color: #4dad54;
-                    --bs-btn-hover-color: #000000;
-                    --bs-btn-hover-bg: #4dad54;
-                    --bs-btn-hover-border-color: #4dad54;
-                    --bs-btn-focus-shadow-rgb: 25, 135, 84;
-                    --bs-btn-active-color: #000000;
-                    --bs-btn-active-bg: #4dad54;
-                    --bs-btn-active-border-color: #4dad54;
-                    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-                    --bs-btn-disabled-color: #4dad54;
-                    --bs-btn-disabled-bg: transparent;
-                    --bs-btn-disabled-border-color: #4dad54;
-                    --bs-gradient: none;
-                ">Thin</button>
-                <button id="btnRefresh" type="button" class="btn btn-sm btn-outline-success" style="
-                    --bs-btn-color: #4dad54;
-                    --bs-btn-border-color: #4dad54;
-                    --bs-btn-hover-color: #000000;
-                    --bs-btn-hover-bg: #4dad54;
-                    --bs-btn-hover-border-color: #4dad54;
-                    --bs-btn-focus-shadow-rgb: 25, 135, 84;
-                    --bs-btn-active-color: #000000;
-                    --bs-btn-active-bg: #4dad54;
-                    --bs-btn-active-border-color: #4dad54;
-                    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-                    --bs-btn-disabled-color: #4dad54;
-                    --bs-btn-disabled-bg: transparent;
-                    --bs-btn-disabled-border-color: #4dad54;
-                    --bs-gradient: none;
-                ">Refresh</button>
+                <button id="btnExtra" type="button" data-bs-toggle="button" aria-pressed="false" class="btn btn-sm btn-outline-primary">Thin</button>
+                <button id="btnRefresh" type="button" class="btn btn-sm btn-outline-primary">Refresh</button>
             </div>
         </div>
 

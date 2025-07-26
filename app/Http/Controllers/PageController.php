@@ -43,10 +43,9 @@ class PageController extends Controller
         return view('partials.price-cluster', compact('code', 'deal'));
     }
 
-    public function test()
+    public function gamelist()
     {
-        $data = app(\App\Services\IsThereAnyDealService::class)->getV3PricesAndGroup();
-        return response()->json($data);
+        return view('games');
     }
 
     public function gamelist_bz98r()

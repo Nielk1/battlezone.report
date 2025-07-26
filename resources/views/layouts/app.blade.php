@@ -12,13 +12,14 @@
         <div id="sidebar-toggle">☰</div>
         <div class="sidebar-scroll">
             <div class="sidebar-top" data-cluster-id="custom">
-                <a data-nav="home" data-ajaxnav="true" href="{{ route('home') }}" class="sidebar-icon-box{{ ($activeNav ?? '') === 'home' ? ' active' : '' }}"><div class="sidebar-icon">BZ</div></a>
-                <!--<a href="{{ route('home') }}" class="sidebar-icon-box{{ request()->routeIs('home') ? ' active' : '' }}"><div class="sidebar-icon">BZ</div></a>-->
+                <a data-nav="home"      data-ajaxnav="true" href="{{ route('home') }}"      class="sidebar-icon-box{{ ($activeNav ?? '') === 'home'      ? ' active' : '' }}"><div class="sidebar-icon">{!! File::get(resource_path('svg/logo_battlezone.svg')) !!}</div></a>
                 <hr class="border border-primary border-2">
-                <a data-nav="issue" data-ajaxnav="true" href="{{ route('issue') }}" class="sidebar-icon-box{{ ($activeNav ?? '') === 'issue' ? ' active' : '' }}"><div class="sidebar-icon">ISU</div></a>
-                <a data-nav="chronicle" data-ajaxnav="true" href="{{ route('chronicle') }}" class="sidebar-icon-box{{ ($activeNav ?? '') === 'chronicle' ? ' active' : '' }}"><div class="sidebar-icon">CRN</div></a>
-                <a data-nav="games_bz98r" data-ajaxnav="true" href="{{ route('games_bz98r') }}" class="sidebar-icon-box{{ ($activeNav ?? '') === 'games_bz98r' ? ' active' : '' }}"><div class="sidebar-icon">98R</div></a>
-                <a href="{{ route('home') }}" class="sidebar-icon-box{{ ($activeNav ?? '') === 'cc' ? ' active' : '' }}"><div class="sidebar-icon">CC</div></a>
+                <a data-nav="issue"     data-ajaxnav="true" href="{{ route('issue') }}"     class="sidebar-icon-box{{ ($activeNav ?? '') === 'issue'     ? ' active' : '' }}"><div class="sidebar-icon"><i class="bi bi-newspaper"></i></div></a>
+                <a data-nav="chronicle" data-ajaxnav="true" href="{{ route('chronicle') }}" class="sidebar-icon-box{{ ($activeNav ?? '') === 'chronicle' ? ' active' : '' }}"><div class="sidebar-icon"><i class="bi bi-feather"></i></div></a>
+                <a data-nav="games"     data-ajaxnav="true" href="{{ route('games') }}"     class="sidebar-icon-box{{ ($activeNav ?? '') === 'games'     ? ' active' : '' }}"><div class="sidebar-icon"><i class="bi bi-controller"></i></div></a>
+                <a data-nav="modding"   data-ajaxnav="true" href="{{ route('home') }}"      class="sidebar-icon-box{{ ($activeNav ?? '') === 'modding'   ? ' active' : '' }}"><div class="sidebar-icon"><i class="bi bi-tools"></i></div></a>
+                <a data-nav="archive"   data-ajaxnav="true" href="{{ route('home') }}"      class="sidebar-icon-box{{ ($activeNav ?? '') === 'archive'   ? ' active' : '' }}"><div class="sidebar-icon"><i class="bi bi-archive-fill"></i></div></a>
+                <a data-nav="social"    data-ajaxnav="true" href="{{ route('home') }}"      class="sidebar-icon-box{{ ($activeNav ?? '') === 'social'    ? ' active' : '' }}"><div class="sidebar-icon"><i class="bi bi-chat-fill"></i></div></a>
             </div>
             {{--
             <div class="sidebar-top">

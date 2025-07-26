@@ -11,7 +11,6 @@ use App\Http\Controllers\GamesApiController;
 
 Route::get('/', [PageController::class, 'index'])->name('home');
 Route::get('/price-cluster/{game}', [PageController::class, 'priceCluster']);
-Route::get('/test', [PageController::class, 'test']);
 
 Route::get('/issue/{type?}/{code?}', [IssueController::class, 'index'])->name('issue');
 Route::get('/article/{type?}/{code?}', [ArticleController::class, 'index']);
@@ -21,7 +20,10 @@ Route::get('/chronicle/{type?}/{code?}/{chapter?}', [ChronicleController::class,
 Route::get('/images/{path}', [ImageController::class, 'show'])->where('path', '(articles|issues|chronicle)/.*\.(png|jpe?g|gif|webp)');
 
 Route::get('/api/games/sessions', [GamesApiController::class, 'sessions']);
+Route::get('/games', [PageController::class, 'gamelist'])->name('games');
 Route::get('/games/bz98r', [PageController::class, 'gamelist_bz98r'])->name('games_bz98r');
+Route::get('/games/bzcc', [PageController::class, 'gamelist_bzcc'])->name('games_bzcc');
+//Route::redirect('games/bzcc', 'https://battlezonescrapfield.github.io/BZCC-Website/', 302);
 
 Route::get('/welcome', function () {
     return view('welcome');
