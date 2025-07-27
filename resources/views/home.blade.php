@@ -7,12 +7,13 @@
 @section('content')
 <style>
 .logo-container {
+    min-height: 100vh;
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-evenly;
     width: 100%;
-    /*height: 100%;*/
     background: url('/images/background_space.jpg') center center / cover no-repeat;
     position: relative;
     padding: 50px 10px;
@@ -43,7 +44,7 @@
 </style>
 
 <div class="logo-container">
-    <div class="container" style="height: 100%;">
+    <div class="container" style="height: calc(100% + 6rem);">{{-- A bit of a hack fix until I figured out the style issue eliminating padding when too short for all content --}}
         <div class="row logos-row" style="height: 100%;">
             <div class="d-flex justify-content-center col-12">
                 <img src="/images/logo.png" alt="Logo" class="logo-img dark d-print-none">
@@ -67,10 +68,6 @@
                 <span class="d-print-block d-none container-fluid text-center">Battlezone: Combat Commander</span>
                 @include('partials.price-cluster', ['code' => 'BZCC', 'deal' => $prices['BZCC']])
             </div>
-            {{--
-        </div>
-        <div class="row row-cols-1 row-cols-md-3 logos-row">
-            --}}
             <div class="col-12 col-lg-4 col-print-6 logos-container">
                 <div class="d-print-none logo-img-pair">
                     <img src="/images/logo_bz98r_custom.png" alt="Logo" class="logo-img">
