@@ -13,7 +13,7 @@
         justify-content: space-evenly;
         width: 100%;
         /*height: 100%;*/
-        background: url('/images/logo_back.jpg') center center / cover no-repeat;
+        background: url('/images/background_space.jpg') center center / cover no-repeat;
         position: relative;
         padding: 50px 10px;
         overflow: auto;
@@ -116,7 +116,7 @@
 
     [data-bs-theme=dark] {
         .logo-container {
-            background: url('/images/logo_back.jpg') center center / cover no-repeat fixed;
+            background: url('/images/background_space.jpg') center center / cover no-repeat fixed;
         }
 
         .dark {
