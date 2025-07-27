@@ -1,4 +1,5 @@
-import './bootstrap';
+//import './bootstrap';
+import { Tooltip } from 'bootstrap';
 //import 'bootstrap';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import { LoadGameListGames } from '/resources/js/gamelist_games.js';
@@ -429,3 +430,7 @@ function setupAjaxNavLinks() {
     });
 }
 setupAjaxNavLinks();
+
+// activate tooltips which are only needed (so far) for the main nav that is always there no matter what page loads
+const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new Tooltip(tooltipTriggerEl))
