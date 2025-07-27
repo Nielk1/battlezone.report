@@ -43,6 +43,11 @@ class PageController extends Controller
         return view('partials.price-cluster', compact('code', 'deal'));
     }
 
+    public function social()
+    {
+        return view('social');
+    }
+
     public function gamelist()
     {
         return view('games');

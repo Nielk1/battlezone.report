@@ -19,20 +19,12 @@
     overflow: auto;
 }
 
-.logos-container {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start; /* Aligns children to the top/left */
-    max-width: 430px;
-    margin-top: 20px;
-}
-
 .logo-img {
     width: auto;
     height: auto;
     max-width: 100%;
     max-height: 100%;
-    /*z-index: 1;*/
+    object-fit: contain;
     position: relative;
     margin-bottom: 5px;
 }
@@ -48,110 +40,63 @@
     width: 45%;
     height: auto;
 }
-
-.logos-row {
-    width: 100%;
-    /*max-width: 1280px;*/
-    margin: 0 auto;
-    justify-content: center;
-}
-
-.logos-row .col {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    padding: 10px;
-    /*min-width: 430px;*/
-}
-
-.logos-row .col .logo-container {
-    max-width: 430px;
-}
-
-.screen {
-    display: inherit;
-}
-.print {
-    display: none;
-}
-
-:root,
-[data-bs-theme=light] {
-    .logo-container {
-        background: none;
-    }
-    .dark {
-        display: none;
-    }
-    .light {
-        display: inherit;
-    }
-}
-
-[data-bs-theme=dark] {
-    .logo-container {
-        background: url('/images/logo_back.jpg') center center / cover no-repeat fixed;
-    }
-    .dark {
-        display: inherit;
-    }
-    .light {
-        display: none;
-    }
-}
-
-@media print {
-    .screen {
-        display: none;
-    }
-    .print {
-        display: block;
-    }
-}
 </style>
 
 <div class="logo-container">
-    <img src="/images/logo.png" alt="Logo" class="logo-img dark screen">
-    <img src="/images/logo_print.png" alt="Logo" class="logo-img light print">
-
-    <div class="row row-cols-1 row-cols-md-3 mt-4 logos-row">
-        <div class="logos-container">
-            <img src="/images/logo_bz98r_custom.png" alt="Logo" class="logo-img">
-            @include('partials.price-cluster', ['code' => 'BZ98R', 'deal' => $prices['BZ98R']])
-        </div>
-        <div class="logos-container">
-            <img src="/images/logo_tror_custom.png" alt="Logo" class="logo-img">
-            @include('partials.price-cluster', ['code' => 'TROR', 'deal' => $prices['TROR']])
-        </div>
-        <div class="logos-container">
-            <img src="/images/logo_bzcc_custom.png" alt="Logo" class="logo-img">
-            @include('partials.price-cluster', ['code' => 'BZCC', 'deal' => $prices['BZCC']])
-        </div>
-    </div>
-
-    <div class="row row-cols-1 row-cols-md-3 mt-4 logos-row">
-        <div class="logos-container">
-            <div class="logo-img-pair">
-                <img src="/images/logo_bz98r_custom.png" alt="Logo" class="logo-img">
-                <h1>+</h1>
-                <img src="/images/logo_tror_custom.png" alt="Logo" class="logo-img">
+    <div class="container" style="height: 100%;">
+        <div class="row logos-row" style="height: 100%;">
+            <div class="d-flex justify-content-center col-12">
+                <img src="/images/logo.png" alt="Logo" class="logo-img dark d-print-none">
             </div>
-            @include('partials.price-cluster', ['code' => 'BZ98R|TROR', 'deal' => $prices['BZ98R|TROR']])
-        </div>
-        <div class="logos-container">
-            <div class="logo-img-pair">
-                <img src="/images/logo_bz98r_custom.png" alt="Logo" class="logo-img">
-                <h1>+</h1>
-                <img src="/images/logo_bzcc_custom.png" alt="Logo" class="logo-img">
+            <div class="d-flex justify-content-center col-12">
+                <img src="/images/logo_print.png" alt="Logo" class="logo-img light d-none d-print-block">
             </div>
-            @include('partials.price-cluster', ['code' => 'BZ98R|BZCC', 'deal' => $prices['BZ98R|BZCC']])
-        </div>
-        <div class="logos-container">
-            <div class="logo-img-pair">
-                <img src="/images/logo_bzvr.png" alt="Logo" class="logo-img">
+            <div class="col-12 col-lg-4 col-print-6 logos-container">
+                <img src="/images/logo_bz98r_custom.png" alt="Logo" class="d-print-none logo-img">
+                <span class="d-print-block d-none container-fluid text-center">Battlezone 98 Redux</span>
+                @include('partials.price-cluster', ['code' => 'BZ98R', 'deal' => $prices['BZ98R']])
             </div>
-            @include('partials.price-cluster', ['code' => 'BZVR', 'deal' => $prices['BZVR']])
+            <div class="col-12 col-lg-4 col-print-6 logos-container">
+                <img src="/images/logo_tror_custom.png" alt="Logo" class="d-print-none logo-img">
+                <span class="d-print-block d-none container-fluid text-center">Battlezone: The Red Odyssey</span>
+                @include('partials.price-cluster', ['code' => 'TROR', 'deal' => $prices['TROR']])
+            </div>
+            <hr class="d-print-block d-none col-12 invisible">
+            <div class="col-12 col-lg-4 col-print-6 logos-container">
+                <img src="/images/logo_bzcc_custom.png" alt="Logo" class="d-print-none logo-img">
+                <span class="d-print-block d-none container-fluid text-center">Battlezone: Combat Commander</span>
+                @include('partials.price-cluster', ['code' => 'BZCC', 'deal' => $prices['BZCC']])
+            </div>
+            {{--
+        </div>
+        <div class="row row-cols-1 row-cols-md-3 logos-row">
+            --}}
+            <div class="col-12 col-lg-4 col-print-6 logos-container">
+                <div class="d-print-none logo-img-pair">
+                    <img src="/images/logo_bz98r_custom.png" alt="Logo" class="logo-img">
+                    <h1>+</h1>
+                    <img src="/images/logo_tror_custom.png" alt="Logo" class="logo-img">
+                </div>
+                <span class="d-print-block d-none container-fluid text-center">Battlezone 98 Redux + Battlezone: The Red Odyssey</span>
+                @include('partials.price-cluster', ['code' => 'BZ98R|TROR', 'deal' => $prices['BZ98R|TROR']])
+            </div>
+            <hr class="d-print-block d-none col-12 invisible">
+            <div class="col-12 col-lg-4 col-print-6 logos-container">
+                <div class="d-print-none logo-img-pair">
+                    <img src="/images/logo_bz98r_custom.png" alt="Logo" class="logo-img">
+                    <h1>+</h1>
+                    <img src="/images/logo_bzcc_custom.png" alt="Logo" class="logo-img">
+                </div>
+                <span class="d-print-block d-none container-fluid text-center">Battlezone 98 Redux + Battlezone: Combat Commander</span>
+                @include('partials.price-cluster', ['code' => 'BZ98R|BZCC', 'deal' => $prices['BZ98R|BZCC']])
+            </div>
+            <div class="col-12 col-lg-4 col-print-6 logos-container">
+                <div class="d-print-none logo-img-pair">
+                    <img src="/images/logo_bzvr.png" alt="Logo" class="logo-img">
+                </div>
+                <span class="d-print-block d-none container-fluid text-center">Battlezone VR</span>
+                @include('partials.price-cluster', ['code' => 'BZVR', 'deal' => $prices['BZVR']])
+            </div>
         </div>
     </div>
 </div>

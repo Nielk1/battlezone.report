@@ -7,6 +7,7 @@
                     <span class="svg-icon">
                         {!! File::get(resource_path('svg/logo_gog.svg')) !!}
                     </span>
+                    {{--<span class="d-print-block d-none text-truncate" title="GOG">GOG</span>--}}
                     @include('partials.price-number', ['deal' => $deal['GOG']])
                 </a>
             @endif
@@ -15,6 +16,7 @@
                     <span class="svg-icon">
                         {!! File::get(resource_path('svg/logo_steam.svg')) !!}
                     </span>
+                    {{--<span class="d-print-block d-none text-truncate" title="Steam">Steam</span>--}}
                     @include('partials.price-number', ['deal' => $deal['Steam']])
                 </a>
             @endif

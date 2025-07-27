@@ -11,7 +11,7 @@
 
 @section('sub-content')
 <div class="page-container">
-    <aside class="sidebar3">
+    <div class="sidebar3">
         <div class="header-bar header-bar-menu-pad2">
             <div class="flex-grow-1 text-truncate">{{ $issue->title ?? 'NAME MISSING' }}</div>
             <div>{{ $issue->date ?? 'DATE MISSING' }}</div>
@@ -60,6 +60,6 @@
                 <hr style="clear:both;padding-top:1rem;">
             @endforeach
         </div>
-    </aside>
+    </div>
 </div>
 @endsection

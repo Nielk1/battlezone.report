@@ -11,7 +11,7 @@
 
 @section('sub-content')
 <div class="page-container">
-    <aside class="sidebar3">
+    <div class="sidebar3">
         <div class="header-bar header-bar-menu-pad2">
             <div class="flex-grow-1 text-truncate">{{ $issue->title ?? 'NAME MISSING' }}</div>
         </div>
@@ -25,6 +25,6 @@
                 @include('partials.chapter', ['article' => $article, 'content' => $content])
             </div>
         </div>
-    </aside>
+    </div>
 </div>
 @endsection

@@ -7,25 +7,30 @@
             <span class="svg-icon">{!! File::get(resource_path('svg/logo_target.svg')) !!}</span>
         </a>
         @endif
-        @if($article->title)
-        <h1>{{ $article->title }}</h1>
-        @endif
+        <div>
+            @if($article->title)
+                <h1>{{ $article->title }}</h1>
+            @endif
+            @if(!$article->hidepermlink)
+                <div class="d-print-block d-none">
+                    <span class="article-permalink" title="Permalink">/article/{{ $type }}/{{ $code }}</span>
+                </div>
+            @endif
+        </div>
     </div>
     @endif
     <div>
-        <blockquote>
-            <p>
-                @if(count($article->authors) > 0)
-                    by:
-                @endif
-                @php($comma = false)
-                @foreach($article->authors as $author)
-                    @if($comma), @endif
-                    {{ $author['name'] }}
-                    @php($comma = true)
-                @endforeach
-            </p>
-        </blockquote>
+        <p>
+            @if(count($article->authors) > 0)
+                by:
+            @endif
+            @php($comma = false)
+            @foreach($article->authors as $author)
+                @if($comma), @endif
+                {{ $author['name'] }}
+                @php($comma = true)
+            @endforeach
+        </p>
     </div>
 {!! $content !!}
 </div>

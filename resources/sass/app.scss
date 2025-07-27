@@ -591,6 +591,16 @@ $code-color:     #0e0;
     }
 }
 
+.modlink-row {
+    width: 100%;
+    gap: 4px;
+    display: flex;
+    flex-direction: column;
+    .d-flex {
+        gap: 4px;
+    }
+}
+
 .sale-btn {
     flex: 1;
     padding: 0.4em 0.3em !important;
@@ -1075,11 +1085,201 @@ $code-color:     #0e0;
     }
 }
 
+// Up the size of alert glpyhs so they're bigger than the text
 .alert {
     .alert-icon {
         margin-right: 0.5rem !important;
         font-size: 2em;
         margin-top: -0.5em;
         margin-bottom: -0.5em;
+    }
+}
+
+//.logos-container {
+//    margin-top: 2rem;
+//}
+
+.logos-row {
+    //margin-top: 1.5rem !important;
+    //gap: 2rem;
+
+    //width: 100%;
+    /*max-width: 1280px;*/
+    margin: 0 auto;
+    justify-content: space-evenly !important;
+    row-gap: 1rem;
+}
+
+// print stylesheet fixes
+/*! Source: https://github.com/h5bp/html5-boilerplate/blob/master/src/css/main.css */
+@media print {
+    *,*:before,*:after {
+        background: transparent !important;
+        color: #000 !important;
+        -webkit-box-shadow: none !important;
+        box-shadow: none !important;
+        text-shadow: none !important
+    }
+
+    a,a:visited {
+        text-decoration: underline
+    }
+
+    a[href]:after {
+        content: " (" attr(href) ")"
+    }
+
+    abbr[title]:after {
+        content: " (" attr(title) ")"
+    }
+
+    a[href^="#"]:after,a[href^="javascript:"]:after {
+        content: ""
+    }
+
+    pre,blockquote {
+        border: 1px solid #999;
+        page-break-inside: avoid
+    }
+
+    thead {
+        display: table-header-group
+    }
+
+    tr,img {
+        page-break-inside: avoid
+    }
+
+    img {
+        max-width: 100% !important
+    }
+
+    p,h2,h3 {
+        orphans: 3;
+        widows: 3
+    }
+
+    h2,h3 {
+        page-break-after: avoid
+    }
+
+    .navbar {
+        display: none
+    }
+
+    .btn>.caret,.dropup>.btn>.caret {
+        border-top-color: #000 !important
+    }
+
+    .label {
+        border: 1px solid #000
+    }
+
+    .table {
+        border-collapse: collapse !important
+    }
+
+    .table td,.table th {
+        background-color: #fff !important
+    }
+
+    .table-bordered th,.table-bordered td {
+        border: 1px solid #ddd !important
+    }
+
+    // specific to this site
+
+    // remove links added by above rule for permalinks, they are shown via nother method
+    // also hide original permalink box and icon
+    // permalinks need to be placed in hidden spans
+    a.article-permalink:after {
+        content: ""
+    }
+    a.article-permalink {
+        display: none !important;
+    }
+
+    // destroy flex layouts and screen heights
+    body, #main-content, #sub-content, #main-scrollable-content, .sidebar3,
+    .page-container, .sidebar3-content {
+        display: block !important;
+        height: auto !important;
+        overflow-y: visible !important;
+    }
+
+    // adjust padding around top level (consider changes to selector paths) to remove large left gutter
+    .container {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+        width: auto !important;
+        max-width: none !important;
+    }
+
+    // remove sidebars from print
+    .sidebar, .sidebar2 {
+        display: none !important;
+    }
+
+    .social-buttons {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        .btn {
+            height: auto !important;
+            width: auto !important;
+            gap: 0.5em;
+            padding-left: 0.5em !important;
+            padding-right: 0.5em !important;
+            i, img {
+                display: none !important; // hide icons in print
+            }
+        }
+    }
+
+    .modlink-row {
+        flex-direction: column !important;
+        .d-flex {
+            flex-direction: column !important;
+            .svg-icon {
+                display: none !important; // hide icons in print
+            }
+        }
+    }
+
+    .price-row{
+        a:after {
+            content: ""
+        }
+    }
+
+    .logo-container {
+        justify-content: unset !important;
+    }
+
+    .logos-container {
+        margin-top: 2rem;
+    }
+
+    .logos-row {
+        margin-top: 0 !important;
+        row-gap: 0;
+    }
+
+
+
+    // 12-column print grid
+    @for $i from 1 through 12 {
+        .col-print-#{$i} {
+            float: left;
+            width: (100% / 12) * $i !important;
+            box-sizing: border-box;
+        }
+    }
+
+    // Clear floats after each row if needed
+    .row {
+        display: block !important;
+        clear: both;
     }
 }

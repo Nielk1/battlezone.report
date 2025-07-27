@@ -490,7 +490,7 @@
     </style>
 
 <div class="page-container">
-    <aside class="sidebar3" style="background-color: black !important;">
+    <div class="sidebar3" style="background-color: black !important;">
 
         <div id="lobbyListHeader" class="header-bar header-bar-menu-pad">
             <div class="flex-grow-1 text-truncate">Battlezone Combat Commander - Multiplayer Session List</div>
@@ -504,14 +504,13 @@
         <div class="sidebar3-content" style="display: flex; flex-direction: column;">
 
         <div id="lobbyList" class="container-fluid mt-2 flex-fill show_extra"></div>
-
-    <footer class="border-top footer text-muted">
-        <div class="container-fluid">
-            &copy; {{ date('Y') }} - MultiplayerSessionList
+            <footer class="border-top footer text-muted">
+                <div class="container-fluid">
+                    &copy; {{ date('Y') }} - MultiplayerSessionList
+                </div>
+            </footer>
         </div>
-    </footer>
-            </div>
-    </aside>
+    </div>
 </div>
 
     {{--<script src="/lib/jquery/dist/jquery.min.js"></script>--}}

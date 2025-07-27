@@ -25,6 +25,8 @@ Route::get('/games/bz98r', [PageController::class, 'gamelist_bz98r'])->name('gam
 Route::get('/games/bzcc', [PageController::class, 'gamelist_bzcc'])->name('games_bzcc');
 //Route::redirect('games/bzcc', 'https://battlezonescrapfield.github.io/BZCC-Website/', 302);
 
+Route::get('/social', [PageController::class, 'social'])->name('social');
+
 Route::get('/welcome', function () {
     return view('welcome');
 });
