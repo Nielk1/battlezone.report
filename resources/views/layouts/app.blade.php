@@ -10,7 +10,7 @@
 </head>
 <body class="sidebar-layout{{ request()->query('sbh') ? ' sidebar-hidden' : '' }}" id="main-layout">
     <aside class="sidebar" id="sidebar">
-        <div id="sidebar-toggle">☰</div>
+        <div id="sidebar-toggle" class="corner-button">☰</div>
         <div class="sidebar-scroll">
             <div class="sidebar-top" data-cluster-id="custom">
                 <a data-nav="home"      data-ajaxnav="true" href="{{ route('home') }}"      class="sidebar-icon-box{{ ($activeNav ?? '') === 'home'      ? ' active' : '' }}"><div class="sidebar-icon">{!! File::get(resource_path('svg/logo_battlezone.svg')) !!}</div></a>

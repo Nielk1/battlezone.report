@@ -271,8 +271,7 @@ function initPage() {
     function getMainPathSegment(path) {
        return path.split('/').filter(Boolean)[0] || '';
     }
-    const mainSegment = getMainPathSegment(window.location.pathname);
-    if (mainSegment === 'games') {
+    if (window.location.pathname.split('/').filter(Boolean).join('/') === 'games') {
         if (LoadGameListGames) {
             LoadGameListGames();
         }

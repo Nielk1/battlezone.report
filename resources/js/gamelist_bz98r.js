@@ -513,8 +513,11 @@ export function LoadGameListBZ98R() {
             }
 
             // game mod(s)
+            if (main_mod)
             {
                 htmlEntries += `<a href="${encodeAttr(main_mod.url)}" target="_blank" rel="noopener noreferrer" class="text-decoration-none rule_game_mod chamfer d-flex flex-row mb-1" style="white-space:pre;" title="${encodeAttr(main_mod?.abbr ?? main_mod?.name ?? main_mod?.$id)}"><div class="icon"><i class="fa-solid fa-screwdriver-wrench"></i></div><div class="flex-grow-1 text-center text-truncate"><span class="text-truncate" data-path="session.name">${escapeHtml(main_mod?.abbr ?? main_mod?.name ?? main_mod?.$id)}</span></div></a>`;
+            } else {
+                htmlEntries += `<div class="rule_game_mod chamfer d-flex flex-row mb-1 disabled" style="white-space:pre;"></div>`;
             }
 
             // lives and kill_limit

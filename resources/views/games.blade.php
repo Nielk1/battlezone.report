@@ -140,6 +140,9 @@
 </style>
 
 <div class="logo-container">
+    <div id="gamelist-games-reload" class="corner-button">
+        <i class="fa fa-refresh fa-spin" aria-hidden="true"></i>
+    </div>
     <div class="row row-cols-1 row-cols-md-2 logos-row">
         <div class="logos-container">
             <a href="{{ route('games_bz98r') }}" data-ajaxnav="true" class="logo-img-wrapper"><img src="/images/logo_bz98r_custom.png" alt="Logo" class="logo-img"></a>

@@ -218,9 +218,9 @@ export function LoadGameListBZCC() {
                 <div class="me-1 d-flex game_mode_cell">
                     <div class="d-flex flex-row">
                         <div class="chamfer game_mode d-flex flex-row" data-path="session.level.game_mode">
-                            <div class="nub" style="border-right:solid black 2px; box-sizing: content-box;" data-path="session.level.game_type"></div>
-                            <div class="game_mode_icon" data-path="session.level.game_mode.icon"></div>
-                            <span class="game_mode_text ps-1 pe-1 text-truncate" data-path="session.level.game_mode.text"></span>
+                            <div class="nub" style="border-right:solid black 2px; box-sizing: content-box;" data-path="session.level.game_type"></div>`+
+                            //<div class="game_mode_icon" data-path="session.level.game_mode.icon"></div>
+                            `<span class="game_mode_text ps-1 pe-1 text-truncate" data-path="session.level.game_mode.text"></span>
                         </div>
                     </div>
                 </div>
@@ -371,27 +371,21 @@ export function LoadGameListBZCC() {
                 break;
         }
 
-        let game_mods = [];
-        if (session.game?.mod || (session.game?.mods?.length ?? 0) > 0) {
-            if (session.game?.mod) {
-                game_mods.push(session.game.mod);
-                if (Array.isArray(session.game.mods)) {
-                    for (let mod of session.game.mods) {
-                        game_mods.push(mod);
-                    }
+        let main_mod = null;
+        if ((session.game?.mods?.major?.length ?? 0) > 0) {
+            for(let mod_wrapper of session.game.mods.major) {
+                if (mod_wrapper.role == "main") {
+                    main_mod = mod_wrapper.mod;
+                    break;
                 }
             }
-            else
-            {
-                game_mods = session.game.mods;
-            }
         }
-        if (game_mods.length > 0) {
+        if (main_mod) {
             sessionDom.querySelector('[data-path="session.game.mod.off"]').style.display = "none";
             let modIconDom = sessionDom.querySelector('[data-path="session.game.mod"]');
             modIconDom.style.display = "block";
-            modIconDom.setAttribute('title', game_mods[0].name);
-            modIconDom.setAttribute('href', game_mods[0].url);
+            modIconDom.setAttribute('title', main_mod.name);
+            modIconDom.setAttribute('href', main_mod.url);
         }
         else
         {
@@ -431,7 +425,7 @@ export function LoadGameListBZCC() {
 
         // Session Game Mode
         let game_mode_element = sessionDom.querySelector(`[data-path="session.level.game_mode"]`);
-        let game_mode_icon_element = sessionDom.querySelector(`[data-path="session.level.game_mode.icon"]`);
+        //let game_mode_icon_element = sessionDom.querySelector(`[data-path="session.level.game_mode.icon"]`);
         let game_mode_text_element = sessionDom.querySelector(`[data-path="session.level.game_mode.text"]`);
         game_mode_element.setAttribute("title",
             session.level?.rules?.game_mode?.name ?? session.level?.rules?.game_mode?.$id ??
@@ -442,10 +436,10 @@ export function LoadGameListBZCC() {
             session.level?.map?.game_mode?.name ?? session.level?.map?.game_mode?.$id ??
             session.level?.game_mode?.name ?? session.level?.game_mode?.$id ?? "Unknown";
         game_mode_text_element.innerHTML = game_mode_text_string.split(/(?<=[A-Z])(?=[a-z ])|(?<=[a-z ])(?=[A-Z])/).map(i => `<span class="${i == i.toLowerCase() ? 'smallcap' : 'bigcap'}">${escapeHtml(i)}</span>`).join('');
-        let game_mode_icon =
-            session.level?.rules?.game_mode?.icon ??
-            session.level?.map?.game_mode?.icon ??
-            session.level?.game_mode?.icon ?? null;
+        //let game_mode_icon =
+        //    session.level?.rules?.game_mode?.icon ??
+        //    session.level?.map?.game_mode?.icon ??
+        //    session.level?.game_mode?.icon ?? null;
         let game_mode_color =
             session.level?.rules?.game_mode?.color ??
             session.level?.map?.game_mode?.color ??
@@ -453,36 +447,30 @@ export function LoadGameListBZCC() {
         if (game_mode_color) {
             game_mode_element.style.backgroundColor = game_mode_color;
             game_mode_element.style.backgroundImage = "";
-        } else if (game_mode_icon) {
-            game_mode_element.style.backgroundImage = `url("${game_mode_icon}")`; // do coloring via icon image
-            game_mode_element.style.backgroundColor = "";
+        //} else if (game_mode_icon) {
+        //    game_mode_element.style.backgroundImage = `url("${game_mode_icon}")`; // do coloring via icon image
+        //    game_mode_element.style.backgroundColor = "";
         } else {
             game_mode_element.style.backgroundImage = "";
             game_mode_element.style.backgroundColor = "#101010";
         }
-        if (game_mode_icon) {
-            game_mode_icon_element.style.backgroundImage = `url("${game_mode_icon}")`;
-        } else {
-            game_mode_icon_element.style.backgroundImage = 'url("//gamelistassets.iondriver.com/bz98r/resources/icon_unknown.png")';
-        }
+        //if (game_mode_icon) {
+        //    game_mode_icon_element.style.backgroundImage = `url("${game_mode_icon}")`;
+        //} else {
+        //    game_mode_icon_element.style.backgroundImage = 'url("//gamelistassets.iondriver.com/bz98r/resources/icon_unknown.png")';
+        //}
 
         // Session Level Rules
         // +---------------+
         // |    Version    |
         // +---------------+
-        // |               |
-        // +---------------+
         // |    Balance    |
         // +---------------+
         // |      Mod      |
         // +-------+-------+
-        // | Lives | Kills |
-        // +-------+-------+
         // |     Time      |
         // +-------+-------+
-        // |  Barr |  Sat  |
-        // +-------+-------+
-        // |  Snip | Splnt |
+        // | Kills | RSpwn |
         // +-------+-------+
         let sessionRulesElem = sessionDom2.querySelector(`[data-path="session.level.rules"]`);
         {
@@ -494,9 +482,6 @@ export function LoadGameListBZCC() {
                 if (game_version != null)
                     htmlEntries += `<div class="rule_game_version chamfer d-flex flex-row mb-1" style="white-space:pre;" title="Game Version ${encodeAttr(game_version)}"><div class="icon"><i class="fa-solid fa-gamepad"></i></div><div class="flex-grow-1 text-center">${escapeHtml(game_version)}</div></div>`;
             }
-
-            // un-populated for patch feature
-            htmlEntries += `<div class="rule_balance chamfer d-flex flex-row mb-1 disabled" style="white-space:pre;"></div>`;
 
             // Session Game Balance
             {
@@ -519,28 +504,11 @@ export function LoadGameListBZCC() {
             }
 
             // game mod(s)
+            if (main_mod)
             {
-                for (let mod of game_mods) {
-                    htmlEntries += `<a href="${encodeAttr(mod.url)}" target="_blank" rel="noopener noreferrer" class="text-decoration-none rule_game_mod chamfer d-flex flex-row mb-1" style="white-space:pre;" title="${encodeAttr(mod?.abbr ?? mod?.name ?? mod?.$id)}"><div class="icon"><i class="fa-solid fa-screwdriver-wrench"></i></div><div class="flex-grow-1 text-center text-truncate"><span class="text-truncate" data-path="session.name">${escapeHtml(mod?.abbr ?? mod?.name ?? mod?.$id)}</span></div></a>`;
-                }
-            }
-
-            // lives and kill_limit
-            {
-                let rule_lives = session.level?.rules?.["lives"];
-                let rule_kill_limit = session.level?.rules?.["kill_limit"];
-                if (rule_lives != null || rule_kill_limit != null) {
-                    if (rule_lives != null) {
-                        htmlEntries += `<div class="chamfer d-flex flex-row mb-1 half" title="${encodeAttr('' + rule_lives)} Lives"><div class="icon"><i class="fa-solid fa-user-group"></i></div><div class="flex-grow-1 text-center">${escapeHtml('' + rule_lives)}</div></div>`;
-                    } else {
-                        htmlEntries += `<div class="chamfer d-flex flex-row mb-1 half disabled"></div>`;
-                    }
-                    if (rule_kill_limit != null) {
-                        htmlEntries += `<div class="chamfer d-flex flex-row mb-1 half" title="${encodeAttr('' + rule_kill_limit)} Kills"><div class="icon"><i class="fa-solid fa-skull"></i></div><div class="flex-grow-1 text-center">${escapeHtml('' + rule_kill_limit)}</div></div>`;
-                    } else {
-                        htmlEntries += `<div class="chamfer d-flex flex-row mb-1 half disabled"></div>`;
-                    }
-                }
+                htmlEntries += `<a href="${encodeAttr(main_mod.url)}" target="_blank" rel="noopener noreferrer" class="text-decoration-none rule_game_mod chamfer d-flex flex-row mb-1" style="white-space:pre;" title="${encodeAttr(main_mod?.abbr ?? main_mod?.name ?? main_mod?.$id)}"><div class="icon"><i class="fa-solid fa-screwdriver-wrench"></i></div><div class="flex-grow-1 text-center text-truncate"><span class="text-truncate" data-path="session.name">${escapeHtml(main_mod?.abbr ?? main_mod?.name ?? main_mod?.$id)}</span></div></a>`;
+            } else {
+                htmlEntries += `<div class="rule_game_mod chamfer d-flex flex-row mb-1 disabled" style="white-space:pre;"></div>`;
             }
 
             // time_limit
@@ -553,36 +521,28 @@ export function LoadGameListBZCC() {
                 }
             }
 
-            // barracks and satellite
+            // respawn
             {
-                let rule_satellite = session.level?.rules?.["satellite"];
-                let rule_barracks = session.level?.rules?.["barracks"];
-                if (rule_satellite != null || rule_barracks != null) {
-                    if (rule_satellite != null) {
-                        htmlEntries += `<div class="${rule_satellite ? "on" : "off"} chamfer d-flex flex-row mb-1 half" title="Satellite ${rule_satellite ? "On" : "Off"}"><div class="icon"><i class="fa-solid fa-satellite" ></i></div><div class="flex-grow-1 text-center">${rule_satellite ? 'ON' : 'OFF'}</div></div>`;
-                    } else {
-                        htmlEntries += `<div class="chamfer d-flex flex-row mb-1 half disabled"></div>`;
-                    }
-                    if (rule_barracks != null) {
-                        htmlEntries += `<div class="${rule_barracks ? "on" : "off"} chamfer d-flex flex-row mb-1 half" title="Barracks ${rule_barracks ? "On" : "Off"}"><div class="icon"><i class="fa-solid fa-tent"></i></div><div class="flex-grow-1 text-center">${rule_barracks ? 'ON' : 'OFF'}</div></div>`;
-                    } else {
-                        htmlEntries += `<div class="chamfer d-flex flex-row mb-1 half disabled"></div>`;
-                    }
+                let rule_respawn = session.level?.rules?.["respawn"];
+                if (rule_respawn != null) {
+                    htmlEntries += `<div class="chamfer d-flex flex-row mb-1" title="${encodeAttr('' + rule_respawn)} Respawn"><div class="icon"><i class="fa-solid fa-undo"></i></div><div class="flex-grow-1 text-center">${escapeHtml('' + rule_respawn)}</div></div>`;
+                } else {
+                    htmlEntries += `<div class="chamfer d-flex flex-row mb-1 disabled"></div>`;
                 }
             }
 
-            // sniper and splinter
+            // kill_limit and vehicle_only
             {
-                let rule_sniper = session.level?.rules?.["sniper"];
-                let rule_splinter = session.level?.rules?.["splinter"];
-                if (rule_sniper != null || rule_splinter != null) {
-                    if (rule_sniper != null) {
-                        htmlEntries += `<div class="${rule_sniper ? "on" : "off"} chamfer d-flex flex-row mb-1 half" title="Sniper ${rule_sniper ? "On" : "Off"}"><div class="icon"><i class="fa-solid fa-cust-rifle"></i></div><div class="flex-grow-1 text-center">${rule_sniper ? 'ON' : 'OFF'}</div></div>`;
+                let rule_kill_limit = session.level?.rules?.["kill_limit"];
+                let rule_vehicle_only = session.level?.rules?.["vehicle_only"];
+                if (rule_kill_limit != null || rule_vehicle_only != null) {
+                    if (rule_kill_limit != null) {
+                        htmlEntries += `<div class="chamfer d-flex flex-row mb-1 half" title="${encodeAttr('' + rule_kill_limit)} Kills"><div class="icon"><i class="fa-solid fa-skull"></i></div><div class="flex-grow-1 text-center">${escapeHtml('' + rule_kill_limit)}</div></div>`;
                     } else {
                         htmlEntries += `<div class="chamfer d-flex flex-row mb-1 half disabled"></div>`;
                     }
-                    if (rule_splinter != null) {
-                        htmlEntries += `<div class="${rule_splinter ? "on" : "off"} chamfer d-flex flex-row mb-1 half" title="Splinter ${rule_splinter ? "On" : "Off"}"><div class="icon"><i class="fa-solid fa-explosion" ></i></div><div class="flex-grow-1 text-center">${rule_splinter ? 'ON' : 'OFF'}</div></div>`;
+                    if (rule_vehicle_only != null) {
+                        htmlEntries += `<div class="${rule_vehicle_only ? "on" : "off"} chamfer d-flex flex-row mb-1 half" title="Vehicle Only ${rule_vehicle_only ? "On" : "Off"}"><div class="icon"><i class="fa-solid fa-car" ></i></div><div class="flex-grow-1 text-center">${rule_vehicle_only ? 'ON' : 'OFF'}</div></div>`;
                     } else {
                         htmlEntries += `<div class="chamfer d-flex flex-row mb-1 half disabled"></div>`;
                     }
@@ -593,13 +553,9 @@ export function LoadGameListBZCC() {
             for (let prop in session.level.rules) {
                 if (session.level.rules[prop] != null) {
                     switch (prop) {
-                        case 'lives':
                         case 'kill_limit':
                         case 'time_limit':
-                        case 'satellite':
-                        case 'barracks':
-                        case 'sniper':
-                        case 'splinter':
+                        case 'respawn':
                             break;
                         default:
                             htmlEntries += `<div class="text-truncate text-center chamfer d-flex flex-row mb-1" title="${encodeAttr(prop)}">${escapeHtml('' + session.level.rules[prop])}</div>`;

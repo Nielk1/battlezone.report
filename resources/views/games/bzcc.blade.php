@@ -493,7 +493,7 @@
     <aside class="sidebar3" style="background-color: black !important;">
 
         <div id="lobbyListHeader" class="header-bar header-bar-menu-pad">
-            <div class="flex-grow-1 text-truncate">Battlezone Combat Commander - Multiplayer Session List (WIP)</div>
+            <div class="flex-grow-1 text-truncate">Battlezone Combat Commander - Multiplayer Session List</div>
             <div class="d-flex gap-1 float-end">
                 <i id="lobbyListLoading" class="text-primary fa fa-circle-o-notch fa-spin fa-2x fa-fw"></i>
                 <button id="btnExtra" type="button" data-bs-toggle="button" aria-pressed="false" class="btn btn-sm btn-outline-primary">Thin</button>
