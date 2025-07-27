@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\TeamMember;
 
 class PageController extends Controller
 {
@@ -46,6 +46,19 @@ class PageController extends Controller
     public function social()
     {
         return view('social');
+    }
+
+    public function about()
+    {
+        $filename = resource_path("data/team.json");
+        $sdata = json_decode(file_get_contents($filename), true);
+        $team = [];
+        if (is_array($sdata)) {
+            foreach ($sdata as $member) {
+                $team[] = TeamMember::fromArray($member);
+            }
+        }
+        return view('about', ['team' => $team]);
     }
 
     public function gamelist()

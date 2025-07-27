@@ -1,35 +1,41 @@
-{
-  "team": [
+[
     {
-      "name": "John \"Nielk1\" Klein",
-      "position": "Web Developer, Editor",
-      "image": "nielk1.png",
-      "social": {
-        "twitter": "nielk1"
-      }
+        "name": "John \"Nielk1\" Klein",
+        "position": "Web Developer, Editor",
+        "image": "nielk1.png",
+        "social": {
+            "twitter": "nielk1",
+            "mobygames": "789084"
+        }
     },
     {
-      "name": "Anthony \"Ded10c\" Hadley",
-      "position": "Lead Editor, Contributor",
-      "image": "ded10c.png",
-      "social": {
-        "twitter": "ded10c"
-      }
+        "name": "Anthony \"Ded10c\" Hadley",
+        "position": "Lead Editor, Contributor",
+        "image": "ded10c.png",
+        "social": {
+            "twitter": "ded10c",
+            "mobygames": "789081"
+        }
     },
     {
-      "name": "Dee \"DeusExCeteri\" Rains",
-      "position": "Editor, Contributor",
-      "image": "deus.png"
+        "name": "Dee \"DeusExCeteri\" Rains",
+        "position": "Editor, Contributor",
+        "image": "deus.png",
+        "social": {
+            "mobygames": "789077"
+        }
     },
     {
-      "name": "HyperFighter",
-      "position": "Contributor",
-      "image": "hyperfighter.jpg"
+        "name": "HyperFighter",
+        "position": "Contributor",
+        "image": "hyperfighter.jpg"
     },
     {
-      "name": "Mike Arkin",
-      "position": "Advisor",
-      "image": "arkin.jpg"
+        "name": "Mike Arkin",
+        "position": "Advisor",
+        "image": "arkin.jpg",
+        "social": {
+            "mobygames": "4722"
+        }
     }
-  ]
-}
+]

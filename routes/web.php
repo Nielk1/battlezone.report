@@ -17,7 +17,7 @@ Route::get('/article/{type?}/{code?}', [ArticleController::class, 'index']);
 
 Route::get('/chronicle/{type?}/{code?}/{chapter?}', [ChronicleController::class, 'index'])->name('chronicle');
 
-Route::get('/images/{path}', [ImageController::class, 'show'])->where('path', '(articles|issues|chronicle)/.*\.(png|jpe?g|gif|webp)');
+Route::get('/images/{path}', [ImageController::class, 'show'])->where('path', '(articles|issues|chronicle|team)/.*\.(png|jpe?g|gif|webp)');
 
 Route::get('/api/games/sessions', [GamesApiController::class, 'sessions']);
 Route::get('/games', [PageController::class, 'gamelist'])->name('games');
@@ -26,6 +26,7 @@ Route::get('/games/bzcc', [PageController::class, 'gamelist_bzcc'])->name('games
 //Route::redirect('games/bzcc', 'https://battlezonescrapfield.github.io/BZCC-Website/', 302);
 
 Route::get('/social', [PageController::class, 'social'])->name('social');
+Route::get('/about', [PageController::class, 'about'])->name('about');
 
 Route::get('/welcome', function () {
     return view('welcome');
