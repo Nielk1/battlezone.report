@@ -17,7 +17,7 @@ Route::get('/article/{type?}/{code?}', [ArticleController::class, 'index']);
 
 Route::get('/chronicle/{type?}/{code?}/{chapter?}', [ChronicleController::class, 'index'])->name('chronicle');
 
-Route::get('/images/{path}', [ImageController::class, 'show'])->where('path', '(articles|issues|chronicle|team)/.*\.(png|jpe?g|gif|webp)');
+Route::get('/images/{path}', [ImageController::class, 'show'])->where('path', '(articles|issues|chronicle)/.*\.(png|jpe?g|gif|webp)');
 
 Route::get('/api/games/sessions', [GamesApiController::class, 'sessions']);
 Route::get('/games', [PageController::class, 'gamelist'])->name('games');
