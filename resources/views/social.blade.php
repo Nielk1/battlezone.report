@@ -16,9 +16,7 @@
                     <div class="col-12 col-md-7">
                         <p>Lobby-sitting getting you down? Keeping the IRC open starting to get on your nerves? Don't worry - we've got just the thing! Come on down to the Battlezone Discord channel instead; keep track of both lobbies, keep an eye on the news and an ear to the ground, and get help for all your mapping and modding woes... or just talk rubbish until you're blue in the face, we don't judge.</p>
                         <p>
-                            <a href="https://discord.battlezone.report" target="_blank" class="btn btn-primary" aria-label="Join">
-                                <span class="glyphicon glyphicon-link" aria-hidden="true"></span> Join
-                            </a>
+                            <a href="https://discord.battlezone.report" target="_blank" class="btn btn-primary" aria-label="Join"><i class="bi bi-discord"></i> Join Community Discord</a>
                         </p>
                         <img style="margin:auto;width:500px;" class="d-none d-print-block" src="/images/discord-qr.png" alt="DiscordQR"/>
                     </div>
