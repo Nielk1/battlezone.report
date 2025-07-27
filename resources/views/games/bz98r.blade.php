@@ -15,6 +15,12 @@
             --section-mode-extra-left: calc(var(--section-icons-width) + var(--section-mode-width) + ((var(--section-icons-count) - 1) * 4px))
         }
 
+        @media screen and (max-width: 768px) {
+            :root {
+                --section-mode-width: 25px;
+            }
+        }
+
         /*
          * Custom Icon: Rifle
          * Formed by cropping the soldier glyph to only show the rifle portion, then rotating it 45 deg.
