@@ -27,9 +27,11 @@ export function LoadGameListBZ98R() {
         const btnExtra = document.getElementById('btnExtra');
         const lobbyList = document.getElementById('lobbyList');
         if (btnExtra.classList.contains('active')) {
-            lobbyList.classList.remove('show_extra');
-        } else {
             lobbyList.classList.add('show_extra');
+            btnExtra.classList.remove('active');
+        } else {
+            lobbyList.classList.remove('show_extra');
+            btnExtra.classList.add('active');
         }
     });
     document.getElementById("btnRefresh").addEventListener('click', function (e) {

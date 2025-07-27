@@ -507,6 +507,7 @@ $code-color:     #0e0;
     .sidebar3-content {
         flex: 1;
         overflow: auto;
+        word-break: break-word;
     }
     .sidebar-hidden .header-bar-menu-pad2 {
         padding-left: 42px;

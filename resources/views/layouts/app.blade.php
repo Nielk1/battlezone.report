@@ -2,7 +2,7 @@
 <html data-bs-theme="dark">
 <head>
     <title>@yield('title', 'Battlezone Field Report')</title>
-    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    @vite(['resources/sass/app.scss','resources/js/app.js'])
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">

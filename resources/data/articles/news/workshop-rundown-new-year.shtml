@@ -29,14 +29,14 @@
                         <div class="modlink-row">
                             <div class="d-flex flex-row flex-md-column flex-xl-row flex-row" role="group">
                                 <a href="http://steamcommunity.com/sharedfiles/filedetails/?id=669768479" target="_blank" rel="noopener noreferrer" role="button" class="btn btn-dark d-flex align-items-center sale-btn" style="--bs-btn-border-color: #111111; --bs-btn-bg: #111111;"><span class="svg-icon"><!--#svg logo_steam --></span>
-                                    <span class="text-nowrap flex-fill text-center">
+                                    <span class="flex-fill text-center">
                                         <span class="text-body-secondary">
                                             Multiplayer <span class="hidden-xs">Map Pack</span>
                                         </span>
                                     </span>
                                 </a>
                                 <a href="http://steamcommunity.com/sharedfiles/filedetails/?id=677699019" target="_blank" rel="noopener noreferrer" role="button" class="btn btn-dark d-flex align-items-center sale-btn" style="--bs-btn-border-color: #111111; --bs-btn-bg: #111111;"><span class="svg-icon"><!--#svg logo_steam --></span>
-                                    <span class="text-nowrap flex-fill text-center">
+                                    <span class="flex-fill text-center">
                                         <span class="text-body-secondary">
                                             Instant Action <span class="hidden-xs">Map Pack</span>
                                         </span>
@@ -58,14 +58,14 @@
                         <div class="modlink-row">
                             <div class="d-flex flex-row flex-md-column flex-xl-row flex-row" role="group">
                                 <a href="http://steamcommunity.com/sharedfiles/filedetails/?id=688808310" target="_blank" rel="noopener noreferrer" role="button" class="btn btn-dark d-flex align-items-center sale-btn" style="--bs-btn-border-color: #111111; --bs-btn-bg: #111111;"><span class="svg-icon"><!--#svg logo_steam --></span>
-                                    <span class="text-nowrap flex-fill text-center">
+                                    <span class="flex-fill text-center">
                                         <span class="text-body-secondary">
                                             Steam
                                         </span>
                                     </span>
                                 </a>
                                 <a href="http://www.moddb.com/games/battlezone-98-redux/addons/hd-reticle-pack" target="_blank" rel="noopener noreferrer" role="button" class="btn btn-danger d-flex align-items-center sale-btn"><span class="svg-icon"><!--#svg logo_moddb --></span>
-                                    <span class="text-nowrap flex-fill text-center">
+                                    <span class="flex-fill text-center">
                                         <span class="text-body-secondary">
                                             ModDB
                                         </span>
@@ -92,7 +92,7 @@
                         <div class="modlink-row">
                             <div class="d-flex flex-row flex-md-column flex-xl-row flex-row" role="group">
                                 <a href="http://steamcommunity.com/sharedfiles/filedetails/?id=731314309" target="_blank" rel="noopener noreferrer" role="button" class="btn btn-dark d-flex align-items-center sale-btn" style="--bs-btn-border-color: #111111; --bs-btn-bg: #111111;"><span class="svg-icon"><!--#svg logo_steam --></span>
-                                    <span class="text-nowrap flex-fill text-center">
+                                    <span class="flex-fill text-center">
                                         <span class="text-body-secondary">
                                             Steam
                                         </span>
@@ -114,7 +114,7 @@
                         <div class="modlink-row">
                             <div class="d-flex flex-row flex-md-column flex-xl-row flex-row" role="group">
                                 <a href="http://steamcommunity.com/sharedfiles/filedetails/?id=680256441" target="_blank" rel="noopener noreferrer" role="button" class="btn btn-dark d-flex align-items-center sale-btn" style="--bs-btn-border-color: #111111; --bs-btn-bg: #111111;"><span class="svg-icon"><!--#svg logo_steam --></span>
-                                    <span class="text-nowrap flex-fill text-center">
+                                    <span class="flex-fill text-center">
                                         <span class="text-body-secondary">
                                             Steam
                                         </span>
@@ -137,7 +137,7 @@
                         <div class="modlink-row">
                             <div class="d-flex flex-row flex-md-column flex-xl-row flex-row" role="group">
                                 <a href="http://steamcommunity.com/sharedfiles/filedetails/?id=700772106" target="_blank" rel="noopener noreferrer" role="button" class="btn btn-dark d-flex align-items-center sale-btn" style="--bs-btn-border-color: #111111; --bs-btn-bg: #111111;"><span class="svg-icon"><!--#svg logo_steam --></span>
-                                    <span class="text-nowrap flex-fill text-center">
+                                    <span class="flex-fill text-center">
                                         <span class="text-body-secondary">
                                             Steam
                                         </span>
@@ -159,7 +159,7 @@
                         <div class="modlink-row">
                             <div class="d-flex flex-row flex-md-column flex-xl-row flex-row" role="group">
                                 <a href="http://steamcommunity.com/sharedfiles/filedetails/?id=670202215" target="_blank" rel="noopener noreferrer" role="button" class="btn btn-dark d-flex align-items-center sale-btn" style="--bs-btn-border-color: #111111; --bs-btn-bg: #111111;"><span class="svg-icon"><!--#svg logo_steam --></span>
-                                    <span class="text-nowrap flex-fill text-center">
+                                    <span class="flex-fill text-center">
                                         <span class="text-body-secondary">
                                             Steam
                                         </span>
@@ -181,7 +181,7 @@
                         <div class="modlink-row">
                             <div class="d-flex flex-row flex-md-column flex-xl-row flex-row" role="group">
                                 <a href="http://steamcommunity.com/sharedfiles/filedetails/?id=670063056" target="_blank" rel="noopener noreferrer" role="button" class="btn btn-dark d-flex align-items-center sale-btn" style="--bs-btn-border-color: #111111; --bs-btn-bg: #111111;"><span class="svg-icon"><!--#svg logo_steam --></span>
-                                    <span class="text-nowrap flex-fill text-center">
+                                    <span class="flex-fill text-center">
                                         <span class="text-body-secondary">
                                             Steam
                                         </span>
@@ -205,7 +205,7 @@
                         <div class="modlink-row">
                             <div class="d-flex flex-row flex-md-column flex-xl-row flex-row" role="group">
                                 <a href="http://steamcommunity.com/sharedfiles/filedetails/?id=668997489" target="_blank" rel="noopener noreferrer" role="button" class="btn btn-dark d-flex align-items-center sale-btn" style="--bs-btn-border-color: #111111; --bs-btn-bg: #111111;"><span class="svg-icon"><!--#svg logo_steam --></span>
-                                    <span class="text-nowrap flex-fill text-center">
+                                    <span class="flex-fill text-center">
                                         <span class="text-body-secondary">
                                             Steam
                                         </span>
@@ -230,14 +230,14 @@
                     <div class="modlink-row">
                         <div class="d-flex flex-row flex-md-column flex-xl-row flex-row" role="group">
                             <a href="http://steamcommunity.com/sharedfiles/filedetails/?id=668704990" target="_blank" rel="noopener noreferrer" role="button" class="btn btn-dark d-flex align-items-center sale-btn" style="--bs-btn-border-color: #111111; --bs-btn-bg: #111111;"><span class="svg-icon"><!--#svg logo_steam --></span>
-                                <span class="text-nowrap flex-fill text-center">
+                                <span class="flex-fill text-center">
                                     <span class="text-body-secondary">
                                         Outpost 5
                                     </span>
                                 </span>
                             </a>
                             <a href="http://steamcommunity.com/sharedfiles/filedetails/?id=667094151" target="_blank" rel="noopener noreferrer" role="button" class="btn btn-dark d-flex align-items-center sale-btn" style="--bs-btn-border-color: #111111; --bs-btn-bg: #111111;"><span class="svg-icon"><!--#svg logo_steam --></span>
-                                <span class="text-nowrap flex-fill text-center">
+                                <span class="flex-fill text-center">
                                     <span class="text-body-secondary">
                                         The Relic
                                     </span>
@@ -246,7 +246,7 @@
                         </div>
                         <div class="d-flex flex-row flex-md-column flex-xl-row flex-row" role="group">
                             <a href="http://www.moddb.com/games/battlezone-98-redux/addons/the-relic1" target="_blank" rel="noopener noreferrer" role="button" class="btn btn-danger d-flex align-items-center sale-btn"><span class="svg-icon"><!--#svg logo_moddb --></span>
-                                <span class="text-nowrap flex-fill text-center">
+                                <span class="flex-fill text-center">
                                     <span class="text-body-secondary">
                                         The Relic
                                     </span>
@@ -271,14 +271,14 @@
                         <div class="modlink-row">
                             <div class="d-flex flex-row flex-md-column flex-xl-row flex-row" role="group">
                                 <a href="http://steamcommunity.com/sharedfiles/filedetails/?id=677530903" target="_blank" rel="noopener noreferrer" role="button" class="btn btn-dark d-flex align-items-center sale-btn" style="--bs-btn-border-color: #111111; --bs-btn-bg: #111111;"><span class="svg-icon"><!--#svg logo_steam --></span>
-                                    <span class="text-nowrap flex-fill text-center">
+                                    <span class="flex-fill text-center">
                                         <span class="text-body-secondary">
                                             Bully <span class="d-none d-sm-inline hidden-xs">in the Playground<span>
                                         </span>
                                     </span>
                                 </a>
                                 <a href="http://steamcommunity.com/sharedfiles/filedetails/?id=676138826" target="_blank" rel="noopener noreferrer" role="button" class="btn btn-dark d-flex align-items-center sale-btn" style="--bs-btn-border-color: #111111; --bs-btn-bg: #111111;"><span class="svg-icon"><!--#svg logo_steam --></span>
-                                    <span class="text-nowrap flex-fill text-center">
+                                    <span class="flex-fill text-center">
                                         <span class="text-body-secondary">
                                             Soviet <span class="hidden-xs">Playground</span>
                                         </span>
@@ -303,14 +303,14 @@
                         <div class="modlink-row">
                             <div class="d-flex flex-row flex-md-column flex-xl-row flex-row" role="group">
                                 <a href="http://steamcommunity.com/sharedfiles/filedetails/?id=716724243" target="_blank" rel="noopener noreferrer" role="button" class="btn btn-dark d-flex align-items-center sale-btn" style="--bs-btn-border-color: #111111; --bs-btn-bg: #111111;"><span class="svg-icon"><!--#svg logo_steam --></span>
-                                    <span class="text-nowrap flex-fill text-center">
+                                    <span class="flex-fill text-center">
                                         <span class="text-body-secondary">
                                             Steam
                                         </span>
                                     </span>
                                 </a>
                                 <a href="http://www.moddb.com/games/battlezone-98-redux/addons/black-dog-voice-pack" target="_blank" rel="noopener noreferrer" role="button" class="btn btn-danger d-flex align-items-center sale-btn"><span class="svg-icon"><!--#svg logo_moddb --></span>
-                                    <span class="text-nowrap flex-fill text-center">
+                                    <span class="flex-fill text-center">
                                         <span class="text-body-secondary">
                                             ModDB
                                         </span>
@@ -332,7 +332,7 @@
                         <div class="modlink-row">
                             <div class="d-flex flex-row flex-md-column flex-xl-row flex-row" role="group">
                                 <a href="http://steamcommunity.com/sharedfiles/filedetails/?id=677530903" target="_blank" rel="noopener noreferrer" role="button" class="btn btn-dark d-flex align-items-center sale-btn" style="--bs-btn-border-color: #111111; --bs-btn-bg: #111111;"><span class="svg-icon"><!--#svg logo_steam --></span>
-                                    <span class="text-nowrap flex-fill text-center">
+                                    <span class="flex-fill text-center">
                                         <span class="text-body-secondary">
                                             Steam
                                         </span>
