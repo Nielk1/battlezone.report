@@ -24,6 +24,7 @@ Route::get('/games', [PageController::class, 'gamelist'])->name('games');
 Route::get('/games/bz98r', [PageController::class, 'gamelist_bz98r'])->name('games_bz98r');
 Route::get('/games/bzcc', [PageController::class, 'gamelist_bzcc'])->name('games_bzcc');
 //Route::redirect('games/bzcc', 'https://battlezonescrapfield.github.io/BZCC-Website/', 302);
+Route::redirect('/acticle/news/interview-with-jason-kingsley', '/article/interview/interview-with-jason-kingsley', 301);
 
 Route::get('/social', [PageController::class, 'social'])->name('social');
 Route::get('/about', [PageController::class, 'about'])->name('about');
