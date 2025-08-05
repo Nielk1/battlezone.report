@@ -67,7 +67,7 @@ class IssueController extends Controller
                     $html = file_get_contents($filename1);
 
                     // Replace SVG logo placeholders like <!--#svg LOGO_NAME -->
-                    $html = preg_replace_callback('/<!--#svg ([a-zA-Z0-9_-]+) -->/', function($matches) {
+                    $html = preg_replace_callback('/<!--#svg ([a-zA-Z0-9\/_-]+) -->/', function($matches) {
                         $svgName = $matches[1];
                         $svgPath = resource_path("svg/{$svgName}.svg");
                         return file_exists($svgPath) ? file_get_contents($svgPath) : '';

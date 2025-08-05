@@ -5,7 +5,7 @@
             @if (isset($deal['GOG']))
                 <a href="{{ $deal['GOG']['url'] }}" target="_blank" rel="noopener noreferrer" role="button" class="btn btn-gog d-flex align-items-center sale-btn">
                     <span class="svg-icon">
-                        {!! File::get(resource_path('svg/logo_gog.svg')) !!}
+                        {!! File::get(resource_path('svg/glyph/brand/gog.svg')) !!}
                     </span>
                     {{--<span class="d-print-block d-none text-truncate" title="GOG">GOG</span>--}}
                     @include('partials.price-number', ['deal' => $deal['GOG']])
@@ -14,7 +14,7 @@
             @if (isset($deal['Steam']))
                 <a href="{{ $deal['Steam']['url'] }}" target="_blank" rel="noopener noreferrer" role="button" class="btn btn-steam d-flex align-items-center sale-btn">
                     <span class="svg-icon">
-                        {!! File::get(resource_path('svg/logo_steam.svg')) !!}
+                        {!! File::get(resource_path('svg/glyph/brand/steam.svg')) !!}
                     </span>
                     {{--<span class="d-print-block d-none text-truncate" title="Steam">Steam</span>--}}
                     @include('partials.price-number', ['deal' => $deal['Steam']])
