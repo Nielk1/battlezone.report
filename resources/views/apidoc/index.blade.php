@@ -14,46 +14,61 @@
             <div class="container">
                 @foreach($content as $item)
                     <div class="content-item" data-spy="section" id="{{ $item['code'] }}">
-                        <h4>Module: {{ $item['name'] }}</h4>
-                        <pre>{{ $item['desc'] }}</pre>
-                    </div>
-                    {{-- Recursive dive the children, where they will still be rendered flat but the data matches the channel tree --}}
-                    @if(isset($item['children']) && count($item['children']) > 0)
-                        <div class="content-children">
-                            @foreach($item['children'] as $child)
-                                <div class="content-item" data-spy="section" id="{{ $child['code'] }}">
-                                    <h5>Section: {{ $child['name'] }}</h5>
-                                    <pre>{{ $child['desc'] }}</pre>
-                                    @if(isset($child['children']) && count($child['children']) > 0)
-                                        <div class="content-children">
-                                            @foreach($child['children'] as $subchild)
-                                                <div class="content-item" data-spy="section" id="{{ $subchild['code'] }}">
-                                                    <h6>Item: {{ $subchild['name'] }}</h6>
-                                                    <pre>{{ $subchild['desc'] }}</pre>
-                                                    @if(isset($subchild['view']))
-                                                        <pre>{{ $subchild['view'] }}</pre>
-                                                    @endif
-                                                    @if(isset($subchild['children']) && count($subchild['children']) > 0)
-                                                        <div class="content-children">
-                                                            @foreach($subchild['children'] as $subsubchild)
-                                                                <div class="content-item" data-spy="section" id="{{ $subsubchild['code'] }}">
-                                                                    <h6>Subitem: {{ $subsubchild['name'] }}</h6>
-                                                                    <pre>{{ $subsubchild['desc'] }}</pre>
-                                                                    @if(isset($subsubchild['view']))
-                                                                        <pre>{{ $subsubchild['view'] }}</pre>
-                                                                    @endif
-                                                                </div>
-                                                            @endforeach
-                                                        </div>
-                                                    @endif
-                                                </div>
-                                            @endforeach
-                                        </div>
-                                    @endif
-                                </div>
+                        <h2>Module: {{ $item['name'] }}</h2>
+                        <div class="documentation-desc">
+                            @foreach($item['desc'] as $desc)
+                                <p>{{ $desc }}</p>
                             @endforeach
                         </div>
-                    @endif
+                        @if(isset($item['children']) && count($item['children']) > 0)
+                            <div class="ps-3 border-5 border-start border-primary">
+                                @foreach($item['children'] as $child)
+                                    <div class="content-item" data-spy="section" id="{{ $child['code'] }}">
+                                        <h3>Section: {{ $child['name'] }}</h3>
+                                        <div class="documentation-desc">
+                                            @foreach($child['desc'] as $desc)
+                                                <p>{{ $desc }}</p>
+                                            @endforeach
+                                        </div>
+                                        @if(isset($child['children']) && count($child['children']) > 0)
+                                            <div class="ps-3 border-5 border-start border-primary">
+                                                @foreach($child['children'] as $subchild)
+                                                    <div class="content-item" data-spy="section" id="{{ $subchild['code'] }}">
+                                                        <h4>Item: {{ $subchild['name'] }}</h4>
+                                                        <div class="documentation-desc">
+                                                            @foreach($subchild['desc'] as $desc)
+                                                                <p>{{ $desc }}</p>
+                                                            @endforeach
+                                                        </div>
+                                                        @if(isset($subchild['view']))
+                                                            <pre>{{ $subchild['view'] }}</pre>
+                                                        @endif
+                                                        @if(isset($subchild['children']) && count($subchild['children']) > 0)
+                                                            <div class="ps-3 border-5 border-start border-primary">
+                                                                @foreach($subchild['children'] as $subsubchild)
+                                                                    <div class="content-item" data-spy="section" id="{{ $subsubchild['code'] }}">
+                                                                        <h5>Subitem: {{ $subsubchild['name'] }}</h5>
+                                                                        @if(isset($subsubchild['view']))
+                                                                            <pre>{{ $subsubchild['view'] }}</pre>
+                                                                        @endif
+                                                                        <div class="documentation-desc">
+                                                                            @foreach($subsubchild['desc'] as $desc)
+                                                                                <p>{{ $desc }}</p>
+                                                                            @endforeach
+                                                                        </div>
+                                                                    </div>
+                                                                @endforeach
+                                                            </div>
+                                                        @endif
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                        @endif
+                                    </div>
+                                @endforeach
+                            </div>
+                        @endif
+                    </div>
                     <hr>
                 @endforeach
             </div>

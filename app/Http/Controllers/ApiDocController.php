@@ -151,9 +151,16 @@ class ApiDocController extends Controller
                 $content_members[] = $memberContent;
             }
         }
+        // Convert desc to paragraphs
+        $desc = $field['desc'] ?? null;
+        if ($desc !== null) {
+            $paragraphs = preg_split('/(\r\n|\r|\n){2,}/', trim($desc));
+        } else {
+            $paragraphs = [];
+        }
         $content_item = [
             'name' => $name,
-            'desc' => $field['desc'] ?? null,
+            'desc' => $paragraphs,
             //'type' => $field['type'] ?? null,
             'code' => $code,
             'special' => $special,
@@ -217,6 +224,13 @@ class ApiDocController extends Controller
                 if (!empty($section['children'])) {
                     $section_name = $section['name'] ?? "Other";
                     $section_code = $section['code'] ?? null;
+                    // Convert desc to paragraphs for section
+                    $section_desc = $section['desc'] ?? null;
+                    if ($section_desc !== null) {
+                        $section_paragraphs = preg_split('/(\r\n|\r|\n){2,}/', trim($section_desc));
+                    } else {
+                        $section_paragraphs = [];
+                    }
                     $children[] = new Channel(
                         $section_name,
                         $section['desc'] ?? null,
@@ -229,7 +243,7 @@ class ApiDocController extends Controller
                     $content_children[] = [
                         'name' => $section_name,
                         'code' => $section_code,
-                        'desc' => $section['desc'] ?? null,
+                        'desc' => $section_paragraphs,
                         'children' => $section['content'] ?? []
                     ];
                     $section_counter++;
@@ -244,11 +258,17 @@ class ApiDocController extends Controller
             }
 
             $name = $api['modules'][$module]['name'] ?? $module;
+            $module_desc = $api['modules'][$module]['desc'] ?? null;
+            if ($module_desc !== null) {
+                $module_paragraphs = preg_split('/(\r\n|\r|\n){2,}/', trim($module_desc));
+            } else {
+                $module_paragraphs = [];
+            }
             $channels[] = new Channel($name, null, null, null, null, "/apidoc#{$module}", [], $children);
             $contents[] = [
                 'name' => $name,
                 'code' => $module,
-                'desc' => $api['modules'][$module]['desc'] ?? null,
+                'desc' => $module_paragraphs,
                 'children' => $content_children
             ];
         }
