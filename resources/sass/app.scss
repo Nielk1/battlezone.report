@@ -609,25 +609,31 @@ $code-color:     #0e0;
     gap: 0.5em;
 }
 
-
-.svg-icon {
-    margin: -4px 0;
-    svg {
-        height: 2em;
-        width: auto;
-        display: inline-block;
-        vertical-align: middle;
+.channel-link {
+    .svg-icon {
+        margin: -4px 0;
+        svg {
+            height: 2em;
+            width: auto;
+            display: inline-block;
+            vertical-align: middle;
+        }
     }
 }
 .font-icon {
-    //margin: -4px 0;
-    width: 32px;
-    height: 32px;
-    margin: -4px 0;
-    text-align: center;
-    .bi::before {
+    font-size: 2em;
+}
+.channel-link {
+    .font-icon {
         font-size: calc(2em - 8px);
-        margin: 4px 0;
+        //margin: -4px 0;
+        width: 32px;
+        height: 32px;
+        margin: -4px 0;
+        text-align: center;
+        .bi::before {
+            margin: 4px 0;
+        }
     }
 }
 

@@ -4,9 +4,19 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Channel;
+use League\CommonMark\CommonMarkConverter;
 
 class ApiDocController extends Controller
 {
+    private CommonMarkConverter $converter;
+    //private const VERSION_TAG_PATTERN = '/\{VERSION:\s*\d+(?:\.[\da-zA-Z]+)*\+\}/';
+    private const VERSION_TAG_PATTERN = '/\{VERSION:\s*([\d\w\.]+\+?)\}/';
+
+    public function __construct()
+    {
+        $this->converter = new CommonMarkConverter();
+    }
+
     private static function sortUnderscoresLast($a, $b) {
         $a_cmp = str_replace('_', '{', $a);
         $b_cmp = str_replace('_', '{', $b);
@@ -71,36 +81,67 @@ class ApiDocController extends Controller
         return strcmp($a_cmp, $b_cmp);
     }
 
-    private function generateChannelFromFieldEntry($field, $special, $section_code)
+    private function generateChannelAndContentFromFieldEntry($field, $special, $section_code)
     {
         $glyph = null;
+        $typeArrayRaw = [];
+        $typeArray = [];
+        $specialModulator = null;
+
         if (isset($field['type'])) {
+            $typeArrayRaw[] = $field['type'];
+        }
+
+        if (isset($field['types']) && is_array($field['types'])) {
+            foreach ($field['types'] as $t) {
+                $typeArrayRaw[] = $t;
+            }
+        }
+
+        $name = $field['name'];
+        foreach($typeArrayRaw as $type) {
             $type = $field['type'];
-            $name = $field['name'];
             switch ($type) {
-                case 'function':
+                case 'alias':
+                    $glyph = $glyph ?? "bi bi-box-seam";
+                    $typeArray[] = "alias";
+                    $specialModulator = "alias";
+                    break;
                 case 'function?':
+                    $typeArray[] = "nil";
+                case 'function':
                     $glyph = "glyph/tablericons/math-function";
+                    $typeArray[] = "function";
                     break;
-                case 'string':
                 case 'string?':
+                    $typeArray[] = "nil";
+                case 'string':
                     $glyph = "bi bi-fonts";
+                    $typeArray[] = "string";
                     break;
-                case 'integer':
                 case 'integer?':
+                    $typeArray[] = "nil";
+                case 'integer':
                     $glyph = "bi bi-123";
+                    $typeArray[] = "integer";
                     break;
-                case 'number':
                 case 'number?':
+                    $typeArray[] = "nil";
+                case 'number':
                     $glyph = "bi bi-hash";
+                    $typeArray[] = "number";
                     break;
-                case 'table':
                 case 'table?':
+                    $typeArray[] = "nil";
+                case 'table':
                     $glyph = "bi bi-table";
+                    $typeArray[] = "table";
                     break;
-                case 'boolean':
                 case 'boolean?':
+                    $typeArray[] = "nil";
+                case 'boolean':
                     $glyph = "bi bi-toggle-on";
+                    $typeArray[] = "boolean";
                     break;
                 default:
                     if (str_starts_with($type, 'enum ')) {
@@ -129,12 +170,15 @@ class ApiDocController extends Controller
                     }
                     break;
             }
-        } else {
-            switch ($special) {
-                case 'type':
-                    $glyph = "bi bi-box-seam";
-                    break;
-            }
+        }
+        switch ($special) {
+            case 'type':
+                if ($specialModulator == 'alias') {
+                } else {
+                    $glyph = $glyph ?? "bi bi-box-fill";
+                    $typeArray[] = "type";
+                }
+                break;
         }
         $name = $field['name'];
         if (!isset($glyph)) {
@@ -146,25 +190,53 @@ class ApiDocController extends Controller
         $content_members = [];
         if (isset($field['fields'])) {
             foreach ($field['fields'] as $inner_field) {
-                [$memberChannel, $memberContent] = $this->generateChannelFromFieldEntry($inner_field, "inner_" . $special, $code);
+                [$memberChannel, $memberContent] = $this->generateChannelAndContentFromFieldEntry($inner_field, "inner_" . $special, $code);
                 $members[] = $memberChannel;
                 $content_members[] = $memberContent;
             }
         }
-        // Convert desc to paragraphs
         $desc = $field['desc'] ?? null;
+
         if ($desc !== null) {
-            $paragraphs = preg_split('/(\r\n|\r|\n){2,}/', trim($desc));
+            // extract data from description
+
+            //preg_match_all('/@(\w+)\s+(.*?)(?=\s+@\w+|$)/s', $desc, $matches, PREG_SET_ORDER);
+            //foreach ($matches as $match) {
+            //    $tag = $match[1];
+            //    $content = trim($match[2]);
+            //    $field['tags'][$tag] = $content;
+            //}
+
+            // Version Tags
+            preg_match_all(self::VERSION_TAG_PATTERN, $desc, $version_matches);
+            foreach ($version_matches[1] as $version_value) {
+                $tag = 'version';
+                $field['tags'][$tag] = trim($version_value);
+            }
+            $desc = preg_replace(self::VERSION_TAG_PATTERN, '', $desc);
+
+            $desc_html = $this->converter->convert(trim($desc));
         } else {
-            $paragraphs = [];
+            $desc_html = null;
         }
+
+        // distinct and sort $typeArray
+        $typeArray = array_values(array_unique($typeArray));
+        sort($typeArray);
+
         $content_item = [
             'name' => $name,
-            'desc' => $paragraphs,
+            'desc' => $desc_html,
             //'type' => $field['type'] ?? null,
+            'type' => $typeArray ?? [],
             'code' => $code,
             'special' => $special,
             'glyph' => $glyph,
+
+            'base' => $field['base'] ?? null,
+            'view' => $field['view'] ?? null,
+            'tags' => $field['tags'] ?? null,
+
             'children' => $content_members
         ];
         $channel = new Channel(
@@ -202,7 +274,7 @@ class ApiDocController extends Controller
                 if ($type_data) {
                     $start = $type_data['start'] ?? 0;
                     $section_key = $this->findSectionKey($sections, $start);
-                    [$new_item, $new_content_item] = $this->generateChannelFromFieldEntry($type_data, 'type', $sections[$section_key]['code'] ?? null);
+                    [$new_item, $new_content_item] = $this->generateChannelAndContentFromFieldEntry($type_data, 'type', $sections[$section_key]['code'] ?? null);
                     $sections[$section_key]['children'][] = $new_item;
                     $sections[$section_key]['content'][] = $new_content_item;
                 }
@@ -211,7 +283,7 @@ class ApiDocController extends Controller
             foreach ($fields as $field) {
                 $start = $field['start'] ?? 0;
                 $section_key = $this->findSectionKey($sections, $start);
-                [$channel, $content] = $this->generateChannelFromFieldEntry($field, 'field', $sections[$section_key]['code'] ?? null);
+                [$channel, $content] = $this->generateChannelAndContentFromFieldEntry($field, 'field', $sections[$section_key]['code'] ?? null);
                 $sections[$section_key]['children'][] = $channel;
                 $sections[$section_key]['content'][] = $content;
             }
@@ -224,12 +296,11 @@ class ApiDocController extends Controller
                 if (!empty($section['children'])) {
                     $section_name = $section['name'] ?? "Other";
                     $section_code = $section['code'] ?? null;
-                    // Convert desc to paragraphs for section
                     $section_desc = $section['desc'] ?? null;
                     if ($section_desc !== null) {
-                        $section_paragraphs = preg_split('/(\r\n|\r|\n){2,}/', trim($section_desc));
+                        $desc_html = $this->converter->convert(trim($section_desc));
                     } else {
-                        $section_paragraphs = [];
+                        $desc_html = null;
                     }
                     $children[] = new Channel(
                         $section_name,
@@ -243,7 +314,9 @@ class ApiDocController extends Controller
                     $content_children[] = [
                         'name' => $section_name,
                         'code' => $section_code,
-                        'desc' => $section_paragraphs,
+                        'desc' => $desc_html,
+                        'type' => [ 'section' ],
+                        'glyph' => 'glyph/tablericons/section',
                         'children' => $section['content'] ?? []
                     ];
                     $section_counter++;
@@ -260,15 +333,15 @@ class ApiDocController extends Controller
             $name = $api['modules'][$module]['name'] ?? $module;
             $module_desc = $api['modules'][$module]['desc'] ?? null;
             if ($module_desc !== null) {
-                $module_paragraphs = preg_split('/(\r\n|\r|\n){2,}/', trim($module_desc));
+                $desc_html = $this->converter->convert(trim($module_desc));
             } else {
-                $module_paragraphs = [];
+                $desc_html = null;
             }
             $channels[] = new Channel($name, null, null, null, null, "/apidoc#{$module}", [], $children);
             $contents[] = [
                 'name' => $name,
                 'code' => $module,
-                'desc' => $module_paragraphs,
+                'desc' => $desc_html,
                 'children' => $content_children
             ];
         }
