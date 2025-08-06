@@ -71,7 +71,7 @@ class ApiDocController extends Controller
         return strcmp($a_cmp, $b_cmp);
     }
 
-    private function generateChannelFromFieldEntry($field, $special, &$new_content_item)
+    private function generateChannelFromFieldEntry($field, $special)
     {
         $glyph = null;
         if (isset($field['type'])) {
@@ -98,24 +98,10 @@ class ApiDocController extends Controller
                 case 'table?':
                     $glyph = "bi bi-table";
                     break;
-                //case 'bool':
                 case 'boolean':
                 case 'boolean?':
                     $glyph = "bi bi-toggle-on";
                     break;
-                //case 'array':
-                //case 'list':
-                //    $glyph = "bi bi-list-ul";
-                //    break;
-                //case 'object':
-                //    $glyph = "bi bi-box-seam";
-                //    break;
-                //case 'callable':
-                //    $glyph = "bi bi-code-slash";
-                //    break;
-                //case 'mixed':
-                //    $glyph = "bi bi-question-circle";
-                //    break;
                 default:
                     if (str_starts_with($type, 'enum ')) {
                         $glyph = "bi bi-list-ul";
@@ -145,25 +131,18 @@ class ApiDocController extends Controller
             }
         } else {
             switch ($special) {
-                //case 'type_field':
-                //    $glyph = "bi bi-code-square";
-                //    break;
                 case 'type':
                     $glyph = "bi bi-box-seam";
                     break;
-                //case 'field':
-                //    $glyph = "bi bi-file-earmark-text";
-                //    break;
             }
         }
         $members = [];
         $content_members = [];
         if (isset($field['fields'])) {
             foreach ($field['fields'] as $inner_field) {
-                //$members[] = $this->generateChannelFromFieldEntry($inner_field, 'inner_field');
-                $content_member = [];
-                $members[] = $this->generateChannelFromFieldEntry($inner_field, "inner_" . $special, $content_member);
-                $content_members[] = $content_member;
+                [$memberChannel, $memberContent] = $this->generateChannelFromFieldEntry($inner_field, "inner_" . $special);
+                $members[] = $memberChannel;
+                $content_members[] = $memberContent;
             }
         }
         $name = $field['name'];
@@ -171,7 +150,7 @@ class ApiDocController extends Controller
             $glyph = "bi bi-question-circle";
             $name = $field['name'] . ":" . ($field['type'] ?? 'unknown') . ($special ? " ($special)" : '');
         }
-        $new_content_item = [
+        $content_item = [
             'name' => $name,
             'desc' => $field['desc'] ?? null,
             'type' => $field['type'] ?? null,
@@ -179,7 +158,7 @@ class ApiDocController extends Controller
             'glyph' => $glyph,
             'children' => $content_members
         ];
-        return new Channel(
+        $channel = new Channel(
             $name,
             null,
             $glyph,
@@ -189,6 +168,7 @@ class ApiDocController extends Controller
             [],
             $members
         );
+        return [$channel, $content_item];
     }
 
     public function index()
@@ -213,8 +193,7 @@ class ApiDocController extends Controller
                 if ($type_data) {
                     $start = $type_data['start'] ?? 0;
                     $section_key = $this->findSectionKey($sections, $start);
-                    $new_content_item = [];
-                    $new_item = $this->generateChannelFromFieldEntry($type_data, 'type', $new_content_item);
+                    [$new_item, $new_content_item] = $this->generateChannelFromFieldEntry($type_data, 'type');
                     $sections[$section_key]['children'][] = $new_item;
                     $sections[$section_key]['content'][] = $new_content_item;
                 }
@@ -223,9 +202,9 @@ class ApiDocController extends Controller
             foreach ($fields as $field) {
                 $start = $field['start'] ?? 0;
                 $section_key = $this->findSectionKey($sections, $start);
-                $new_content_item = [];
-                $sections[$section_key]['children'][] = $this->generateChannelFromFieldEntry($field, 'field', $new_content_item);
-                $sections[$section_key]['content'][] = $new_content_item;
+                [$channel, $content] = $this->generateChannelFromFieldEntry($field, 'field');
+                $sections[$section_key]['children'][] = $channel;
+                $sections[$section_key]['content'][] = $content;
             }
 
             // Prepare children arrays for output
