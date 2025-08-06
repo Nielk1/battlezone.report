@@ -13,7 +13,7 @@
         <div id="main-scrollable-content" class="sidebar3-content">
             <div class="container">
                 @foreach($content as $item)
-                    <div class="content-item" data-spy="section" id="{{ $item['type'] }}/{{ $item['code'] }}">
+                    <div class="content-item" data-spy="section" id="{{ $item['code'] }}">
                         <h4>Module: {{ $item['name'] }}</h4>
                         <pre>{{ $item['desc'] }}</pre>
                     </div>
@@ -21,17 +21,30 @@
                     @if(isset($item['children']) && count($item['children']) > 0)
                         <div class="content-children">
                             @foreach($item['children'] as $child)
-                                <div class="content-item" data-spy="section" id="{{ $child['type'] ?? '' }}/{{ $child['code'] ?? '' }}">
+                                <div class="content-item" data-spy="section" id="{{ $child['code'] }}">
                                     <h5>Section: {{ $child['name'] }}</h5>
                                     <pre>{{ $child['desc'] }}</pre>
                                     @if(isset($child['children']) && count($child['children']) > 0)
                                         <div class="content-children">
                                             @foreach($child['children'] as $subchild)
-                                                <div class="content-item" data-spy="section" id="{{ $subchild['type'] ?? '' }}/{{ $subchild['code'] ?? '' }}">
+                                                <div class="content-item" data-spy="section" id="{{ $subchild['code'] }}">
                                                     <h6>Item: {{ $subchild['name'] }}</h6>
                                                     <pre>{{ $subchild['desc'] }}</pre>
                                                     @if(isset($subchild['view']))
                                                         <pre>{{ $subchild['view'] }}</pre>
+                                                    @endif
+                                                    @if(isset($subchild['children']) && count($subchild['children']) > 0)
+                                                        <div class="content-children">
+                                                            @foreach($subchild['children'] as $subsubchild)
+                                                                <div class="content-item" data-spy="section" id="{{ $subsubchild['code'] }}">
+                                                                    <h6>Subitem: {{ $subsubchild['name'] }}</h6>
+                                                                    <pre>{{ $subsubchild['desc'] }}</pre>
+                                                                    @if(isset($subsubchild['view']))
+                                                                        <pre>{{ $subsubchild['view'] }}</pre>
+                                                                    @endif
+                                                                </div>
+                                                            @endforeach
+                                                        </div>
                                                     @endif
                                                 </div>
                                             @endforeach

@@ -71,7 +71,7 @@ class ApiDocController extends Controller
         return strcmp($a_cmp, $b_cmp);
     }
 
-    private function generateChannelFromFieldEntry($field, $special)
+    private function generateChannelFromFieldEntry($field, $special, $section_code)
     {
         $glyph = null;
         if (isset($field['type'])) {
@@ -136,24 +136,26 @@ class ApiDocController extends Controller
                     break;
             }
         }
-        $members = [];
-        $content_members = [];
-        if (isset($field['fields'])) {
-            foreach ($field['fields'] as $inner_field) {
-                [$memberChannel, $memberContent] = $this->generateChannelFromFieldEntry($inner_field, "inner_" . $special);
-                $members[] = $memberChannel;
-                $content_members[] = $memberContent;
-            }
-        }
         $name = $field['name'];
         if (!isset($glyph)) {
             $glyph = "bi bi-question-circle";
             $name = $field['name'] . ":" . ($field['type'] ?? 'unknown') . ($special ? " ($special)" : '');
         }
+        $code = $section_code ? "{$section_code}/" . strtolower(preg_replace('/[^a-z0-9]+/i', '_', $name)) : null;
+        $members = [];
+        $content_members = [];
+        if (isset($field['fields'])) {
+            foreach ($field['fields'] as $inner_field) {
+                [$memberChannel, $memberContent] = $this->generateChannelFromFieldEntry($inner_field, "inner_" . $special, $code);
+                $members[] = $memberChannel;
+                $content_members[] = $memberContent;
+            }
+        }
         $content_item = [
             'name' => $name,
             'desc' => $field['desc'] ?? null,
-            'type' => $field['type'] ?? null,
+            //'type' => $field['type'] ?? null,
+            'code' => $code,
             'special' => $special,
             'glyph' => $glyph,
             'children' => $content_members
@@ -164,7 +166,7 @@ class ApiDocController extends Controller
             $glyph,
             null,
             null,
-            null,
+            "/apidoc#{$code}",
             [],
             $members
         );
@@ -183,7 +185,7 @@ class ApiDocController extends Controller
         usort($key_list, [self::class, 'sortUnderscoresLast']);
 
         foreach ($key_list as $module) {
-            $sections = $this->buildSections($api['sections'][$module] ?? []);
+            $sections = $this->buildSections($module, $api['sections'][$module] ?? []);
             $types = $api['types'][$module] ?? [];
             $fields = $api['fields'][$module] ?? [];
 
@@ -193,7 +195,7 @@ class ApiDocController extends Controller
                 if ($type_data) {
                     $start = $type_data['start'] ?? 0;
                     $section_key = $this->findSectionKey($sections, $start);
-                    [$new_item, $new_content_item] = $this->generateChannelFromFieldEntry($type_data, 'type');
+                    [$new_item, $new_content_item] = $this->generateChannelFromFieldEntry($type_data, 'type', $sections[$section_key]['code'] ?? null);
                     $sections[$section_key]['children'][] = $new_item;
                     $sections[$section_key]['content'][] = $new_content_item;
                 }
@@ -202,7 +204,7 @@ class ApiDocController extends Controller
             foreach ($fields as $field) {
                 $start = $field['start'] ?? 0;
                 $section_key = $this->findSectionKey($sections, $start);
-                [$channel, $content] = $this->generateChannelFromFieldEntry($field, 'field');
+                [$channel, $content] = $this->generateChannelFromFieldEntry($field, 'field', $sections[$section_key]['code'] ?? null);
                 $sections[$section_key]['children'][] = $channel;
                 $sections[$section_key]['content'][] = $content;
             }
@@ -214,19 +216,19 @@ class ApiDocController extends Controller
             foreach ($sections as $section) {
                 if (!empty($section['children'])) {
                     $section_name = $section['name'] ?? "Other";
-                    $section_code = $module . "/" . strtolower(preg_replace('/[^a-z0-9]+/i', '_', $section_name));
+                    $section_code = $section['code'] ?? null;
                     $children[] = new Channel(
                         $section_name,
                         $section['desc'] ?? null,
                         'glyph/tablericons/section',
                         null, null,
-                        "/apidoc#{$section_code}",
+                        $section_code ? "/apidoc#{$section_code}" : null,
                         [],
                         $section['children']
                     );
                     $content_children[] = [
                         'name' => $section_name,
-                        'code' => "{$section_code}",
+                        'code' => $section_code,
                         'desc' => $section['desc'] ?? null,
                         'children' => $section['content'] ?? []
                     ];
@@ -259,13 +261,16 @@ class ApiDocController extends Controller
     }
 
     // Helper to build sections array
-    private function buildSections($sections)
+    private function buildSections($module, $sections)
     {
-        $result = [0 => ['name' => null, 'desc' => null, 'children' => [], 'content' => []]];
+        $result = [0 => ['name' => null, 'desc' => null, 'children' => [], 'content' => [], 'code' => $module]];
         foreach ($sections as $section) {
             $result[$section['start']] = [
                 'name' => $section['name'],
                 'desc' => $section['desc'] ?? null,
+
+                'code' => $module . "/" . strtolower(preg_replace('/[^a-z0-9]+/i', '_', $section['name'] ?? "Other")),
+
                 'children' => [],
                 'content' => []
             ];
