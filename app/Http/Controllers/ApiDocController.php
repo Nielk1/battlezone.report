@@ -210,27 +210,42 @@ class ApiDocController extends Controller
             // Prepare children arrays for output
             $children = [];
             $content_children = [];
+            $section_counter = 0;
             foreach ($sections as $section) {
                 if (!empty($section['children'])) {
+                    $section_name = $section['name'] ?? "Other";
+                    $section_code = $module . "/" . strtolower(preg_replace('/[^a-z0-9]+/i', '_', $section_name));
                     $children[] = new Channel(
-                        $section['name'] ?? "Other",
+                        $section_name,
                         $section['desc'] ?? null,
                         'glyph/tablericons/section',
-                        null, null, null, [],
+                        null, null,
+                        "/apidoc#{$section_code}",
+                        [],
                         $section['children']
                     );
                     $content_children[] = [
-                        'name' => $section['name'] ?? "Other",
+                        'name' => $section_name,
+                        'code' => "{$section_code}",
                         'desc' => $section['desc'] ?? null,
                         'children' => $section['content'] ?? []
                     ];
+                    $section_counter++;
                 }
+            }
+            if ($section_counter === 1) {
+                // If there's only one section, we can flatten it
+                $children = $children[0]->children;
+
+                // Don't flatten content children, keep structure
+                //$content_children = $content_children[0]['children'];
             }
 
             $name = $api['modules'][$module]['name'] ?? $module;
-            $channels[] = new Channel($name, null, null, null, null, null, [], $children);
+            $channels[] = new Channel($name, null, null, null, null, "/apidoc#{$module}", [], $children);
             $contents[] = [
                 'name' => $name,
+                'code' => $module,
                 'desc' => $api['modules'][$module]['desc'] ?? null,
                 'children' => $content_children
             ];

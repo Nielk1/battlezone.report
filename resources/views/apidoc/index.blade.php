@@ -13,10 +13,35 @@
         <div id="main-scrollable-content" class="sidebar3-content">
             <div class="container">
                 @foreach($content as $item)
-                    <div class="content-item">
-                        <h4>{{ $item['name'] }}</h4>
-                        <p>{{ $item['desc'] }}</p>
+                    <div class="content-item" data-spy="section" id="{{ $item['type'] }}/{{ $item['code'] }}">
+                        <h4>Module: {{ $item['name'] }}</h4>
+                        <pre>{{ $item['desc'] }}</pre>
                     </div>
+                    {{-- Recursive dive the children, where they will still be rendered flat but the data matches the channel tree --}}
+                    @if(isset($item['children']) && count($item['children']) > 0)
+                        <div class="content-children">
+                            @foreach($item['children'] as $child)
+                                <div class="content-item" data-spy="section" id="{{ $child['type'] ?? '' }}/{{ $child['code'] ?? '' }}">
+                                    <h5>Section: {{ $child['name'] }}</h5>
+                                    <pre>{{ $child['desc'] }}</pre>
+                                    @if(isset($child['children']) && count($child['children']) > 0)
+                                        <div class="content-children">
+                                            @foreach($child['children'] as $subchild)
+                                                <div class="content-item" data-spy="section" id="{{ $subchild['type'] ?? '' }}/{{ $subchild['code'] ?? '' }}">
+                                                    <h6>Item: {{ $subchild['name'] }}</h6>
+                                                    <pre>{{ $subchild['desc'] }}</pre>
+                                                    @if(isset($subchild['view']))
+                                                        <pre>{{ $subchild['view'] }}</pre>
+                                                    @endif
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    @endif
+                                </div>
+                            @endforeach
+                        </div>
+                    @endif
+                    <hr>
                 @endforeach
             </div>
             {{--<div data-spy="section" class="issue_mast" id="top" style="<?php if($issue->image != null) { ?>background-image:url('/images/<?php echo $issue->image; ?>');<?php } ?>">
