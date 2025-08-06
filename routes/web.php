@@ -8,6 +8,7 @@ use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\ChronicleController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\GamesApiController;
+use App\Http\Controllers\ApiDocController;
 
 Route::get('/', [PageController::class, 'index'])->name('home');
 Route::get('/price-cluster/{game}', [PageController::class, 'priceCluster']);
@@ -36,3 +37,6 @@ Route::get('/welcome', function () {
 Route::get('/hello', [HelloController::class, 'index']);
 
 //Route::redirect('/old-issue', '/issue');
+
+Route::get('/apidoc', [ApiDocController::class, 'index'])->name('apidoc.index');
+Route::get('/apidoc/{name}', [ApiDocController::class, 'show'])->name('apidoc.show');
