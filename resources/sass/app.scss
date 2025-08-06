@@ -611,12 +611,23 @@ $code-color:     #0e0;
 
 
 .svg-icon {
-    margin: -5px 0;
+    margin: -4px 0;
     svg {
         height: 2em;
         width: auto;
         display: inline-block;
         vertical-align: middle;
+    }
+}
+.font-icon {
+    //margin: -4px 0;
+    width: 32px;
+    height: 32px;
+    margin: -4px 0;
+    text-align: center;
+    .bi::before {
+        font-size: calc(2em - 8px);
+        margin: 4px 0;
     }
 }
 
@@ -744,6 +755,10 @@ $code-color:     #0e0;
 
     //transition: background 0.2s, color 0.2s;
 
+    &.has-icon {
+        padding: 0 2px;
+    }
+
     .channel-link {
         display: flex;
         flex: 1 1 auto !important;
@@ -754,7 +769,7 @@ $code-color:     #0e0;
         text-decoration: none;
         padding: 5px 0;
         color: inherit;
-        gap: 0.5rem;
+        gap: 0.2rem;
 
         -webkit-user-select: none; /* Safari */
         -moz-user-select: none;    /* Firefox */
@@ -789,8 +804,16 @@ $code-color:     #0e0;
             color: var(--bs-body-color);
         }
     }
-    &:hover, &.active, &.spy {
-        background: var(--bs-tertiary-bg);
+    &.spy {
+        background: var(--bs-tertiary-bg); // TODO: I'd like this to be brighter
+        color: var(--bs-body-color);
+        .channel-action {
+            //opacity: 1;
+            display: block;
+        }
+    }
+    &:hover, &.active {
+        background: var(--bs-secondary-bg);
         color: var(--bs-body-color);
         .channel-action {
             //opacity: 1;

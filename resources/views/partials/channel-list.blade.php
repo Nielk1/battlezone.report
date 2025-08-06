@@ -1,12 +1,16 @@
 {{-- filepath: resources/views/partials/channel-list.blade.php --}}
-<span class="channel-item{{ $channel->type == ($type ?? null) && $channel->code == ($code ?? null) && $channel->subcode == ($subcode ?? null) ? ' active' : '' }}">
+<span class="channel-item{{ ($channel->icon ? ' has-icon' : '') }}{{ $channel->type == ($type ?? null) && $channel->code == ($code ?? null) && $channel->subcode == ($subcode ?? null) ? ' active' : '' }}">
     @if ($channel->url)
         <a class="channel-link" data-ajaxnav="2" data-ajaxnav-target="#sub-content" href="{{ $channel->url }}">
     @else
         <span class="channel-link">
     @endif
     @if ($channel->icon)
-        <span class="svg-icon">{!! File::get(resource_path('svg/' . $channel->icon . '.svg')) !!}</span>
+        @if (str_starts_with($channel->icon, 'bi '))
+            <span class="font-icon"><i class="{{ $channel->icon }}"></i></span>
+        @else
+            <span class="svg-icon">{!! File::get(resource_path('svg/' . $channel->icon . '.svg')) !!}</span>
+        @endif
     @endif
     <span class="channel-name">{{ $channel->name }}</span>
     @if ($channel->url)
@@ -21,7 +25,13 @@
                     @foreach($button->attr ?? [] as $attrName => $attrValue)
                         {{ $attrName }}="{{ $attrValue }}"
                     @endforeach
-                >{!! File::get(resource_path('svg/' . $button->icon . '.svg')) !!}</a>
+                >
+                @if (str_starts_with($button->icon, 'bi '))
+                    <i class="{{ $button->icon }}"></i>
+                @else
+                {!! File::get(resource_path('svg/' . $button->icon . '.svg')) !!}
+                @endif
+                </a>
             @endforeach
         </span>
     @endif
