@@ -199,161 +199,57 @@ class ApiDocController extends Controller
         $channels = [];
         $contents = [];
 
-        //$key_list = array_keys($api['types']) +
-        //    array_keys($api['fields']);
-        //    array_keys($api['modules']) +
-        //    array_keys($api['functions']) +
-        //    array_keys($api['constants']);
-
         $key_list = array_unique(array_merge(array_keys($api['types']), array_keys($api['fields'])));
-
-        // Custom sort: underscores sort after "z"
         usort($key_list, [self::class, 'sortUnderscoresLast']);
 
         foreach ($key_list as $module) {
-            $section_map_table = [ 0 => [
-                'children' => []
-            ] ];
-            $section_map_content = [ 0 => [
-                'children' => []
-            ] ];
-            if (isset($api['sections'][$module])) {
-                foreach ($api['sections'][$module] as $section) {
-                    $section_map_table[$section['start']] = [
-                        'name' => $section['name'],
-                        'desc' => $section['desc'] ?? null,
-                        'children' => []
-                    ];
-                    $section_map_content[$section['start']] = [
-                        'name' => $section['name'],
-                        'desc' => $section['desc'] ?? null,
-                        'children' => []
-                    ];
-                }
-            }
-            ksort($section_map_table, SORT_NUMERIC);
-            ksort($section_map_content, SORT_NUMERIC);
-
+            $sections = $this->buildSections($api['sections'][$module] ?? []);
             $types = $api['types'][$module] ?? [];
             $fields = $api['fields'][$module] ?? [];
 
-            //$children_types = []; // types and fields
-            //$children_fields = []; // types and fields
-
-            // add type children to module
-            //usort($types, [self::class, 'sortFieldByProperties']);
+            // Populate sections with types and fields
             foreach ($types as $type) {
-                //$members = [];
-
-                if (isset($type) && isset($api['type_data'][$type])) {
-                    $type_data = $api['type_data'][$type];
-
+                $type_data = $api['type_data'][$type] ?? null;
+                if ($type_data) {
                     $start = $type_data['start'] ?? 0;
-                    $target = &$section_map_table[0]['children'];
-                    $content_target = &$section_map_content[0]['children'];
-                    foreach ($section_map_table as $section_start => &$section_data) {
-                        if ($section_start <= $start) {
-                            $target = &$section_data['children'];
-                            $content_target = &$section_map_content[$section_start]['children'];
-                        } else {
-                            break;
-                        }
-                    }
-                    unset($section_data);
-
-                    //foreach ($type_data['fields'] as $field) {
-                    //    $members[] = $this->generateChannelFromFieldEntry($field, 'type_field');
-                    //}
+                    $section_key = $this->findSectionKey($sections, $start);
                     $new_content_item = [];
                     $new_item = $this->generateChannelFromFieldEntry($type_data, 'type', $new_content_item);
-                    //$new_item->children = array_merge($new_item->children ?? [], $members);
-                    $target[] = $new_item;
-                    $content_target[] = $new_content_item;
-                }else{
-                    // fallback for types without data
-                    $target[] = new Channel(
-                        $type,
-                        null,
-                        "bi bi-exclamation-diamond-fill",
-                        null,
-                        null,
-                        null,
-                        [],
-                        []//$members
-                    );
+                    $sections[$section_key]['children'][] = $new_item;
+                    $sections[$section_key]['content'][] = $new_content_item;
                 }
             }
-
-            // add field children to file
             usort($fields, [self::class, 'sortFieldByProperties']);
             foreach ($fields as $field) {
-                //$children_fields[] = $this->generateChannelFromFieldEntry($field, 'field');
-
                 $start = $field['start'] ?? 0;
-                $target = &$section_map_table[0]['children'];
-                $content_target = &$section_map_content[0]['children'];
-                foreach ($section_map_table as $section_start => &$section_data) {
-                    if ($section_start <= $start) {
-                        $target = &$section_data['children'];
-                        $content_target = &$section_map_content[$section_start]['children'];
-                    } else {
-                        break;
-                    }
-                }
-                unset($section_data);
-
+                $section_key = $this->findSectionKey($sections, $start);
                 $new_content_item = [];
-                $target[] = $this->generateChannelFromFieldEntry($field, 'field', $new_content_item);
-                $content_target[] = $new_content_item;
+                $sections[$section_key]['children'][] = $this->generateChannelFromFieldEntry($field, 'field', $new_content_item);
+                $sections[$section_key]['content'][] = $new_content_item;
             }
 
-            //$children = array_merge($children_types, $children_fields);
-
-            // convert $section_map_table into sections, unless there's only section at 0
+            // Prepare children arrays for output
             $children = [];
             $content_children = [];
-            if (count($section_map_table) > 1) {
-                foreach ($section_map_table as $section_start => $section_data) {
-                    if (count($section_data['children']) == 0)
-                        continue;
+            foreach ($sections as $section) {
+                if (!empty($section['children'])) {
                     $children[] = new Channel(
-                        $section_data['name'] ?? "Other",
-                        $section_data['desc'] ?? null,
+                        $section['name'] ?? "Other",
+                        $section['desc'] ?? null,
                         'glyph/tablericons/section',
-                        null,
-                        null,
-                        null,
-                        [],
-                        $section_data['children'] ?? []
+                        null, null, null, [],
+                        $section['children']
                     );
                     $content_children[] = [
-                        'name' => $section_data['name'] ?? "Other",
-                        'desc' => $section_data['desc'] ?? null,
-                        'children' => $section_map_content[$section_start]['children'] ?? []
+                        'name' => $section['name'] ?? "Other",
+                        'desc' => $section['desc'] ?? null,
+                        'children' => $section['content'] ?? []
                     ];
                 }
-            } else {
-                $children = $section_map_table[0]['children'] ?? [];
-                $content_children = $section_map_content[0]['children'] ?? [];
             }
 
-            $name = $module;
-            if (isset($api['modules'][$module]['name'])) {
-                $name = $api['modules'][$module]['name'];
-            }
-
-            // field item
-            $channels[] = new Channel(
-                $name,
-                null,
-                null,
-                null,
-                null,
-                null,
-                [],
-                $children
-                //array_map([Channel::class, 'fromArray'], $entry['children'] ?? [])
-            );
+            $name = $api['modules'][$module]['name'] ?? $module;
+            $channels[] = new Channel($name, null, null, null, null, null, [], $children);
             $contents[] = [
                 'name' => $name,
                 'desc' => $api['modules'][$module]['desc'] ?? null,
@@ -361,7 +257,42 @@ class ApiDocController extends Controller
             ];
         }
 
-        return view('apidoc.index', ['channels_header' => 'Issues', 'channels' => $channels, 'content' => $contents]);
+        return view('apidoc.index', [
+            'channels_header' => 'Issues',
+            'channels' => $channels,
+            'content' => $contents
+        ]);
+    }
+
+    // Helper to build sections array
+    private function buildSections($sections)
+    {
+        $result = [0 => ['name' => null, 'desc' => null, 'children' => [], 'content' => []]];
+        foreach ($sections as $section) {
+            $result[$section['start']] = [
+                'name' => $section['name'],
+                'desc' => $section['desc'] ?? null,
+                'children' => [],
+                'content' => []
+            ];
+        }
+        ksort($result, SORT_NUMERIC);
+        return $result;
+    }
+
+    // Helper to find the correct section key for a given start value
+    private function findSectionKey($sections, $start)
+    {
+        $keys = array_keys($sections);
+        $section_key = 0;
+        foreach ($keys as $key) {
+            if ($key <= $start) {
+                $section_key = $key;
+            } else {
+                break;
+            }
+        }
+        return $section_key;
     }
 
     public function show($name)
