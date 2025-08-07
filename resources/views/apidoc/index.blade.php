@@ -19,7 +19,7 @@
                         @if(isset($item['children']) && count($item['children']) > 0)
                             <div>
                                 @foreach($item['children'] as $child)
-                                    @include('partials.api-field', ['content' => $child])
+                                    @include('partials.api-field', ['content' => $child, 'type_id_map' => $type_id_map])
                                     {{--<div class="ps-3 border-5 border-start border-primary" data-spy="section" id="{{ $child['code'] }}">
                                         <div class="d-flex align-items-center flex-row gap-2 mb-2">
                                             @if(isset($child['glyph']))

@@ -16,9 +16,15 @@
                 @php($type_code = 'alias')
                 @php($has_non_primitive = true)
                 @break
+            @case('function')
+            @case('function_overload')
+                @php($type_code = 'function')
+                @php($has_non_primitive = true)
+                @break
             @case('string')
             @case('integer')
             @case('number')
+            @case('boolean')
                 @php($has_primitive = true)
                 @break
         @endswitch
@@ -26,7 +32,7 @@
             @php($nillable = true)
         @endif
     @endforeach
-    <div class="d-flex align-items-center flex-row gap-2 mb-2">
+    <div class="apidoc-field-header d-flex align-items-center flex-row gap-2 mb-2">
         @if(isset($content['glyph']))
             @if (str_starts_with($content['glyph'], 'bi '))
                 <span class="font-icon"><i class="{{ $content['glyph'] }}"></i></span>
@@ -37,16 +43,47 @@
         <h5 class="mb-0">
             {{ $content['name'] }}
             @if(isset($content['base']))
-                @if(($type_code ?? null) == 'type')
-                    : {{ $content['base'] }}
-                @endif
-                @if(($type_code ?? null) == 'alias')
-                    : {{ $content['base'] }}
+                @if(($type_code ?? null) == 'type' || ($type_code ?? null) == 'alias')
+                    :
+                    @if(isset($type_id_map[$content['base']]))
+                        <a href="#{{ $type_id_map[$content['base']] }}">{{ $content['base'] }}</a>
+                    @else
+                        {{ $content['base'] }}
+                    @endif
                 @endif
             @endif
         </h5>
+            @if($type_code == 'function')
+            <h5 class="mb-0">(</h5>
+                @if(isset($content['args']))
+                    <span class="d-flex align-items-center flex-row gap-0">
+                        @foreach($content['args'] as $loopIndex => $arg)
+                            <span class="d-flex align-items-center flex-row gap-0">
+                                <span class="me-1">{{ $arg['name'] ?? '???' }}: </span>
+                                @if(isset($arg['type']))
+                                    @foreach($arg['type'] as $loopIndex2 => $type)
+                                        @if(isset($type_id_map[$type]))
+                                            <a href="#{{ $type_id_map[$type] }}">{{ $type }}</a>
+                                        @else
+                                            {{ $type }}
+                                        @endif
+                                        @if($loopIndex2 < count($arg['type']) - 1)
+                                            <span>|</span>
+                                        @endif
+                                    @endforeach
+                                @endif
+                            </span>
+                            @if($loopIndex < count($content['args']) - 1)
+                                <span class="me-1">, </span>
+                            @endif
+                        @endforeach
+                    </span>
+                @endif
+            <h5 class="mb-0">)</h5>
+            @endif
+
         @foreach($content['type'] as $type)
-            @if($type === 'nil' || $type === 'section')
+            @if($type === 'nil' || $type === 'section' || $type === 'function')
                 @continue
             @endif
             <span class="badge text-bg-primary">{{ $type }}</span>
@@ -80,6 +117,61 @@
             @case('alias')
             @case('section')
                 @break
+            @case ('function')
+                @if(isset($content['args']))
+                @foreach($content['args'] as $arg)
+                    <div class="arg-item ps-3 mb-3 border-5 border-start border-info">
+                        ARG:
+                        <strong>{{ $arg['name'] ?? '' }}</strong>
+                        @if(isset($arg['type']))
+                            @foreach($arg['type'] as $loopIndex => $type)
+                                @if(isset($type_id_map[$type]))
+                                    <a href="#{{ $type_id_map[$type] }}">{{ $type }}</a>
+                                @else
+                                    {{ $type }}
+                                @endif
+                                @if($loopIndex < count($arg['type']) - 1)
+                                    |
+                                @endif
+                            @endforeach
+                        @endif
+
+
+
+
+                        @if(isset($arg['tags']))
+                            @foreach($arg['tags'] as $tag => $tagcontent)
+                                <span class="badge text-bg-info">{{ $tag }}: {{ $tagcontent }}</span>
+                            @endforeach
+                        @endif
+                        @if(!empty($arg['desc']))
+                            <div>{!! $arg['desc'] !!}</div>
+                        @endif
+                    </div>
+                @endforeach
+                @endif
+                @if(isset($content['returns']))
+                @foreach($content['returns'] as $return)
+                    <div class="arg-item ps-3 mb-3 border-5 border-start border-danger">
+                        RETURN:
+                        <strong>{{ $return['name'] ?? '' }}</strong>
+                        @if(isset($return['type']))
+                            @foreach($return['type'] as $type)
+                                <span class="badge text-bg-primary">{{ $type }}</span>
+                            @endforeach
+                        @endif
+                        @if(isset($return['tags']))
+                            @foreach($return['tags'] as $tag => $tagcontent)
+                                <span class="badge text-bg-info">{{ $tag }}: {{ $tagcontent }}</span>
+                            @endforeach
+                        @endif
+                        @if(!empty($return['desc']))
+                            <div>{!! $return['desc'] !!}</div>
+                        @endif
+                    </div>
+                @endforeach
+                @endif
+                @break
             @default
                 @if(isset($type_code))
                 <h6>TYPECODE: {{ $type_code }}</h6>
@@ -94,13 +186,55 @@
                 @if(isset($content['view']))
                     <pre>VIEW: {{ $content['view'] }}</pre>
                 @endif
+                @if(isset($content['args']))
+                @foreach($content['args'] as $arg)
+                    <div class="arg-item ps-3 mb-3 border-5 border-start border-info">
+                        ARG:
+                        <strong>{{ $arg['name'] ?? '' }}</strong>
+                        @if(isset($arg['type']))
+                            @foreach($arg['type'] as $type)
+                                <span class="badge text-bg-primary">{{ $type }}</span>
+                            @endforeach
+                        @endif
+                        @if(isset($arg['tags']))
+                            @foreach($arg['tags'] as $tag => $tagcontent)
+                                <span class="badge text-bg-info">{{ $tag }}: {{ $tagcontent }}</span>
+                            @endforeach
+                        @endif
+                        @if(!empty($arg['desc']))
+                            <div>{!! $arg['desc'] !!}</div>
+                        @endif
+                    </div>
+                @endforeach
+                @endif
+                @if(isset($content['returns']))
+                @foreach($content['returns'] as $return)
+                    <div class="arg-item ps-3 mb-3 border-5 border-start border-danger">
+                        RETURN:
+                        <strong>{{ $return['name'] ?? '' }}</strong>
+                        @if(isset($return['type']))
+                            @foreach($return['type'] as $type)
+                                <span class="badge text-bg-primary">{{ $type }}</span>
+                            @endforeach
+                        @endif
+                        @if(isset($return['tags']))
+                            @foreach($return['tags'] as $tag => $tagcontent)
+                                <span class="badge text-bg-info">{{ $tag }}: {{ $tagcontent }}</span>
+                            @endforeach
+                        @endif
+                        @if(!empty($return['desc']))
+                            <div>{!! $return['desc'] !!}</div>
+                        @endif
+                    </div>
+                @endforeach
+                @endif
         @endswitch
     @endif
     <div class="documentation-desc">{!! $content['desc'] !!}</div>
     @if(isset($content['children']) && count($content['children']) > 0)
         <div>
             @foreach($content['children'] as $child)
-                @include('partials.api-field', ['content' => $child])
+                @include('partials.api-field', ['content' => $child, 'type_id_map' => $type_id_map])
             @endforeach
         </div>
     @endif

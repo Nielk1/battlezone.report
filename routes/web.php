@@ -39,4 +39,3 @@ Route::get('/hello', [HelloController::class, 'index']);
 //Route::redirect('/old-issue', '/issue');
 
 Route::get('/apidoc', [ApiDocController::class, 'index'])->name('apidoc.index');
-Route::get('/apidoc/{name}', [ApiDocController::class, 'show'])->name('apidoc.show');
