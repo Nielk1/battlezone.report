@@ -1193,6 +1193,7 @@ $border-widths: (
     height: 1px;
     width: 10px;
     margin-left: -10px;
+    float: left;
 }
 @media print {
     .print-and-select {
@@ -1206,7 +1207,8 @@ $border-widths: (
 }
 .arg-item {
     position: relative;
-    padding-left: 0.75em;
+    //padding-left: 0.75em;
+    padding-left: 0.5em;
     &.param,
     &.return {
         &::before {
@@ -1245,6 +1247,9 @@ $border-widths: (
     p:last-child {
         margin-bottom: 0;
     }
+    pre.language-lua {
+        padding: 0.5em;
+    }
 }
 
 .apidoc {
@@ -1267,6 +1272,11 @@ $border-widths: (
 
     .alert {
         --bs-alert-border-radius: 0;
+        padding: 0.5em;
+        min-height: 3em;
+        .alert-icon {
+            margin-right: 0.5em;
+        }
     }
 }
 

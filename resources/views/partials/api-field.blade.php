@@ -32,14 +32,17 @@
             @php($nillable = true)
         @endif
     @endforeach
+    <span class="print-and-select">---------------------------------------------------</span>
     <div class="d-flex flex-row align-items-stretch gap-1 mb-1">
         @if(isset($content['glyph']))
-            <div class="apidoc-icon bg-primary">
-            @if (str_starts_with($content['glyph'], 'bi '))
-                <span class="font-icon"><i class="{{ $content['glyph'] }}"></i></span>
-            @else
-                <span class="svg-icon">{!! File::get(resource_path('svg/' . $content['glyph'] . '.svg')) !!}</span>
-            @endif
+            <div class="bg-primary d-flex align-items-center">
+                <div class="apidoc-icon">
+                @if (str_starts_with($content['glyph'], 'bi '))
+                    <span class="font-icon"><i class="{{ $content['glyph'] }}"></i></span>
+                @else
+                    <span class="svg-icon">{!! File::get(resource_path('svg/' . $content['glyph'] . '.svg')) !!}</span>
+                @endif
+                </div>
             </div>
         @endif
         <div class="d-flex justify-content-between flex-column">
@@ -110,10 +113,10 @@
             </div>
             <div class="d-flex flex-row gap-1">
                 @foreach($content['type'] as $type)
-                    {{--@if($type === 'nil' || $type === 'section' || $type === 'function' || $type === 'function_overload')
+                    @if($type === 'nil')
                         @continue
-                    @endif--}}
-                    <span class="badge text-bg-primary text-wrap">{{ $type }}</span>
+                    @endif
+                    <span class="badge text-bg-primary text-wrap"><span class="print-and-select">[</span>{{ $type }}<span class="print-and-select">]</span></span>
                     {{--<span class="badge text-bg-secondary">{{ $type }}</span>
                     <span class="badge text-bg-success">{{ $type }}</span>
                     <span class="badge text-bg-danger">{{ $type }}</span>
@@ -123,20 +126,20 @@
                     <span class="badge text-bg-dark">{{ $type }}</span>--}}
                 @endforeach
                 @if($nillable)
-                    <span class="badge text-bg-secondary">nil</span>
+                    <span class="badge text-bg-secondary"><span class="print-and-select">[</span>nil<span class="print-and-select">]</span></span>
                 @endif
                 @if(isset($content['deprecated']) && $content['deprecated'])
-                    <span class="badge text-bg-danger">deprecated</span>
+                    <span class="badge text-bg-danger"><span class="print-and-select">[</span>deprecated<span class="print-and-select">]</span></span>
                 @endif
                 @if(isset($content['tags']['version']))
-                    <span class="badge text-bg-info">Version {{ $content['tags']['version'] }}</span>
+                    <span class="badge text-bg-info"><span class="print-and-select">[</span>Version {{ $content['tags']['version'] }}<span class="print-and-select">]</span></span>
                 @endif
                 @if(isset($content['tags']))
                     @foreach($content['tags'] as $tag => $tagcontent)
                         @if($tag === 'version' || $tag === '(i)' || $tag === '(!)' || $tag === '(!!)' || $tag === 'mod')
                             @continue
                         @endif
-                        <span class="badge text-bg-info">{{ $tag }}: {{ $tagcontent }}</span>
+                        <span class="badge text-bg-info"><span class="print-and-select">[</span>{{ $tag }}: {{ $tagcontent }}<span class="print-and-select">]</span></span>
                     @endforeach
                 @endif
             </div>
@@ -151,6 +154,7 @@
             @case ('function')
                 @if(isset($content['args']))
                 @foreach($content['args'] as $arg)
+                    <span class="print-and-select">----</span>
                     <div class="arg-item param mb-1 border-15 border-start border-info">
                         <span class="print-and-select">@param&nbsp;</span><span class="fw-bolder text-info">{{ $arg['name'] ?? '' }}</span>
                         <?php
@@ -169,13 +173,13 @@
                         @if(isset($arg['tags']))
                             <div class="d-flex flex-row gap-1">
                                 @if(isset($arg['tags']['version']))
-                                    <span class="badge text-bg-info">Version {{ $arg['tags']['version'] }}</span>
+                                    <span class="badge text-bg-info"><span class="print-and-select">[</span>Version {{ $arg['tags']['version'] }}<span class="print-and-select">]</span></span>
                                 @endif
                                 @foreach($arg['tags'] as $tag => $tagcontent)
                                     @if($tag === 'version')
                                         @continue
                                     @endif
-                                    <span class="badge text-bg-info">{{ $tag }}: {{ $tagcontent }}</span>
+                                    <span class="badge text-bg-info"><span class="print-and-select">[</span>{{ $tag }}: {{ $tagcontent }}<span class="print-and-select">]</span></span>
                                 @endforeach
                             </div>
                         @endif
@@ -187,6 +191,7 @@
                 @endif
                 @if(isset($content['returns']))
                 @foreach($content['returns'] as $return)
+                    <span class="print-and-select">----</span>
                     @php($return_index = 1)
                     <div class="arg-item return mb-1 border-15 border-start border-danger position-relative">
                         <span class="print-and-select">@param&nbsp;</span><span class="fw-bolder text-danger">{{ $return['name'] ?? '['.$return_index.']' }}</span>
@@ -206,8 +211,14 @@
                         ?>
                         @if(isset($return['tags']))
                             <div class="d-flex flex-row gap-1">
+                                @if(isset($return['tags']['version']))
+                                    <span class="badge text-bg-info"><span class="print-and-select">[</span>Version {{ $return['tags']['version'] }}<span class="print-and-select">]</span></span>
+                                @endif
                                 @foreach($return['tags'] as $tag => $tagcontent)
-                                    <span class="badge text-bg-info">{{ $tag }}: {{ $tagcontent }}</span>
+                                    @if($tag === 'version')
+                                        @continue
+                                    @endif
+                                    <span class="badge text-bg-info"><span class="print-and-select">[</span>{{ $tag }}: {{ $tagcontent }}<span class="print-and-select">]</span></span>
                                 @endforeach
                             </div>
                         @endif
@@ -232,55 +243,15 @@
                 @if(isset($content['view']))
                     <pre>VIEW: {{ $content['view'] }}</pre>
                 @endif
-                @if(isset($content['args']))
-                @foreach($content['args'] as $arg)
-                    <div class="arg-item ps-3 mb-1 border-5 border-start border-info">
-                        ARG:
-                        <strong>{{ $arg['name'] ?? '' }}</strong>
-                        @if(isset($arg['type']))
-                            @foreach($arg['type'] as $type)
-                                <span class="badge text-bg-primary">{{ $type }}</span>
-                            @endforeach
-                        @endif
-                        @if(isset($arg['tags']))
-                            @foreach($arg['tags'] as $tag => $tagcontent)
-                                <span class="badge text-bg-info">{{ $tag }}: {{ $tagcontent }}</span>
-                            @endforeach
-                        @endif
-                        @if(!empty($arg['desc']))
-                            <div>{!! $arg['desc'] !!}</div>
-                        @endif
-                    </div>
-                @endforeach
-                @endif
-                @if(isset($content['returns']))
-                @foreach($content['returns'] as $return)
-                    <div class="arg-item ps-3 mb-1 border-5 border-start border-danger">
-                        RETURN:
-                        <strong>{{ $return['name'] ?? '' }}</strong>
-                        @if(isset($return['type']))
-                            @foreach($return['type'] as $type)
-                                <span class="badge text-bg-primary">{{ $type }}</span>
-                            @endforeach
-                        @endif
-                        @if(isset($return['tags']))
-                            @foreach($return['tags'] as $tag => $tagcontent)
-                                <span class="badge text-bg-info">{{ $tag }}: {{ $tagcontent }}</span>
-                            @endforeach
-                        @endif
-                        @if(!empty($return['desc']))
-                            <div>{!! $return['desc'] !!}</div>
-                        @endif
-                    </div>
-                @endforeach
-                @endif
         @endswitch
     @endif
     @if(isset($content['tags']['(!!)']))
     @foreach($content['tags']['(!!)'] as $tag)
+        <span class="print-and-select">----</span>
         <div class="alert alert-danger d-flex align-items-center my-1" role="alert">
             <i class="bi bi-exclamation-octagon-fill alert-icon" aria-label="Error:"></i>
             <div>
+                <span class="print-and-select">Error:</span>
                 @if(isset($tag['name']) && !empty($tag['name']))
                 <strong>{{ $tag['name'] }}:</strong>
                 @endif
@@ -291,9 +262,11 @@
     @endif
     @if(isset($content['tags']['(!)']))
     @foreach($content['tags']['(!)'] as $tag)
+        <span class="print-and-select">----</span>
         <div class="alert alert-warning d-flex align-items-center my-1" role="alert">
             <i class="bi bi-exclamation-triangle-fill alert-icon" aria-label="Warning:"></i>
             <div>
+                <span class="print-and-select">Warning:</span>
                 @if(isset($tag['name']) && !empty($tag['name']))
                 <strong>{{ $tag['name'] }}:</strong>
                 @endif
@@ -304,9 +277,11 @@
     @endif
     @if(isset($content['tags']['(i)']))
     @foreach($content['tags']['(i)'] as $tag)
+        <span class="print-and-select">----</span>
         <div class="alert alert-info d-flex align-items-center my-1" role="alert">
             <i class="bi bi-info-circle-fill alert-icon" aria-label="Info:"></i>
             <div>
+                <span class="print-and-select">Info:</span>
                 @if(isset($tag['name']) && !empty($tag['name']))
                 <strong>{{ $tag['name'] }}:</strong>
                 @endif
@@ -317,9 +292,11 @@
     @endif
     @if(isset($content['tags']['mod']))
     @foreach($content['tags']['mod'] as $tag)
+        <span class="print-and-select">----</span>
         <div class="alert alert-light d-flex align-items-center my-1" role="alert">
             <i class="bi bi-tools alert-icon" aria-label="Mod:"></i>
             <div>
+                <span class="print-and-select">Mod:</span>
                 @if(isset($tag['name']) && !empty($tag['name']))
                 <strong>{{ $tag['name'] }}:</strong>
                 @endif
@@ -328,12 +305,15 @@
         </div>
     @endforeach
     @endif
+    <span class="print-and-select">----</span>
     <div class="documentation-desc">{!! $content['desc'] !!}</div>
     @if(isset($content['children']) && count($content['children']) > 0)
+        <span class="print-and-select">>></span>
         <div>
             @foreach($content['children'] as $child)
                 @include('partials.api-field', ['content' => $child, 'type_id_map' => $type_id_map])
             @endforeach
         </div>
+        <span class="print-and-select"><<</span>
     @endif
 </div>

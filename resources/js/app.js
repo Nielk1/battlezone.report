@@ -303,6 +303,8 @@ function initPage_full() {
             }
         }
     }
+
+    Prism.highlightAll();
 }
 
 document.addEventListener('DOMContentLoaded', initPage_full);
