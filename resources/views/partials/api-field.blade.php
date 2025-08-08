@@ -1,4 +1,4 @@
-<div class="ps-3 mb-3 border-5 border-start border-primary" data-spy="section" id="{{ $content['code'] }}">
+<div class="apidoc ps-2 my-3 border-5 border-start border-primary" data-spy="section" id="{{ $content['code'] }}">
     @php($nillable = false)
     @php($has_primitive = false)
     @php($has_non_primitive = false)
@@ -32,38 +32,65 @@
             @php($nillable = true)
         @endif
     @endforeach
-    <div class="apidoc-field-header d-flex align-items-center flex-row gap-2 mb-2">
+    <div class="d-flex flex-row align-items-stretch gap-1 mb-1">
         @if(isset($content['glyph']))
+            <div class="apidoc-icon bg-primary">
             @if (str_starts_with($content['glyph'], 'bi '))
-                <span class="apidoc font-icon bg-primary"><i class="{{ $content['glyph'] }}"></i></span>
+                <span class="font-icon"><i class="{{ $content['glyph'] }}"></i></span>
             @else
-                <span class="apidoc svg-icon bg-primary">{!! File::get(resource_path('svg/' . $content['glyph'] . '.svg')) !!}</span>
+                <span class="svg-icon">{!! File::get(resource_path('svg/' . $content['glyph'] . '.svg')) !!}</span>
             @endif
+            </div>
         @endif
-        <span>
-            <span class="h5">
-                {{ $content['name'] }}
-                @if(isset($content['base']))
-                    @if(($type_code ?? null) == 'type' || ($type_code ?? null) == 'alias')
-                        :
-                        @if(isset($type_id_map[$content['base']]))
-                            <a href="#{{ $type_id_map[$content['base']] }}">{{ $content['base'] }}</a>
-                        @else
-                            {{ $content['base'] }}
+        <div class="d-flex justify-content-between flex-column">
+            <div>
+                <span class="h5">
+                    {{ $content['name'] }}
+                    @if(isset($content['base']))
+                        @if(($type_code ?? null) == 'type' || ($type_code ?? null) == 'alias')
+                            :
+                            @if(isset($type_id_map[$content['base']]))
+                                <a href="#{{ $type_id_map[$content['base']] }}">{{ $content['base'] }}</a>
+                            @else
+                                {{ $content['base'] }}
+                            @endif
                         @endif
                     @endif
-                @endif
-            </span>
-            @if($type_code == 'function')
-                <span class="h4">(</span>
-                <span style="vertical-align: text-bottom;">
-                <?php
-                    if(isset($content['args'])) {
+                </span>
+                @if($type_code == 'function')
+                    <span class="h4">(</span>
+                    <span style="vertical-align: text-bottom;">
+                    <?php
+                        if(isset($content['args'])) {
+                            $argsOut = [];
+                            foreach($content['args'] as $arg) {
+                                $typesOut = [];
+                                if(isset($arg['type'])) {
+                                    foreach($arg['type'] as $type) {
+                                        if(isset($type_id_map[rtrim($type, '?')])) {
+                                            $typesOut[] = '<a href="#' . e($type_id_map[rtrim($type, '?')]) . '">' . e($type) . '</a>';
+                                        } else {
+                                            $typesOut[] = e($type);
+                                        }
+                                    }
+                                }
+                                $argsOut[] = '<span class="apidoc-arg"><span class="fw-bolder text-info">' . e($arg['name'] ?? '???') . '</span>: ' . implode('<span class="fw-bold">|</span>', $typesOut) . '</span>';
+                            }
+                            echo implode('<span class="h5">,</span> ', $argsOut);
+                        }
+                    ?>
+                    </span>
+                    <span class="h4">)</span>
+                    @if(isset($content['returns']) && count($content['returns']) > 0)
+                    <span class="align-text-middle"><i class="bi bi-arrow-right"><span class="select-only">-&gt;</span></i></span>
+                    <span class="align-text-bottom">
+                    <?php
                         $argsOut = [];
-                        foreach($content['args'] as $arg) {
+                        $return_index = 1;
+                        foreach($content['returns'] as $return) {
                             $typesOut = [];
-                            if(isset($arg['type'])) {
-                                foreach($arg['type'] as $type) {
+                            if(isset($return['type'])) {
+                                foreach($return['type'] as $type) {
                                     if(isset($type_id_map[rtrim($type, '?')])) {
                                         $typesOut[] = '<a href="#' . e($type_id_map[rtrim($type, '?')]) . '">' . e($type) . '</a>';
                                     } else {
@@ -71,71 +98,49 @@
                                     }
                                 }
                             }
-                            $argsOut[] = '<span class="fw-bolder text-info">' . e($arg['name'] ?? '???') . '</span>: ' . implode('<span class="fw-bold">|</span>', $typesOut);
+                            //$argsOut[] = '<span class="fw-bolder text-danger">' . e($return['name'] ?? '???') . '</span>: ' . implode('<span class="h5">|</span>', $typesOut);
+                            $argsOut[] = '<span class="apidoc-arg"><span class="fw-bolder text-danger">' . e($return['name'] ?? '['.$return_index.']') . '</span>: ' . implode('<span class="fw-bold">|</span>', $typesOut) . '</span>';
+                            $return_index++;
                         }
                         echo implode('<span class="h5">,</span> ', $argsOut);
-                    }
-                ?>
-                </span>
-                <span class="h4">)</span>
-                @if(isset($content['returns']) && count($content['returns']) > 0)
-                <span class="align-text-middle"><i class="bi bi-arrow-right"><span class="select-only">-&gt;</span></i></span>
-                <span class="align-text-bottom">
-                <?php
-                    $argsOut = [];
-                    $return_index = 1;
-                    foreach($content['returns'] as $return) {
-                        $typesOut = [];
-                        if(isset($return['type'])) {
-                            foreach($return['type'] as $type) {
-                                if(isset($type_id_map[rtrim($type, '?')])) {
-                                    $typesOut[] = '<a href="#' . e($type_id_map[rtrim($type, '?')]) . '">' . e($type) . '</a>';
-                                } else {
-                                    $typesOut[] = e($type);
-                                }
-                            }
-                        }
-                        //$argsOut[] = '<span class="fw-bolder text-danger">' . e($return['name'] ?? '???') . '</span>: ' . implode('<span class="h5">|</span>', $typesOut);
-                        $argsOut[] = '<span class="fw-bolder text-danger">' . e($return['name'] ?? '['.$return_index.']') . '</span>: ' . implode('<span class="fw-bold">|</span>', $typesOut);
-                        $return_index++;
-                    }
-                    echo implode('<span class="h5">,</span> ', $argsOut);
-                ?>
-                </span>
+                    ?>
+                    </span>
+                    @endif
                 @endif
-            @endif
-        </span>
-        @foreach($content['type'] as $type)
-            @if($type === 'nil' || $type === 'section' || $type === 'function' || $type === 'function_overload')
-                @continue
-            @endif
-            <span class="badge text-bg-primary">{{ $type }}</span>
-            {{--<span class="badge text-bg-secondary">{{ $type }}</span>
-            <span class="badge text-bg-success">{{ $type }}</span>
-            <span class="badge text-bg-danger">{{ $type }}</span>
-            <span class="badge text-bg-warning">{{ $type }}</span>
-            <span class="badge text-bg-info">{{ $type }}</span>
-            <span class="badge text-bg-light">{{ $type }}</span>
-            <span class="badge text-bg-dark">{{ $type }}</span>--}}
-        @endforeach
-        @if($nillable)
-            <span class="badge text-bg-secondary">nil</span>
-        @endif
-        @if(isset($content['tags']['version']))
-            <span class="badge text-bg-info">Version {{ $content['tags']['version'] }}</span>
-        @endif
-        @if(isset($content['tags']))
-            @foreach($content['tags'] as $tag => $tagcontent)
-                @if($tag === 'version' || $tag === '(i)' || $tag === '(!)' || $tag === '(!!)' || $tag === 'mod')
-                    @continue
+            </div>
+            <div class="d-flex flex-row gap-1">
+                @foreach($content['type'] as $type)
+                    {{--@if($type === 'nil' || $type === 'section' || $type === 'function' || $type === 'function_overload')
+                        @continue
+                    @endif--}}
+                    <span class="badge text-bg-primary text-wrap">{{ $type }}</span>
+                    {{--<span class="badge text-bg-secondary">{{ $type }}</span>
+                    <span class="badge text-bg-success">{{ $type }}</span>
+                    <span class="badge text-bg-danger">{{ $type }}</span>
+                    <span class="badge text-bg-warning">{{ $type }}</span>
+                    <span class="badge text-bg-info">{{ $type }}</span>
+                    <span class="badge text-bg-light">{{ $type }}</span>
+                    <span class="badge text-bg-dark">{{ $type }}</span>--}}
+                @endforeach
+                @if($nillable)
+                    <span class="badge text-bg-secondary">nil</span>
                 @endif
-                <span class="badge text-bg-info">{{ $tag }}: {{ $tagcontent }}</span>
-            @endforeach
-        @endif
-        {{-- untested deprecated --}}
-        @if(isset($content['deprecated']) && $content['deprecated'])
-            <span class="badge text-bg-danger">deprecated</span>
-        @endif
+                @if(isset($content['deprecated']) && $content['deprecated'])
+                    <span class="badge text-bg-danger">deprecated</span>
+                @endif
+                @if(isset($content['tags']['version']))
+                    <span class="badge text-bg-info">Version {{ $content['tags']['version'] }}</span>
+                @endif
+                @if(isset($content['tags']))
+                    @foreach($content['tags'] as $tag => $tagcontent)
+                        @if($tag === 'version' || $tag === '(i)' || $tag === '(!)' || $tag === '(!!)' || $tag === 'mod')
+                            @continue
+                        @endif
+                        <span class="badge text-bg-info">{{ $tag }}: {{ $tagcontent }}</span>
+                    @endforeach
+                @endif
+            </div>
+        </div>
     </div>
     @if(!($has_primitive && !$has_non_primitive))
         @switch($type_code ?? null)
@@ -146,7 +151,7 @@
             @case ('function')
                 @if(isset($content['args']))
                 @foreach($content['args'] as $arg)
-                    <div class="arg-item param mb-2 border-15 border-start border-info">
+                    <div class="arg-item param mb-1 border-15 border-start border-info">
                         <span class="print-and-select">@param&nbsp;</span><span class="fw-bolder text-info">{{ $arg['name'] ?? '' }}</span>
                         <?php
                             $typesOut = [];
@@ -162,9 +167,17 @@
                             echo implode('<span class="fw-bold">|</span>', $typesOut);
                         ?>
                         @if(isset($arg['tags']))
-                            @foreach($arg['tags'] as $tag => $tagcontent)
-                                <span class="badge text-bg-info">{{ $tag }}: {{ $tagcontent }}</span>
-                            @endforeach
+                            <div class="d-flex flex-row gap-1">
+                                @if(isset($arg['tags']['version']))
+                                    <span class="badge text-bg-info">Version {{ $arg['tags']['version'] }}</span>
+                                @endif
+                                @foreach($arg['tags'] as $tag => $tagcontent)
+                                    @if($tag === 'version')
+                                        @continue
+                                    @endif
+                                    <span class="badge text-bg-info">{{ $tag }}: {{ $tagcontent }}</span>
+                                @endforeach
+                            </div>
                         @endif
                         @if(!empty($arg['desc']))
                             {!! $arg['desc'] !!}
@@ -175,7 +188,7 @@
                 @if(isset($content['returns']))
                 @foreach($content['returns'] as $return)
                     @php($return_index = 1)
-                    <div class="arg-item return mb-2 border-15 border-start border-danger position-relative">
+                    <div class="arg-item return mb-1 border-15 border-start border-danger position-relative">
                         <span class="print-and-select">@param&nbsp;</span><span class="fw-bolder text-danger">{{ $return['name'] ?? '['.$return_index.']' }}</span>
                         <?php
                             $typesOut = [];
@@ -192,9 +205,11 @@
                             $return_index++;
                         ?>
                         @if(isset($return['tags']))
-                            @foreach($return['tags'] as $tag => $tagcontent)
-                                <span class="badge text-bg-info">{{ $tag }}: {{ $tagcontent }}</span>
-                            @endforeach
+                            <div class="d-flex flex-row gap-1">
+                                @foreach($return['tags'] as $tag => $tagcontent)
+                                    <span class="badge text-bg-info">{{ $tag }}: {{ $tagcontent }}</span>
+                                @endforeach
+                            </div>
                         @endif
                         @if(!empty($return['desc']))
                             {!! $return['desc'] !!}
@@ -263,7 +278,7 @@
     @endif
     @if(isset($content['tags']['(!!)']))
     @foreach($content['tags']['(!!)'] as $tag)
-        <div class="alert alert-danger d-flex align-items-center my-3" role="alert">
+        <div class="alert alert-danger d-flex align-items-center my-1" role="alert">
             <i class="bi bi-exclamation-octagon-fill alert-icon" aria-label="Error:"></i>
             <div>
                 @if(isset($tag['name']) && !empty($tag['name']))
@@ -276,7 +291,7 @@
     @endif
     @if(isset($content['tags']['(!)']))
     @foreach($content['tags']['(!)'] as $tag)
-        <div class="alert alert-warning d-flex align-items-center my-3" role="alert">
+        <div class="alert alert-warning d-flex align-items-center my-1" role="alert">
             <i class="bi bi-exclamation-triangle-fill alert-icon" aria-label="Warning:"></i>
             <div>
                 @if(isset($tag['name']) && !empty($tag['name']))
@@ -289,7 +304,7 @@
     @endif
     @if(isset($content['tags']['(i)']))
     @foreach($content['tags']['(i)'] as $tag)
-        <div class="alert alert-info d-flex align-items-center my-3" role="alert">
+        <div class="alert alert-info d-flex align-items-center my-1" role="alert">
             <i class="bi bi-info-circle-fill alert-icon" aria-label="Info:"></i>
             <div>
                 @if(isset($tag['name']) && !empty($tag['name']))
@@ -302,7 +317,7 @@
     @endif
     @if(isset($content['tags']['mod']))
     @foreach($content['tags']['mod'] as $tag)
-        <div class="alert alert-light d-flex align-items-center my-3" role="alert">
+        <div class="alert alert-light d-flex align-items-center my-1" role="alert">
             <i class="bi bi-tools alert-icon" aria-label="Mod:"></i>
             <div>
                 @if(isset($tag['name']) && !empty($tag['name']))
