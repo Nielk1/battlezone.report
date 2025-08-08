@@ -408,7 +408,8 @@ class ApiDocController extends Controller
                 if ($type_data) {
                     $start = $type_data['start'] ?? 0;
                     $section_key = $this->findSectionKey($sections, $start);
-                    [$new_item, $new_content_item] = $this->generateChannelAndContentFromFieldEntry($type_data, 'type', $sections[$section_key]['code'] ?? null);
+                    //[$new_item, $new_content_item] = $this->generateChannelAndContentFromFieldEntry($type_data, 'type', $sections[$section_key]['code'] ?? null);
+                    [$new_item, $new_content_item] = $this->generateChannelAndContentFromFieldEntry($type_data, 'type', $module ?? null);
                     $sections[$section_key]['children'][] = $new_item;
                     $sections[$section_key]['content'][] = $new_content_item;
                 }
@@ -458,8 +459,11 @@ class ApiDocController extends Controller
                 // If there's only one section, we can flatten it
                 $children = $children[0]->children;
 
-                // Don't flatten content children, keep structure
-                //$content_children = $content_children[0]['children'];
+                // consider flattening the content as well, but only if the category is really useless
+                $content_data = $content_children[0];
+                if ($content_data['name'] === 'Other' && empty($content_data['desc']) && empty($content_data['tags'])) {
+                    $content_children = $content_data['children'];
+                }
             }
 
             $name = $api['modules'][$module]['name'] ?? $module;
@@ -492,7 +496,8 @@ class ApiDocController extends Controller
                 'name' => $section['name'],
                 'desc' => $section['desc'] ?? null,
 
-                'code' => $module . "/" . strtolower(preg_replace('/[^a-z0-9]+/i', '_', $section['name'] ?? "Other")),
+                //'code' => $module . "/" . strtolower(preg_replace('/[^a-z0-9]+/i', '_', $section['name'] ?? "Other")),
+                'code' => $module . "/SEC-" . strtolower(preg_replace('/[^a-z0-9]+/i', '_', $section['name'] ?? "Other")),
 
                 'children' => [],
                 'content' => []
