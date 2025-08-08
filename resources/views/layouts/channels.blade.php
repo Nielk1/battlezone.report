@@ -22,14 +22,14 @@
             <div class="channel-list">
                 @foreach($channels as $channel)
                     <div class="channel-section">
-                        @include('partials.channel-list', ['channel' => $channel])
+                        @include('partials.channel-list', ['channel' => $channel, 'ajaxnav' => $ajaxnav])
                     </div>
                 @endforeach
             </div>
         </div>
         <div class="resizer" id="resizer"></div>
     </aside>
-    <div id="sub-content">
+    <div id="ajax-nav-{{ $ajaxnav }}" class="sub-content">
         @yield('sub-content')
     </div>
 </div>

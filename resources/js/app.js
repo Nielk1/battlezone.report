@@ -314,7 +314,7 @@ function ajaxNavigate(url, targetSelector, depth = 1, historyNavigation = false)
 
     let target = document.querySelector(targetSelector);
     if (!target) {
-        targetSelector = '#main-content';
+        targetSelector = '#ajax-nav-1';
         target = document.querySelector(targetSelector);
         depth = 1;
     }
@@ -393,13 +393,14 @@ window.addEventListener('popstate', function(e) {
         const oldSegments = oldUrl.pathname.split('/').filter(Boolean);
         const newSegments = window.location.pathname.split('/').filter(Boolean);
 
+        // If both start with different segments, we have a depth 1 at the main content
         let depth = 1;
-        let target = '#main-content';
+        let target = '#ajax-nav-1';
 
-        // If both start with 'issue' and have at least 3 segments, use depth 2 and #sub-content
+        // If both start with the same token (such as 'issue') then the depth is 2 and the target is #sub-content // move to ajax nav IDs based on depth
         if (oldSegments[0] === newSegments[0]) {
             depth = 2;
-            target = '#sub-content';
+            target = '#ajax-nav-2';
         }
 
         ajaxNavigate(window.location.pathname + window.location.search + window.location.hash, target, depth, true);
@@ -439,7 +440,7 @@ function setupAjaxNavLinks() {
                 } else {
                     level = parseInt(level, 10) || 1; // default to 1 if not a number
                 }
-                const target = link.getAttribute('data-ajaxnav-target') || '#main-content'; // fallback selector
+                const target = link.getAttribute('data-ajaxnav-target') || '#ajax-nav-' + level; // fallback selector
                 ajaxNavigate(url, target, level);
             }
         }

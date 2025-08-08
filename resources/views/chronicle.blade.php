@@ -5,7 +5,17 @@
 
 ?>
 
-@extends(request()->query('ajax') == 2 ? 'layouts.ajax-subcontent' : 'layouts.channels')
+{{--@extends(request()->query('ajax') == 2 ? 'layouts.ajax-subcontent' : 'layouts.channels', ['ajaxnav' => request()->query('ajax')-1 ?? 2])--}}
+@php
+    $ajax = request()->query('ajax');
+    $layouts = [
+        2 => 'layouts.ajax-subcontent', // there are no children links so level doesn't really matter
+        //1 => 'layouts.channels', // Full page content, children links need level 2
+    ];
+    $layout = $layouts[$ajax] ?? 'layouts.channels';
+    $ajaxnav = 2;
+@endphp
+@extends($layout, ['ajaxnav' => $ajaxnav])
 
 @section('title', 'Battlezone Field Report - Chronicle - ' . ($issue->title ?? "No Volume") . ' - ' . ($article->title ?? "No Title"))
 

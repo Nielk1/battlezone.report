@@ -1,5 +1,15 @@
 {{-- filepath: resources/views/apidoc/index.blade.php --}}
-@extends(request()->query('ajax') == 2 ? 'layouts.ajax-subcontent' : 'layouts.channels')
+{{--@extends(request()->query('ajax') == 2 ? 'layouts.ajax-subcontent' : 'layouts.channels')--}}
+@php
+    $ajax = request()->query('ajax');
+    $layouts = [
+        3 => 'layouts.ajax-subcontent', // there are no children links so level doesn't really matter
+        //1 => 'layouts.channels', // Full page content, children links need level 3
+    ];
+    $layout = $layouts[$ajax] ?? 'layouts.channels';
+    $ajaxnav = 3;
+@endphp
+@extends($layout, ['ajaxnav' => $ajaxnav])
 
 @section('title', 'Battlezone Field Report - API Reference')
 

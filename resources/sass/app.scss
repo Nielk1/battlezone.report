@@ -373,7 +373,7 @@ $border-widths: (
     padding: 0 10px;
 }
 
-#main-content {
+.main-content {
     display: flex;
     flex: 1;
     //padding: 2rem;
@@ -392,7 +392,7 @@ $border-widths: (
     will-change: margin-left;
 }
 
-//#sub-content {
+//.sub-content {
 //    border-left: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color) !important;
 //}
 
@@ -401,12 +401,12 @@ $border-widths: (
     .sidebar {
         transform: translateX(#{-$sidebar-width});
     }
-    #main-content {
+    .main-content {
         margin-left: #{-$sidebar-width};
         //border-top-left-radius: 0 !important;
         border-left: none !important;
     }
-    #sub-content {
+    .sub-content {
         border-left: none !important;
     }
     #sidebar-toggle {
@@ -448,7 +448,7 @@ $border-widths: (
         display: flex;
         z-index: 0;
     }
-    #sub-content {
+    .sub-content {
         display: flex;
         flex: 1;
         overflow: auto;
@@ -1075,8 +1075,11 @@ $border-widths: (
     border-right: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color) !important;
 }
 
-#main-content,
-#sub-content {
+#ajax-nav-1,
+#ajax-nav-2,
+#ajax-nav-3,
+#ajax-nav-4,
+#ajax-nav-5 {
     position: relative;
     &>* {
         transition: opacity 0.3s;
@@ -1335,7 +1338,7 @@ $border-widths: (
     }
 
     // destroy flex layouts and screen heights
-    body, #main-content, #sub-content, #main-scrollable-content, .sidebar3,
+    body, .main-content, .sub-content, .main-scrollable-content, .sidebar3,
     .page-container, .sidebar3-content {
         display: block !important;
         height: auto !important;
