@@ -289,7 +289,23 @@ function initPage() {
     }
 }
 
-document.addEventListener('DOMContentLoaded', initPage);
+function initPage_full() {
+    initPage();
+    setupAjaxNavLinks();
+
+    // Scroll to anchor on full page load (not AJAX)
+    if (!window.location.search.includes('ajax')) {
+        const hash = window.location.hash;
+        if (hash && hash.length > 1) {
+            const el = document.getElementById(hash.slice(1));
+            if (el) {
+                el.scrollIntoView({ block: 'start' });
+            }
+        }
+    }
+}
+
+document.addEventListener('DOMContentLoaded', initPage_full);
 
 // After AJAX navigation:
 function ajaxNavigate(url, targetSelector, depth = 1, historyNavigation = false) {
@@ -429,7 +445,7 @@ function setupAjaxNavLinks() {
         }
     });
 }
-setupAjaxNavLinks();
+//setupAjaxNavLinks();
 
 // activate tooltips which are only needed (so far) for the main nav that is always there no matter what page loads
 const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')

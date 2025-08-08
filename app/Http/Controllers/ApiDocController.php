@@ -4,26 +4,31 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Channel;
+use App\Models\ChannelButton;
 use League\CommonMark\CommonMarkConverter;
 
 class ApiDocController extends Controller
 {
     private CommonMarkConverter $converter;
     //private const VERSION_TAG_PATTERN = '/\{VERSION:\s*\d+(?:\.[\da-zA-Z]+)*\+\}/';
-    private const VERSION_TAG_PATTERN = '/\{VERSION:\s*([\d\w\.]+\+?)\}/';
+    private const VERSION_TAG_PATTERN = '/\{VERSION[: ]\s*([\d\w\.]+\+?)\}/';
+    private const MULTIPLAYER_TAG_PATTERN = '/\{(?<tagtype>\((i|!|!!)\))(?<tagname>.*)\1[: ]?\s+(?<tagdesc>[^}]+)\}/';
+    private const MOD_TAG_PATTERN = '/\{MOD:(?:(?<tagtype>[^:}]{1,50}):\s*(?<tagdesc>[^}]+)|(?<tagtype2>\S+)\s+(?<tagdesc2>[^}]+))\}/';
 
     public function __construct()
     {
         $this->converter = new CommonMarkConverter();
     }
 
-    private static function sortUnderscoresLast($a, $b) {
+    private static function sortUnderscoresLast($a, $b)
+    {
         $a_cmp = str_replace('_', '{', $a);
         $b_cmp = str_replace('_', '{', $b);
         return strcmp($a_cmp, $b_cmp);
     }
 
-    private static function getSortIndexForType($type, $name) {
+    private static function getSortIndexForType($type, $name)
+    {
         switch ($type) {
             case 'table':
             case 'table?':
@@ -68,7 +73,8 @@ class ApiDocController extends Controller
         return 9999;
     }
 
-    private static function getTypesForTypeString($type_string) {
+    private static function getTypesForTypeString($type_string)
+    {
         $types = [];
         $has_nil = false;
         foreach (explode('|', $type_string) as $type) {
@@ -83,15 +89,15 @@ class ApiDocController extends Controller
             }
 
             // likely will remove these in the future
-            if (str_starts_with($type, 'enum ')) {
-                $type = 'enum';
-            }
-            if (str_starts_with($type, 'fun(')) {
-                $type = 'function';
-            }
-            if (str_starts_with($type, 'table<')) {
-                $type = 'table';
-            }
+            //if (str_starts_with($type, 'enum ')) {
+            //    $type = 'enum';
+            //}
+            //if (str_starts_with($type, 'fun(')) {
+            //    $type = 'function';
+            //}
+            //if (str_starts_with($type, 'table<')) {
+            //    $type = 'table';
+            //}
 
             $types[] = $type;
         }
@@ -109,7 +115,8 @@ class ApiDocController extends Controller
         return $types;
     }
 
-    private static function sortFieldByProperties($a, $b) {
+    private static function sortFieldByProperties($a, $b)
+    {
         $a_cmp = self::getSortIndexForType($a['type'], $a['name']);
         $b_cmp = self::getSortIndexForType($b['type'], $b['name']);
 
@@ -254,12 +261,12 @@ class ApiDocController extends Controller
         $args = [];
         if (isset($field['args'])) {
             foreach ($field['args'] as $arg) {
-                [$tags, $desc_html] = $this->extractTagsAndDescription($arg['desc'] ?? null);
+                [$arg_tags, $arg_desc_html] = $this->extractTagsAndDescription($arg['desc'] ?? null);
                 $args[] =[
                     'name' => $arg['name'] ?? null,
                     'type' => self::getTypesForTypeString($arg['type']),
-                    'desc' => $desc_html,
-                    'tags' => $tags,
+                    'desc' => $arg_desc_html,
+                    'tags' => $arg_tags,
                 ];
             }
         }
@@ -267,12 +274,12 @@ class ApiDocController extends Controller
         $returns = [];
         if (isset($field['returns'])) {
             foreach ($field['returns'] as $return) {
-                [$tags, $desc_html] = $this->extractTagsAndDescription($return['desc'] ?? null);
+                [$arg_tags, $arg_desc_html] = $this->extractTagsAndDescription($return['desc'] ?? null);
                 $returns[] =[
                     'name' => $return['name'] ?? null,
                     'type' => self::getTypesForTypeString($return['type']),
-                    'desc' => $desc_html,
-                    'tags' => $tags,
+                    'desc' => $arg_desc_html,
+                    'tags' => $arg_tags,
                 ];
             }
         }
@@ -287,6 +294,7 @@ class ApiDocController extends Controller
             'glyph' => $glyph,
 
             'base' => $field['base'] ?? null,
+            'deprecated' => $field['deprecated'] ?? false,
 
             'view' => $field['view'] ?? null, // not used yet?
             'tags' => $tags,
@@ -296,6 +304,15 @@ class ApiDocController extends Controller
 
             'children' => $content_members
         ];
+        $buttons = [];
+        if ($field['deprecated'] ?? false) {
+            $buttons[] = ChannelButton::FromArray([
+                'name' => 'Deprecated',
+                'icon' => 'bi bi-ban',
+                'href' => '#',
+                'attr' => [ 'data-show' => 'always' ]
+            ]);
+        }
         $channel = new Channel(
             $name,
             null,
@@ -303,7 +320,7 @@ class ApiDocController extends Controller
             null,
             null,
             "/apidoc#{$code}",
-            [],
+            $buttons,
             $members
         );
         return [$channel, $content_item];
@@ -323,8 +340,35 @@ class ApiDocController extends Controller
             foreach ($version_matches[1] as $version_value) {
                 $tags['version'] = trim($version_value);
             }
-            // Remove version tags from description
+
+            // Extract MOD tags
+            preg_match_all(self::MOD_TAG_PATTERN, $desc, $mod_exu_matches);
+            foreach ($mod_exu_matches['tagtype'] as $i => $mod_exu_value) {
+
+                if (!empty($mod_exu_matches['tagtype'][$i])) {
+                    $tag_type = trim($mod_exu_matches['tagtype'][$i]);
+                    $tag_desc = trim($mod_exu_matches['tagdesc'][$i]);
+                } else {
+                    $tag_type = trim($mod_exu_matches['tagtype2'][$i]);
+                    $tag_desc = trim($mod_exu_matches['tagdesc2'][$i]);
+                }
+                $tags['mod'][] = [ 'name' => trim($tag_type), 'desc' => trim($tag_desc) ];
+            }
+
+            // Extract multiplayer tags
+            preg_match_all(self::MULTIPLAYER_TAG_PATTERN, $desc, $multiplayer_matches);
+            foreach ($multiplayer_matches['tagname'] as $i => $multiplayer_value) {
+                $tag_key = $multiplayer_matches['tagname'][$i];
+                $tag_type = $multiplayer_matches['tagtype'][$i];
+                $tag_desc = $multiplayer_matches['tagdesc'][$i];
+                $tags[strtolower($tag_type)][] = [ 'type' => trim($tag_type), 'name' => trim($tag_key), 'desc' => trim($tag_desc) ];
+            }
+
+            // Remove Tags
             $desc = preg_replace(self::VERSION_TAG_PATTERN, '', $desc);
+            $desc = preg_replace(self::MOD_TAG_PATTERN, '', $desc);
+            $desc = preg_replace(self::MULTIPLAYER_TAG_PATTERN, '', $desc);
+
 
             $desc_html = $this->converter->convert(trim($desc));
         } else {

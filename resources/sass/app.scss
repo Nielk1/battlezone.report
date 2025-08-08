@@ -53,6 +53,16 @@ $primary:       #60ab45;
 //$light:         $gray-500 !default;
 //$dark:          $gray-800 !default;
 $code-color:     #0e0;
+
+$border-widths: (
+  1: 1px,
+  2: 2px,
+  3: 3px,
+  4: 4px,
+  5: 5px,
+  15: 15px
+);
+
 @import '_variables';
 
 // Import Bootstrap's SASS source
@@ -652,6 +662,12 @@ $code-color:     #0e0;
         display: inline-block;
         vertical-align: middle;
     }
+    .bi {
+        text-align: center;
+        &::before {
+            width: 24px;
+        }
+    }
 }
 
 .channel-group {
@@ -748,7 +764,7 @@ $code-color:     #0e0;
     align-items: center;
     //padding: 5px 5px;
     //padding: 0 5px 0 0;
-    padding: 0 5px;
+    padding: 0 2px 0 5px;
     gap: 0.5rem;
     //color: var(--bs-tertiary-color);
     color: color-mix(in srgb, rgb(var(--bs-tertiary-color-rgb)), var(--bs-body-bg));
@@ -808,6 +824,10 @@ $code-color:     #0e0;
         }*/
         &:hover {
             color: var(--bs-body-color);
+        }
+        &[data-show="always"] {
+            //opacity: 1;
+            display: block;
         }
     }
     &.spy {
@@ -1118,7 +1138,7 @@ $code-color:     #0e0;
 // Up the size of alert glpyhs so they're bigger than the text
 .alert {
     .alert-icon {
-        margin-right: 0.5rem !important;
+        margin-right: 1rem !important;
         font-size: 2em;
         margin-top: -0.5em;
         margin-bottom: -0.5em;
@@ -1141,14 +1161,85 @@ $code-color:     #0e0;
 }
 
 
-
-
-
+.select-only {
+    opacity: 0;
+    overflow: hidden;
+    pointer-events: none;
+    user-select: text;
+    display: inline-block;
+    height: 1px;
+    width: 10px;
+    margin-left: -10px;
+}
+.print-and-select {
+    opacity: 0;
+    overflow: hidden;
+    pointer-events: none;
+    user-select: text;
+    display: inline-block;
+    height: 1px;
+    width: 10px;
+    margin-left: -10px;
+}
+@media print {
+    .print-and-select {
+        opacity: 1 !important;
+        overflow: visible !important;
+        pointer-events: auto !important;
+        height: auto !important;
+        width: auto !important;
+        margin-left: 0 !important;
+    }
+}
+.arg-item {
+    position: relative;
+    padding-left: 0.75em;
+    &.param,
+    &.return {
+        &::before {
+            position: absolute;
+            left: -10px;
+            top: -5px;
+            font-weight: 900;
+            font-size: 1.2em;
+            text-shadow:
+                -1px -1px 0 black,
+                 1px -1px 0 black,
+                -1px  1px 0 black,
+                 1px  1px 0 black;
+        }
+    }
+    &.param::before {
+        content: "P";
+            text-shadow:
+                -1px -1px 0 var(--bs-info),
+                 1px -1px 0 var(--bs-info),
+                -1px  1px 0 var(--bs-info),
+                 1px  1px 0 var(--bs-info);
+    }
+    &.return::before {
+        content: "R";
+            text-shadow:
+                -1px -1px 0 var(--bs-danger),
+                 1px -1px 0 var(--bs-danger),
+                -1px  1px 0 var(--bs-danger),
+                 1px  1px 0 var(--bs-danger);
+    }
+    p:last-child {
+        margin-bottom: 0;
+    }
+}
+.apidoc-field-header {
+    .font-icon {
+        width: 48px;
+        height: 48px;
+        text-align: center;
+    }
+}
 
 //.documentation-desc {
 //    white-space: pre-wrap;
 //}
-
 
 
 

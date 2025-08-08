@@ -1,4 +1,4 @@
-<div class="alert alert-danger d-flex align-items-center" role="alert">
+<div class="alert alert-warning d-flex align-items-center" role="alert">
     <i class="bi bi-exclamation-triangle-fill alert-icon" aria-label="Danger:"></i>
     <div>This article is preserved for archival purposes. Please note that it is very old and the URLs it contains are no longer valid.</div>
 </div>

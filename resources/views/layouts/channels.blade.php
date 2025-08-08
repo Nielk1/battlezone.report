@@ -19,7 +19,6 @@
     <aside class="sidebar2" id="sidebar2" @if(isset($sidebarWidth)) style="width: {{ $sidebarWidth }}px;" @endif>
         <div class="header-bar header-bar-menu-pad">{{ $channels_header ?? 'Channels' }}</div>
         <div class="sidebar2-content">
-            <!-- Example HTML for a Discord-like channel list -->
             <div class="channel-list">
                 @foreach($channels as $channel)
                     <div class="channel-section">
