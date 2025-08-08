@@ -45,7 +45,7 @@
             <div class="scroll-arrow down" id="scrollDown" onclick="scrollSidebar(100)" style="display: none;">▼</div>
         </div>
     </aside>
-    <main id="ajax-nav-1">
+    <main id="ajax-nav-1" class="main-content">
         @yield('content')
         @include('partials.nav-data')
     </main>

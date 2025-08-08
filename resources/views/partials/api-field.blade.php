@@ -35,9 +35,9 @@
     <div class="apidoc-field-header d-flex align-items-center flex-row gap-2 mb-2">
         @if(isset($content['glyph']))
             @if (str_starts_with($content['glyph'], 'bi '))
-                <span class="font-icon bg-primary"><i class="{{ $content['glyph'] }}"></i></span>
+                <span class="apidoc font-icon bg-primary"><i class="{{ $content['glyph'] }}"></i></span>
             @else
-                <span class="svg-icon bg-primary">{!! File::get(resource_path('svg/' . $content['glyph'] . '.svg')) !!}</span>
+                <span class="apidoc svg-icon bg-primary">{!! File::get(resource_path('svg/' . $content['glyph'] . '.svg')) !!}</span>
             @endif
         @endif
         <span>
