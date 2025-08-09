@@ -40,8 +40,8 @@
                 @if (str_starts_with($content['glyph'], 'bi '))
                     <span class="font-icon"><i class="{{ $content['glyph'] }}"></i></span>
                 @else
-                    <span class="svg-icon"><svg width="24" height="24"><use xlink:href="#svg/{{ $content['glyph'] }}"></use></svg></span>
                     {{--<span class="svg-icon">{!! File::get(resource_path('svg/' . $content['glyph'] . '.svg')) !!}</span>--}}
+                    <span class="svg-icon"><svg width="24" height="24"><use xlink:href="#svg/{{ $content['glyph'] }}"></use></svg></span>
                 @endif
                 </div>
             </div>
@@ -133,7 +133,7 @@
                     <span class="badge text-bg-danger"><span class="print-and-select">[</span>deprecated<span class="print-and-select">]</span></span>
                 @endif
                 @if(isset($content['tags']['version']))
-                    <span class="badge text-bg-info"><span class="print-and-select">[</span>Version {{ $content['tags']['version'] }}<span class="print-and-select">]</span></span>
+                    <span class="badge text-bg-info"><span class="print-and-select">[</span>version {{ $content['tags']['version'] }}<span class="print-and-select">]</span></span>
                 @endif
                 @if(isset($content['tags']))
                     @foreach($content['tags'] as $tag => $tagcontent)
@@ -174,7 +174,7 @@
                         @if(isset($arg['tags']))
                             <div class="d-flex flex-row gap-1">
                                 @if(isset($arg['tags']['version']))
-                                    <span class="badge text-bg-info"><span class="print-and-select">[</span>Version {{ $arg['tags']['version'] }}<span class="print-and-select">]</span></span>
+                                    <span class="badge text-bg-info"><span class="print-and-select">[</span>version {{ $arg['tags']['version'] }}<span class="print-and-select">]</span></span>
                                 @endif
                                 @foreach($arg['tags'] as $tag => $tagcontent)
                                     @if($tag === 'version')
@@ -213,7 +213,7 @@
                         @if(isset($return['tags']))
                             <div class="d-flex flex-row gap-1">
                                 @if(isset($return['tags']['version']))
-                                    <span class="badge text-bg-info"><span class="print-and-select">[</span>Version {{ $return['tags']['version'] }}<span class="print-and-select">]</span></span>
+                                    <span class="badge text-bg-info"><span class="print-and-select">[</span>version {{ $return['tags']['version'] }}<span class="print-and-select">]</span></span>
                                 @endif
                                 @foreach($return['tags'] as $tag => $tagcontent)
                                     @if($tag === 'version')

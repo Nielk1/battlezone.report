@@ -106,8 +106,9 @@ class ChronicleController extends Controller
                 // Replace SVG logo placeholders like <!--#svg LOGO_NAME -->
                 $html = preg_replace_callback('/<!--#svg ([a-zA-Z0-9_-]+) -->/', function($matches) {
                     $svgName = $matches[1];
-                    $svgPath = resource_path("svg/{$svgName}.svg");
-                    return file_exists($svgPath) ? file_get_contents($svgPath) : '';
+                    //$svgPath = resource_path("svg/{$svgName}.svg");
+                    //return file_exists($svgPath) ? file_get_contents($svgPath) : '';
+                    return '<svg width="24" height="24"><use xlink:href="#svg/' . $svgName . '"></use></svg>';
                 }, $html);
 
                 $sdata = json_decode(file_get_contents($filename2), true);

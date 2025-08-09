@@ -6,6 +6,11 @@ $sidebar-icon-spacing: 8px; // spacing between icons
 $sidebar-padding: 8px; // padding of the entire sidebar (mostly affects top/bottom)
 $sidebar-icons-sidepad: 14px; // extra space on the sides of icons for the active indicator
 
+//$modal-icon-size: 48px;
+$modal-icon-size: 96px;
+//$modal-icon-spacing: 8px;
+$modal-icon-spacing: 2em;
+
 $sidebar-width: $sidebar-icon-size + $sidebar-icons-sidepad * 2;
 
 //    0              1
@@ -41,6 +46,30 @@ $sidebar-width: $sidebar-icon-size + $sidebar-icons-sidepad * 2;
         100% var(--chamfer-size-inner),
         100% calc(100% - var(--chamfer-size-inner)),
         calc(100% - var(--chamfer-size-inner)) 100%
+    );
+}
+
+//  3                  0
+//    2              1
+@mixin chamfer-bottom($size: 3px) {
+    --chamfer-size-inner: #{$size};
+    clip-path: polygon(
+        100% calc(100% - var(--chamfer-size-inner)),
+        calc(100% - var(--chamfer-size-inner)) 100%,
+        var(--chamfer-size-inner) 100%,
+        0 calc(100% - var(--chamfer-size-inner)),
+    );
+}
+
+//    0              1
+//  3                  2
+@mixin chamfer-top($size: 3px) {
+    --chamfer-size-inner: #{$size};
+    clip-path: polygon(
+        var(--chamfer-size-inner) 0,
+        calc(100% - var(--chamfer-size-inner)) 0,
+        100% var(--chamfer-size-inner),
+        0 var(--chamfer-size-inner)
     );
 }
 
@@ -318,6 +347,8 @@ $border-widths: (
         bottom: 8px;
     }
 }
+
+
 #sidebar-toggle {
     //top: 8px;
     top: 0;
@@ -649,7 +680,7 @@ $border-widths: (
         //margin: -4px 0;
         width: 32px;
         height: 32px;
-        margin: -4px 0;
+        margin: -6px 0;
         text-align: center;
         .bi::before {
             margin: 4px 0;
@@ -1318,6 +1349,144 @@ $border-widths: (
 //.documentation-desc {
 //    white-space: pre-wrap;
 //}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.modal-nav {
+    //gap: 2em;
+    gap: #{$modal-icon-spacing};
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .modal-icon-box {
+        width: #{$modal-icon-size};
+        height: #{$modal-icon-size};
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 1.2rem;
+        cursor: pointer;
+        user-select: none;
+        position: relative; // Needed for absolute positioning of ::after
+        border-radius: 0;
+
+        margin: #{$modal-icon-spacing};
+        margin-top: 2em;
+
+        // special chamfer customization
+        .modal-icon {
+            width: 100%;
+            height: 100%;
+
+            --bs-bg-opacity: 1;
+            background-color: rgba(var(--bs-secondary-rgb), var(--bs-bg-opacity));
+            color: rgba(var(--bs-link-color-rgb), var(--bs-link-opacity, 1));
+            padding: 2px;
+            transition: background-color 0.15s;
+
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            //border-radius: inherit;
+            @include chamfer(6px);
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            .bi {
+                //font-size: 1.5em;
+                font-size: calc(96px / 2);
+            }
+        }
+
+
+        &:hover .modal-icon,
+        &.active .modal-icon {
+            background-color: $primary;
+            color: color-contrast($primary);
+        }
+        // end special chamfer customization
+
+        &::after {
+            content: '';
+            position: absolute;
+            top: #{-$sidebar-icons-sidepad};
+            width: max(10px, #{$modal-icon-size / 3});
+            height: 5px;
+            opacity: 0;
+            background-color: var(--bs-body-color);
+
+            border-radius: 0;
+            transition: width 0.3s,
+                        opacity 0.2s,
+                        clip-path 0.3s;
+            @include chamfer-bottom(5px);
+        }
+
+        &.active::after {
+            width: #{$modal-icon-size};
+            opacity: 1;
+        }
+
+        &.pip::after {
+            width: 10px;
+            opacity: 1;
+        }
+
+        &:hover::after {
+            width: #{$modal-icon-size / 2};
+            opacity: 1;
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
 
 
 

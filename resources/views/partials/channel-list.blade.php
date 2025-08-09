@@ -9,7 +9,8 @@
         @if (str_starts_with($channel->icon, 'bi '))
             <span class="font-icon"><i class="{{ $channel->icon }}"></i></span>
         @else
-            <span class="svg-icon">{!! File::get(resource_path('svg/' . $channel->icon . '.svg')) !!}</span>
+            {{--<span class="svg-icon">{!! File::get(resource_path('svg/' . $channel->icon . '.svg')) !!}</span>--}}
+            <span class="svg-icon"><svg width="24" height="24"><use xlink:href="#svg/{{ $channel->icon }}"></use></svg></span>
         @endif
     @endif
     <span class="channel-name">{{ $channel->name }}</span>
@@ -29,7 +30,8 @@
                 @if (str_starts_with($button->icon, 'bi '))
                     <i class="{{ $button->icon }}"></i>
                 @else
-                {!! File::get(resource_path('svg/' . $button->icon . '.svg')) !!}
+                {{--{!! File::get(resource_path('svg/' . $button->icon . '.svg')) !!}--}}
+                <svg width="24" height="24"><use xlink:href="#svg/{{ $button->icon }}"></use></svg>
                 @endif
                 </a>
             @endforeach
