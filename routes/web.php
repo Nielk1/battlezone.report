@@ -27,16 +27,16 @@ Route::get('/games/bzcc', [PageController::class, 'gamelist_bzcc'])->name('games
 //Route::redirect('games/bzcc', 'https://battlezonescrapfield.github.io/BZCC-Website/', 302);
 Route::redirect('/acticle/news/interview-with-jason-kingsley', '/article/interview/interview-with-jason-kingsley', 301);
 
-Route::get('/modding', [PageController::class, 'modding'])->name('modding');
 Route::get('/social', [PageController::class, 'social'])->name('social');
 Route::get('/about', [PageController::class, 'about'])->name('about');
 
-Route::get('/welcome', function () {
-    return view('welcome');
-});
+//Route::get('/welcome', function () {
+//    return view('welcome');
+//});
 
 //Route::get('/hello', [HelloController::class, 'index']);
 
 //Route::redirect('/old-issue', '/issue');
 
-Route::get('/apidoc', [ApiDocController::class, 'index'])->name('apidoc.index');
+Route::get('/modding', [PageController::class, 'modding'])->name('modding');
+Route::get('/modding/apidoc/{api?}', [ApiDocController::class, 'index'])->name('apidoc');

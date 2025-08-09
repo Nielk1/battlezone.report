@@ -319,7 +319,7 @@ class ApiDocController extends Controller
             $glyph,
             null,
             null,
-            "/apidoc#{$code}",
+            "#{$code}",
             $buttons,
             $members
         );
@@ -377,9 +377,19 @@ class ApiDocController extends Controller
         return [$tags, $desc_html];
     }
 
-    public function index()
+    public function index($api = null)
     {
-        $jsonPath = resource_path('data/docgen/bz98r_api.json');
+        // Only allow safe characters in $api
+        if (
+            !preg_match('/^[a-zA-Z0-9_-]+$/', $api ?? '')
+        ) {
+            abort(404);
+        }
+
+        $jsonPath = resource_path('data/docgen/'.$api.'.json');
+        if (!file_exists($jsonPath)) {
+            abort(404);
+        }
         $api = json_decode(file_get_contents($jsonPath), true);
 
         $channels = [];
@@ -439,7 +449,7 @@ class ApiDocController extends Controller
                         $section['desc'] ?? null,
                         'glyph/tablericons/section',
                         null, null,
-                        $section_code ? "/apidoc#{$section_code}" : null,
+                        $section_code ? "#{$section_code}" : null,
                         [],
                         $section['children']
                     );
@@ -470,7 +480,7 @@ class ApiDocController extends Controller
             $module_desc = $api['modules'][$module]['desc'] ?? null;
             [$module_tags, $module_desc_html] = $this->extractTagsAndDescription($module_desc);
 
-            $channels[] = new Channel($name, null, null, null, null, "/apidoc#{$module}", [], $children);
+            $channels[] = new Channel($name, null, null, null, null, "#{$module}", [], $children);
             $contents[] = [
                 'name' => $name,
                 'code' => $module,
@@ -479,12 +489,14 @@ class ApiDocController extends Controller
             ];
         }
 
-        return view('apidoc.index', [
-            'channels_header' => 'Issues',
+        return view('apidoc', [
+            'channels_header' => 'API Documentation',
             'channels' => $channels,
             'content' => $contents,
             'type_id_map' => $type_id_map,
-            'code' => 'apidoc'
+            'code' => 'apidoc',
+            'activeNav' => 'modding',
+            'doc_name' => $api['name'] ?? 'API Documentation',
         ]);
     }
 

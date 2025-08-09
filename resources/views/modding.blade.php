@@ -5,7 +5,7 @@
 
 @section('content')
 <style>
-    .logo-container {
+    .page-container {
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -17,145 +17,119 @@
         padding: 50px 10px;
         overflow: auto;
 
-        font-family: "Orbitron", sans-serif;
+        /*font-family: "Orbitron", sans-serif;
         font-optical-sizing: auto;
-        font-style: normal;
+        font-style: normal;*/
         /* font-variant: small-caps; */
-    }
-
-    .logos-container {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        /* Aligns children to the top/left */
-        max-width: 600px;
-    }
-
-    .multiplayer-properties {
-        width: 100%;
-        font-size: 1.2em;
-    }
-    .multiplayer-properties > li > * {
-        width: 100%;
-        height: 1.2em;
-        position: relative;
-    }
-    .multiplayer-properties i.bi {
-        font-size: 1.2em;
-        top: -3px;
-        position: absolute;
-    }
-
-    .logo-img {
-        width: auto;
-        height: auto;
-        max-width: 100%;
-        max-height: 100%;
-        /*z-index: 1;*/
-        position: relative;
-    }
-
-    .logo-img-wrapper {
-        display: flex;
-        flex-direction: row;
-        gap: 10px;
-        width: 100%;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .logos-row {
-        width: 100%;
-        /*max-width: 1280px;*/
-        margin: 0 auto;
-        justify-content: center;
-    }
-
-    .logos-row .col {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: flex-start;
-        padding: 10px;
-        /*min-width: 430px;*/
-    }
-
-    .logos-row .col .logo-container {
-        max-width: 430px;
-    }
-
-    .screen {
-        display: inherit;
-    }
-
-    .print {
-        display: none;
-    }
-
-    .all-sessions-button {
-        padding-left: 40px;
-        padding-right: 40px;
-        position: relative;
-    }
-
-    :root,
-    [data-bs-theme=light] {
-        .logo-container {
-            background: none;
-        }
-
-        .dark {
-            display: none;
-        }
-
-        .light {
-            display: inherit;
-        }
-    }
-
-    [data-bs-theme=dark] {
-        .logo-container {
-            background: url('/images/background_space.jpg') center center / cover no-repeat fixed;
-        }
-
-        .dark {
-            display: inherit;
-        }
-
-        .light {
-            display: none;
-        }
-    }
-
-    @media print {
-        .screen {
-            display: none;
-        }
-
-        .print {
-            display: block;
-        }
     }
 </style>
 
-<div class="logo-container">
+<div class="page-container">
     <div class="container">
         <div class="row modal-nav">
-            <a title="Home"              data-nav="home"      data-ajaxnav="true" href="{{ route('home') }}"      class="modal-icon-box{{ ($activeNav ?? '') === 'home'      ? ' active' : '' }}"><div style="position:absolute;bottom:-2em;">Testing123</div><div class="modal-icon"><svg><use xlink:href="#svg/logo_battlezone"></use></svg></div></a>
-            <a title="Issue"             data-nav="issue"     data-ajaxnav="true" href="{{ route('issue') }}"     class="modal-icon-box{{ ($activeNav ?? '') === 'issue'     ? ' active' : '' }}"><div style="position:absolute;bottom:-2em;">Testing123</div><div class="modal-icon"><i class="bi bi-newspaper"></i></div></a>
-            <a title="Chronicles"        data-nav="chronicle" data-ajaxnav="true" href="{{ route('chronicle') }}" class="modal-icon-box{{ ($activeNav ?? '') === 'chronicle' ? ' active' : '' }}"><div style="position:absolute;bottom:-2em;">Testing123</div><div class="modal-icon"><i class="bi bi-feather"></i></div></a>
-            <a title="Session List"      data-nav="games"     data-ajaxnav="true" href="{{ route('games') }}"     class="modal-icon-box{{ ($activeNav ?? '') === 'games'     ? ' active' : '' }}"><div style="position:absolute;bottom:-2em;">Testing123</div><div class="modal-icon"><i class="bi bi-controller"></i></div></a>
-            <a title="Modding Resources" data-nav="modding"   data-ajaxnav="true" href="{{ route('modding') }}"   class="modal-icon-box{{ ($activeNav ?? '') === 'modding'   ? ' active' : '' }}"><div style="position:absolute;bottom:-2em;">Testing123</div><div class="modal-icon"><i class="bi bi-tools"></i></div></a>
-            <a title="Social"            data-nav="social"    data-ajaxnav="true" href="{{ route('social') }}"    class="modal-icon-box{{ ($activeNav ?? '') === 'social'    ? ' active' : '' }}"><div style="position:absolute;bottom:-2em;">Testing123</div><div class="modal-icon"><i class="bi bi-chat-fill"></i></div></a>
-            <a title="About"             data-nav="about"     data-ajaxnav="true" href="{{ route('about') }}"     class="modal-icon-box{{ ($activeNav ?? '') === 'about'     ? ' active' : '' }}"><div style="position:absolute;bottom:-2em;">Testing123</div><div class="modal-icon"><i class="bi bi-info-circle-fill"></i></div></a>
-            <a title="About"             data-nav="about"     data-ajaxnav="true" href="{{ route('about') }}"     class="modal-icon-box{{ ($activeNav ?? '') === 'about'     ? ' active' : '' }}"><div style="position:absolute;bottom:-2em;">Testing123</div><div class="modal-icon"><i class="bi bi-info-circle-fill"></i></div></a>
-            <a title="About"             data-nav="about"     data-ajaxnav="true" href="{{ route('about') }}"     class="modal-icon-box{{ ($activeNav ?? '') === 'about'     ? ' active' : '' }}"><div style="position:absolute;bottom:-2em;">Testing123</div><div class="modal-icon"><i class="bi bi-info-circle-fill"></i></div></a>
-            <a title="About"             data-nav="about"     data-ajaxnav="true" href="{{ route('about') }}"     class="modal-icon-box{{ ($activeNav ?? '') === 'about'     ? ' active' : '' }}"><div style="position:absolute;bottom:-2em;">Testing123</div><div class="modal-icon"><i class="bi bi-info-circle-fill"></i></div></a>
-            <a title="About"             data-nav="about"     data-ajaxnav="true" href="{{ route('about') }}"     class="modal-icon-box{{ ($activeNav ?? '') === 'about'     ? ' active' : '' }}"><div style="position:absolute;bottom:-2em;">Testing123</div><div class="modal-icon"><i class="bi bi-info-circle-fill"></i></div></a>
-            <a title="About"             data-nav="about"     data-ajaxnav="true" href="{{ route('about') }}"     class="modal-icon-box{{ ($activeNav ?? '') === 'about'     ? ' active' : '' }}"><div style="position:absolute;bottom:-2em;">Testing123</div><div class="modal-icon"><i class="bi bi-info-circle-fill"></i></div></a>
-            <a title="About"             data-nav="about"     data-ajaxnav="true" href="{{ route('about') }}"     class="modal-icon-box{{ ($activeNav ?? '') === 'about'     ? ' active' : '' }}"><div style="position:absolute;bottom:-2em;">Testing123</div><div class="modal-icon"><i class="bi bi-info-circle-fill"></i></div></a>
-            <a title="About"             data-nav="about"     data-ajaxnav="true" href="{{ route('about') }}"     class="modal-icon-box{{ ($activeNav ?? '') === 'about'     ? ' active' : '' }}"><div style="position:absolute;bottom:-2em;">Testing123</div><div class="modal-icon"><i class="bi bi-info-circle-fill"></i></div></a>
-            <a title="About"             data-nav="about"     data-ajaxnav="true" href="{{ route('about') }}"     class="modal-icon-box{{ ($activeNav ?? '') === 'about'     ? ' active' : '' }}"><div style="position:absolute;bottom:-2em;">Testing123</div><div class="modal-icon"><i class="bi bi-info-circle-fill"></i></div></a>
+            <div class="col-12">
+                <div class="modal-block align-items-center">
+                    <div class="modal-icon-box">
+                        <div class="modal-icon">
+                            {{--{!! File::get(resource_path('svg/glyph/brand/lua.svg')) !!}--}}
+                            <svg><use xlink:href="#svg/glyph/brand/lua_a"></use></svg>
+                            <svg class="color2"><use xlink:href="#svg/glyph/brand/lua_b"></use></svg>
+                        </div>
+                    </div>
+                    <div class="d-flex flex-fill flex-column flex-md-row gap-1">
+                        <div class="flex-grow-1">
+                            <div class="d-flex flex-column flex-grow gap-1">
+                                <a title="BZ98R Bare ScriptUtils"
+                                   data-ajaxnav="true"
+                                   href="{{ route('apidoc', ['api' => 'bz98r']) }}"
+                                   class="modal-button x4btn"
+                                   role="button">BZ98R Bare ScriptUtils</a>
+
+                                <a title="BZ98R _api Wrapper"
+                                   data-ajaxnav="true"
+                                   href="{{ route('apidoc', ['api' => 'bz98r_api']) }}"
+                                   class="modal-button x4btn"
+                                   role="button">BZ98R "_api" Wrapper</a>
+                            </div>
+                        </div>
+                        <div class="flex-grow-1">
+                            <div class="d-flex flex-column flex-grow gap-1">
+                                <span class="modal-button x4btn disabled" href="#" role="button">BZCC Bare ScriptUtils</span>
+                                <span class="modal-button x4btn disabled" href="#" role="button">BZCC "_api" Wrapper</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{--
+            <div class="col-lg-6 col-12">
+                <div class="modal-block align-items-center">
+                    <div class="modal-icon-box align-items-center">
+                        <div class="modal-icon">
+                            <svg><use xlink:href="#svg/glyph/brand/lua_a"></use></svg>
+                            <svg class="color2"><use xlink:href="#svg/glyph/brand/lua_b"></use></svg>
+                        </div>
+                    </div>
+                    <div class="flex-grow-1">
+                        <div class="d-flex flex-column flex-grow gap-1">
+                            <a class="modal-button" href="#" role="button">BZ98R Bare ScriptUtils</a>
+                            <a class="modal-button" href="#" role="button">BZCC Bare ScriptUtils</a>
+                            <a class="modal-button" href="#" role="button">BZ98R _api Wrapper</a>
+                            <a class="modal-button" href="#" role="button">BZ9CC _api Wrapper</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-12">
+                    <div class="modal-block align-items-center">
+                    <div class="modal-icon-box">
+                        <div class="modal-icon">
+                            <svg><use xlink:href="#svg/glyph/brand/lua_a"></use></svg>
+                            <svg class="color2"><use xlink:href="#svg/glyph/brand/lua_b"></use></svg>
+                        </div>
+                    </div>
+                    <div>
+                        <h5>Battlezone CC - Lua API</h5>
+                        <p>ScriptUtils and mod APIs</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-12">
+                <div class="modal-block">
+                    <div class="modal-icon-box">
+                        <div class="modal-icon">
+                            <svg><use xlink:href="#svg/logo_battlezone"></use></svg>
+                        </div>
+                    </div>
+                    <div>
+                        BODY
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-12">
+                <div class="modal-block">
+                    <div class="modal-icon-box">
+                        <div class="modal-icon">
+                            <svg><use xlink:href="#svg/logo_battlezone"></use></svg>
+                        </div>
+                    </div>
+                    <div>
+                        BODY
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-12">
+                <div class="modal-block">
+                    <div class="modal-icon-box">
+                        <div class="modal-icon">
+                            <svg><use xlink:href="#svg/logo_battlezone"></use></svg>
+                        </div>
+                    </div>
+                    <div>
+                        BODY
+                    </div>
+                </div>
+            </div>--}}
         </div>
     </div>
 </div>

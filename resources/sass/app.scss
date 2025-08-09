@@ -8,8 +8,10 @@ $sidebar-icons-sidepad: 14px; // extra space on the sides of icons for the activ
 
 //$modal-icon-size: 48px;
 $modal-icon-size: 96px;
+$modal-block-size: 500px;
 //$modal-icon-spacing: 8px;
-$modal-icon-spacing: 2em;
+$modal-inbox-spacing: 1em;
+$modal-outbox-spacing: 2em;
 
 $sidebar-width: $sidebar-icon-size + $sidebar-icons-sidepad * 2;
 
@@ -200,6 +202,12 @@ $border-widths: (
             .bi {
                 font-size: 1.5em;
                 //margin-top: 0.2em;
+            }
+
+            svg {
+                position: absolute;
+                max-width: calc(100% - 0.5rem);
+                max-height: calc(100% - 0.5rem);
             }
         }
 
@@ -1378,23 +1386,73 @@ $border-widths: (
 
 
 
+.modal-button {
+    padding: 0.15em 1em;
+    text-align: center;
+    text-decoration: none;
 
+    --bs-bg-opacity: 1;
+    --bs-btn-border-radius: 0;
+    background-color: rgba(var(--bs-secondary-rgb), var(--bs-bg-opacity));
+    color: rgba(var(--bs-link-color-rgb), var(--bs-link-opacity, 1));
+    transition: background-color 0.15s;
 
+    @include chamfer(6px);
 
+    font-family: "Orbitron", sans-serif;
+    font-style: normal;
+    font-weight: 600;
 
+    &:hover,
+    &.active {
+        background-color: $primary;
+        color: color-contrast($primary);
+    }
 
+    &.x4btn {
+        //font-size: 1.5em;
+        //padding: 0.25em 1em;
+        @include media-breakpoint-up(md) {
+            min-height: calc(#{$modal-icon-size} / 2 - 0.25rem + 2px);
+            line-height: calc(#{$modal-icon-size} / 2 - 0.25rem + 2px);
+            padding: 0;
+        }
+    }
 
+    &.disabled {
+        opacity: 0.65;
+        pointer-events: none;
+    }
+}
 
 
 
 .modal-nav {
     //gap: 2em;
-    gap: #{$modal-icon-spacing};
+    //gap: #{$modal-outbox-spacing};
+    //gap: #{$modal-outbox-spacing};
     display: flex;
     align-items: center;
     justify-content: center;
 
+    .modal-block {
+        background-color: var(--bs-tertiary-bg);
+        display: flex;
+
+        @include chamfer(6px);
+        padding: #{$modal-inbox-spacing};
+        //max-width: #{$modal-block-size};
+
+        gap: #{$modal-inbox-spacing};
+        margin-bottom: #{$modal-inbox-spacing};
+
+        p:last-child {
+            margin-bottom: 0;
+        }
+    }
+
     .modal-icon-box {
+        min-width: #{$modal-icon-size};
         width: #{$modal-icon-size};
         height: #{$modal-icon-size};
         display: flex;
@@ -1404,13 +1462,9 @@ $border-widths: (
         font-size: 1.2rem;
         cursor: pointer;
         user-select: none;
-        position: relative; // Needed for absolute positioning of ::after
+        position: relative;
         border-radius: 0;
 
-        margin: #{$modal-icon-spacing};
-        margin-bottom: 2em;
-
-        // special chamfer customization
         .modal-icon {
             width: 100%;
             height: 100%;
@@ -1419,7 +1473,8 @@ $border-widths: (
             background-color: rgba(var(--bs-secondary-rgb), var(--bs-bg-opacity));
             color: rgba(var(--bs-link-color-rgb), var(--bs-link-opacity, 1));
             padding: 2px;
-            transition: background-color 0.15s;
+            transition: background-color 0.15s,
+                        fill 0.15s;
 
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
@@ -1436,44 +1491,23 @@ $border-widths: (
             }
         }
 
+        svg {
+            position: absolute;
+            max-width: calc(100% - 0.5rem);
+            max-height: calc(100% - 0.5rem);
+        }
+        svg.color2 {
+            color: color-contrast($primary);
+        }
 
         &:hover .modal-icon,
         &.active .modal-icon {
             background-color: $primary;
             color: color-contrast($primary);
+            svg.color2 {
+                color: rgba(var(--bs-link-color-rgb), var(--bs-link-opacity, 1));
+            }
         }
-        // end special chamfer customization
-
-        //&::after {
-        //    content: '';
-        //    position: absolute;
-        //    top: #{-$sidebar-icons-sidepad};
-        //    width: max(10px, #{$modal-icon-size / 3});
-        //    height: 5px;
-        //    opacity: 0;
-        //    background-color: var(--bs-body-color);
-        //
-        //    border-radius: 0;
-        //    transition: width 0.3s,
-        //                opacity 0.2s,
-        //                clip-path 0.3s;
-        //    @include chamfer-bottom(5px);
-        //}
-        //
-        //&.active::after {
-        //    width: #{$modal-icon-size};
-        //    opacity: 1;
-        //}
-        //
-        //&.pip::after {
-        //    width: 10px;
-        //    opacity: 1;
-        //}
-        //
-        //&:hover::after {
-        //    width: #{$modal-icon-size / 2};
-        //    opacity: 1;
-        //}
     }
 }
 

@@ -226,7 +226,31 @@ function initPage() {
             }
 
             navLinks.forEach(link => {
-                link.classList.toggle('spy', link.querySelector('.channel-link').getAttribute('href') === window.location.pathname + '#' + currentId);
+                //link.classList.toggle('spy', link.querySelector('.channel-link').getAttribute('href') === window.location.pathname + '#' + currentId);
+
+                const channelLink = link.querySelector('.channel-link');
+                if (!channelLink) {
+                    link.classList.toggle('spy', false);
+                    return;
+                }
+                const href = channelLink.getAttribute('href');
+                if (!href) {
+                    link.classList.toggle('spy', false);
+                    return;
+                }
+
+                // Check for anchor-only link
+                if (href.startsWith('#')) {
+                    link.classList.toggle('spy', href === '#' + currentId);
+                } else {
+                    // Full path + hash
+                    const urlObj = new URL(href, window.location.origin);
+                    link.classList.toggle(
+                        'spy',
+                        urlObj.pathname === window.location.pathname &&
+                        urlObj.hash === '#' + currentId
+                    );
+                }
             });
 
             // Update URL hash without navigation
@@ -419,7 +443,7 @@ function setupAjaxNavLinks() {
             const url = link.getAttribute('href');
             const urlObj = new URL(url, window.location.origin);
             let localNav = false;
-            if (urlObj.pathname == window.location.pathname && urlObj.search == window.location.search && urlObj.hash)
+            if (url.startsWith('#') || (urlObj.pathname == window.location.pathname && urlObj.search == window.location.search && urlObj.hash))
             {
                 // our URL is the same except for the hash, so this is a local nav
                 localNav = true;
@@ -431,7 +455,7 @@ function setupAjaxNavLinks() {
                 if (el) {
                     el.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }
-                window.history.pushState({}, '', urlObj.pathname + urlObj.search + urlObj.hash);
+                window.history.pushState({}, '', window.location.pathname + window.location.search + urlObj.hash);
             } else {
                 e.preventDefault();
                 let level = link.getAttribute('data-ajaxnav');

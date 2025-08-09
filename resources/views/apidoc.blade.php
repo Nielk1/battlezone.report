@@ -17,8 +17,8 @@
 <div class="page-container">
     <div class="sidebar3">
         <div class="header-bar header-bar-menu-pad2">
-            <div class="flex-grow-1 text-truncate">NO TITLE</div>
-            <div>NO DATE</div>
+            <div class="flex-grow-1 text-truncate">{{ $doc_name }}</div>
+            {{--<div>NO DATE</div>--}}
         </div>
         <div id="main-scrollable-content" class="sidebar3-content">
             <div class="container">
