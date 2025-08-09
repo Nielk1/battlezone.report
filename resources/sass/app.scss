@@ -1408,7 +1408,7 @@ $border-widths: (
         border-radius: 0;
 
         margin: #{$modal-icon-spacing};
-        margin-top: 2em;
+        margin-bottom: 2em;
 
         // special chamfer customization
         .modal-icon {
@@ -1444,36 +1444,36 @@ $border-widths: (
         }
         // end special chamfer customization
 
-        &::after {
-            content: '';
-            position: absolute;
-            top: #{-$sidebar-icons-sidepad};
-            width: max(10px, #{$modal-icon-size / 3});
-            height: 5px;
-            opacity: 0;
-            background-color: var(--bs-body-color);
-
-            border-radius: 0;
-            transition: width 0.3s,
-                        opacity 0.2s,
-                        clip-path 0.3s;
-            @include chamfer-bottom(5px);
-        }
-
-        &.active::after {
-            width: #{$modal-icon-size};
-            opacity: 1;
-        }
-
-        &.pip::after {
-            width: 10px;
-            opacity: 1;
-        }
-
-        &:hover::after {
-            width: #{$modal-icon-size / 2};
-            opacity: 1;
-        }
+        //&::after {
+        //    content: '';
+        //    position: absolute;
+        //    top: #{-$sidebar-icons-sidepad};
+        //    width: max(10px, #{$modal-icon-size / 3});
+        //    height: 5px;
+        //    opacity: 0;
+        //    background-color: var(--bs-body-color);
+        //
+        //    border-radius: 0;
+        //    transition: width 0.3s,
+        //                opacity 0.2s,
+        //                clip-path 0.3s;
+        //    @include chamfer-bottom(5px);
+        //}
+        //
+        //&.active::after {
+        //    width: #{$modal-icon-size};
+        //    opacity: 1;
+        //}
+        //
+        //&.pip::after {
+        //    width: 10px;
+        //    opacity: 1;
+        //}
+        //
+        //&:hover::after {
+        //    width: #{$modal-icon-size / 2};
+        //    opacity: 1;
+        //}
     }
 }
 
