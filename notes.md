@@ -319,3 +319,8 @@ config cache builds .env to cache
 view cache builds views from view blades
 
 
+# Run these commands on the server:
+php artisan view:cache
+php artisan config:cache
+php artisan route:cache
+php artisan app:build-svg-symbol-cache

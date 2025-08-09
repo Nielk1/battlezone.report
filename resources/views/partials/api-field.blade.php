@@ -40,7 +40,8 @@
                 @if (str_starts_with($content['glyph'], 'bi '))
                     <span class="font-icon"><i class="{{ $content['glyph'] }}"></i></span>
                 @else
-                    <span class="svg-icon">{!! File::get(resource_path('svg/' . $content['glyph'] . '.svg')) !!}</span>
+                    <span class="svg-icon"><svg width="24" height="24"><use xlink:href="#svg/{{ $content['glyph'] }}"></use></svg></span>
+                    {{--<span class="svg-icon">{!! File::get(resource_path('svg/' . $content['glyph'] . '.svg')) !!}</span>--}}
                 @endif
                 </div>
             </div>

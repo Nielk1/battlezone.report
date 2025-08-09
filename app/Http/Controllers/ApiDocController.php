@@ -483,7 +483,8 @@ class ApiDocController extends Controller
             'channels_header' => 'Issues',
             'channels' => $channels,
             'content' => $contents,
-            'type_id_map' => $type_id_map
+            'type_id_map' => $type_id_map,
+            'code' => 'apidoc'
         ]);
     }
 

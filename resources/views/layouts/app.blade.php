@@ -13,6 +13,9 @@
     <script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-lua.min.js"></script>
 </head>
 <body class="sidebar-layout{{ request()->query('sbh') ? ' sidebar-hidden' : '' }}" id="main-layout">
+    @if (file_exists(storage_path('app/svg-symbols.svg')))
+        {!! file_get_contents(storage_path('app/svg-symbols.svg')) !!}
+    @endif
     <aside class="sidebar" id="sidebar">
         <div id="sidebar-toggle" class="corner-button">☰</div>
         <div class="sidebar-scroll">
@@ -22,7 +25,7 @@
                 <a data-bs-toggle="tooltip" data-bs-placement="right" title="Issue"             data-nav="issue"     data-ajaxnav="true" href="{{ route('issue') }}"     class="sidebar-icon-box{{ ($activeNav ?? '') === 'issue'     ? ' active' : '' }}"><div class="sidebar-icon"><i class="bi bi-newspaper"></i></div></a>
                 <a data-bs-toggle="tooltip" data-bs-placement="right" title="Chronicles"        data-nav="chronicle" data-ajaxnav="true" href="{{ route('chronicle') }}" class="sidebar-icon-box{{ ($activeNav ?? '') === 'chronicle' ? ' active' : '' }}"><div class="sidebar-icon"><i class="bi bi-feather"></i></div></a>
                 <a data-bs-toggle="tooltip" data-bs-placement="right" title="Session List"      data-nav="games"     data-ajaxnav="true" href="{{ route('games') }}"     class="sidebar-icon-box{{ ($activeNav ?? '') === 'games'     ? ' active' : '' }}"><div class="sidebar-icon"><i class="bi bi-controller"></i></div></a>
-            {{--<a data-bs-toggle="tooltip" data-bs-placement="right" title="Modding Resources" data-nav="modding"   data-ajaxnav="true" href="{{ route('home') }}"      class="sidebar-icon-box{{ ($activeNav ?? '') === 'modding'   ? ' active' : '' }}"><div class="sidebar-icon"><i class="bi bi-tools"></i></div></a>--}}
+                <a data-bs-toggle="tooltip" data-bs-placement="right" title="Modding Resources" data-nav="modding"   data-ajaxnav="true" href="{{ route('home') }}"      class="sidebar-icon-box{{ ($activeNav ?? '') === 'modding'   ? ' active' : '' }}"><div class="sidebar-icon"><i class="bi bi-tools"></i></div></a>
             {{--<a data-bs-toggle="tooltip" data-bs-placement="right" title="Archive"           data-nav="archive"   data-ajaxnav="true" href="{{ route('home') }}"      class="sidebar-icon-box{{ ($activeNav ?? '') === 'archive'   ? ' active' : '' }}"><div class="sidebar-icon"><i class="bi bi-archive-fill"></i></div></a>--}}
                 <a data-bs-toggle="tooltip" data-bs-placement="right" title="Social"            data-nav="social"    data-ajaxnav="true" href="{{ route('social') }}"    class="sidebar-icon-box{{ ($activeNav ?? '') === 'social'    ? ' active' : '' }}"><div class="sidebar-icon"><i class="bi bi-chat-fill"></i></div></a>
                 <a data-bs-toggle="tooltip" data-bs-placement="right" title="About"             data-nav="about"     data-ajaxnav="true" href="{{ route('about') }}"     class="sidebar-icon-box{{ ($activeNav ?? '') === 'about'     ? ' active' : '' }}"><div class="sidebar-icon"><i class="bi bi-info-circle-fill"></i></div></a>
