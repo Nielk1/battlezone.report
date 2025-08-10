@@ -129,15 +129,21 @@
                 @if($nillable)
                     <span class="badge text-bg-secondary"><span class="print-and-select">[</span>nil<span class="print-and-select">]</span></span>
                 @endif
+                @if(isset($content['global']) && $content['global'])
+                    <span class="badge text-bg-success"><span class="print-and-select">[</span>global<span class="print-and-select">]</span></span>
+                @endif
                 @if(isset($content['deprecated']) && $content['deprecated'])
                     <span class="badge text-bg-danger"><span class="print-and-select">[</span>deprecated<span class="print-and-select">]</span></span>
+                @endif
+                @if(isset($content['tags']['internal_use']) && $content['tags']['internal_use'])
+                    <span class="badge text-bg-warning"><span class="print-and-select">[</span>internal use<span class="print-and-select">]</span></span>
                 @endif
                 @if(isset($content['tags']['version']))
                     <span class="badge text-bg-info"><span class="print-and-select">[</span>version {{ $content['tags']['version'] }}<span class="print-and-select">]</span></span>
                 @endif
                 @if(isset($content['tags']))
                     @foreach($content['tags'] as $tag => $tagcontent)
-                        @if($tag === 'version' || $tag === '(i)' || $tag === '(!)' || $tag === '(!!)' || $tag === 'mod')
+                        @if($tag === 'version' || $tag === 'internal_use' || $tag === '(i)' || $tag === '(!)' || $tag === '(!!)' || $tag === 'mod')
                             @continue
                         @endif
                         <span class="badge text-bg-info"><span class="print-and-select">[</span>{{ $tag }}: {{ $tagcontent }}<span class="print-and-select">]</span></span>

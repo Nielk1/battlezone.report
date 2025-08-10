@@ -10,8 +10,8 @@ use League\CommonMark\CommonMarkConverter;
 class ApiDocController extends Controller
 {
     private CommonMarkConverter $converter;
-    //private const VERSION_TAG_PATTERN = '/\{VERSION:\s*\d+(?:\.[\da-zA-Z]+)*\+\}/';
     private const VERSION_TAG_PATTERN = '/\{VERSION[: ]\s*([\d\w\.]+\+?)\}/';
+    private const INTERNAL_USE_TAG_PATTERN = '/\{INTERNAL USE\}/';
     private const MULTIPLAYER_TAG_PATTERN = '/\{(?<tagtype>\((i|!|!!)\))(?<tagname>.*)\1[: ]?\s+(?<tagdesc>[^}]+)\}/';
     private const MOD_TAG_PATTERN = '/\{MOD:(?:(?<tagtype>[^:}]{1,50}):\s*(?<tagdesc>[^}]+)|(?<tagtype2>\S+)\s+(?<tagdesc2>[^}]+))\}/';
 
@@ -295,6 +295,7 @@ class ApiDocController extends Controller
 
             'base' => $field['base'] ?? null,
             'deprecated' => $field['deprecated'] ?? false,
+            'global' => $field['global'] ?? false,
 
             'view' => $field['view'] ?? null, // not used yet?
             'tags' => $tags,
@@ -341,6 +342,12 @@ class ApiDocController extends Controller
                 $tags['version'] = trim($version_value);
             }
 
+            // Extract internal use tags
+            preg_match_all(self::INTERNAL_USE_TAG_PATTERN, $desc, $internal_use_matches);
+            if (!empty($internal_use_matches[0])) {
+                $tags['internal_use'] = true;
+            }
+
             // Extract MOD tags
             preg_match_all(self::MOD_TAG_PATTERN, $desc, $mod_exu_matches);
             foreach ($mod_exu_matches['tagtype'] as $i => $mod_exu_value) {
@@ -366,6 +373,7 @@ class ApiDocController extends Controller
 
             // Remove Tags
             $desc = preg_replace(self::VERSION_TAG_PATTERN, '', $desc);
+            $desc = preg_replace(self::INTERNAL_USE_TAG_PATTERN, '', $desc);
             $desc = preg_replace(self::MOD_TAG_PATTERN, '', $desc);
             $desc = preg_replace(self::MULTIPLAYER_TAG_PATTERN, '', $desc);
 
