@@ -191,11 +191,11 @@
                 @endforeach
                 @endif
                 @if(isset($content['returns']))
+                @php($return_index = 1)
                 @foreach($content['returns'] as $return)
                     <span class="print-and-select">----</span>
-                    @php($return_index = 1)
                     <div class="arg-item return mb-1 border-15 border-start border-danger position-relative">
-                        <span class="print-and-select">@param&nbsp;</span><span class="fw-bolder text-danger">{{ $return['name'] ?? '['.$return_index.']' }}</span>
+                        <span class="print-and-select">@return&nbsp;</span><span class="fw-bolder text-danger">{{ $return['name'] ?? '['.$return_index.']' }}</span>
                         <?php
                             $typesOut = [];
                             if(isset($return['type'])) {
