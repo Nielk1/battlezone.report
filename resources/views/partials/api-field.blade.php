@@ -33,7 +33,7 @@
         @endif
     @endforeach
     <span class="print-and-select">---------------------------------------------------</span>
-    <div class="d-flex flex-row align-items-stretch gap-1 mb-1">
+    <div class="{{--api-sticky-block--}} d-flex flex-row align-items-stretch gap-1 mb-1">
         @if(isset($content['glyph']))
             <div class="bg-primary d-flex align-items-center">
                 <div class="apidoc-icon">

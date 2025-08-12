@@ -129,8 +129,10 @@ class ApiDocController extends Controller
         return strcmp($a_cmp, $b_cmp);
     }
 
-    private function generateChannelAndContentFromFieldEntry($field, $special, $section_code)
+    private function generateChannelAndContentFromFieldEntry($field, $special, $section_code, $sections_data)
     {
+        $sections = $this->buildSections($section_code, $sections_data);
+
         $glyph = null;
         $typeArrayRaw = [];
         $typeArray = [];
@@ -164,6 +166,10 @@ class ApiDocController extends Controller
                 case 'function_overload':
                     $glyph = "glyph/tablericons/math-function-y";
                     $typeArray[] = "function_overload";
+                    break;
+                case 'function_callback':
+                    $glyph = "glyph/tablericons/function";
+                    $typeArray[] = "function_callback";
                     break;
                 case 'string?':
                     $typeArray[] = "nil";
@@ -242,15 +248,63 @@ class ApiDocController extends Controller
         if ($section_code) {
             $code = "{$section_code}/" . $code;
         }
-        $members = [];
-        $content_members = [];
+        //$members = [];
+        //$content_members = [];
         if (isset($field['fields'])) {
             foreach ($field['fields'] as $inner_field) {
-                [$memberChannel, $memberContent] = $this->generateChannelAndContentFromFieldEntry($inner_field, "inner_" . $special, $code);
-                $members[] = $memberChannel;
-                $content_members[] = $memberContent;
+                $start = $inner_field['start'] ?? 0;
+                $section_key = $this->findSectionKey($sections, $start);
+                [$memberChannel, $memberContent] = $this->generateChannelAndContentFromFieldEntry($inner_field, "inner_" . $special, $code, $sections_data);
+                //$members[] = $memberChannel;
+                //$content_members[] = $memberContent;
+                $sections[$section_key]['children'][] = $memberChannel;
+                $sections[$section_key]['content'][] = $memberContent;
             }
         }
+
+        // Prepare children arrays for output
+        $children = [];
+        $content_children = [];
+        $section_counter = 0;
+        foreach ($sections as $section) {
+            if (!empty($section['children'])) {
+                $section_name = $section['name'] ?? "Other";
+                $section_code = $section['code'] ?? null;
+                $section_desc = $section['desc'] ?? null;
+                [$section_tags, $section_desc_html] = $this->extractTagsAndDescription($section_desc);
+
+                $children[] = new Channel(
+                    $section_name,
+                    $section['desc'] ?? null,
+                    'glyph/tablericons/section',
+                    null, null,
+                    $section_code ? "#{$section_code}" : null,
+                    [],
+                    $section['children']
+                );
+                $content_children[] = [
+                    'name' => $section_name,
+                    'code' => $section_code,
+                    'desc' => $section_desc_html,
+                    'tags' => $section_tags,
+                    'type' => [ 'section' ],
+                    'glyph' => 'glyph/tablericons/section',
+                    'children' => $section['content'] ?? []
+                ];
+                $section_counter++;
+            }
+        }
+        if ($section_counter === 1) {
+            // If there's only one section, we can flatten it
+            $children = $children[0]->children;
+
+            // consider flattening the content as well, but only if the category is really useless
+            $content_data = $content_children[0];
+            if ($content_data['name'] === 'Other' && empty($content_data['desc']) && empty($content_data['tags'])) {
+                $content_children = $content_data['children'];
+            }
+        }
+
         $desc = $field['desc'] ?? null;
         [$tags, $desc_html] = $this->extractTagsAndDescription($desc);
 
@@ -303,7 +357,8 @@ class ApiDocController extends Controller
             'args' => $args ?? null,
             'returns' => $returns ?? null,
 
-            'children' => $content_members
+            //'children' => $content_members
+            'children' => $content_children
         ];
         $buttons = [];
         if ($field['deprecated'] ?? false) {
@@ -322,7 +377,8 @@ class ApiDocController extends Controller
             null,
             "#{$code}",
             $buttons,
-            $members
+            //$members
+            $children
         );
         return [$channel, $content_item];
     }
@@ -427,7 +483,7 @@ class ApiDocController extends Controller
                     $start = $type_data['start'] ?? 0;
                     $section_key = $this->findSectionKey($sections, $start);
                     //[$new_item, $new_content_item] = $this->generateChannelAndContentFromFieldEntry($type_data, 'type', $sections[$section_key]['code'] ?? null);
-                    [$new_item, $new_content_item] = $this->generateChannelAndContentFromFieldEntry($type_data, 'type', $module ?? null);
+                    [$new_item, $new_content_item] = $this->generateChannelAndContentFromFieldEntry($type_data, 'type', $module ?? null, $api['sections'][$module] ?? []);
                     $sections[$section_key]['children'][] = $new_item;
                     $sections[$section_key]['content'][] = $new_content_item;
                 }
@@ -436,7 +492,8 @@ class ApiDocController extends Controller
             foreach ($fields as $field) {
                 $start = $field['start'] ?? 0;
                 $section_key = $this->findSectionKey($sections, $start);
-                [$channel, $content] = $this->generateChannelAndContentFromFieldEntry($field, 'field', $sections[$section_key]['code'] ?? null);
+                //[$channel, $content] = $this->generateChannelAndContentFromFieldEntry($field, 'field', $sections[$section_key]['code'] ?? null);
+                [$channel, $content] = $this->generateChannelAndContentFromFieldEntry($field, 'field', $module ?? null, $api['sections'][$module] ?? []);
                 $sections[$section_key]['children'][] = $channel;
                 $sections[$section_key]['content'][] = $content;
             }

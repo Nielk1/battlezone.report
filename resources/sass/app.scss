@@ -1350,6 +1350,21 @@ $border-widths: (
     }
 }
 
+/*.apidoc {
+    background-color: var(--bs-tertiary-bg) !important;
+    z-index: 1000;
+}
+
+.api-sticky-block {
+    position: sticky;
+    top: 0;
+    //background-color: var(--bs-tertiary-bg) !important;
+    z-index: 1000;
+
+    //margin-left: -0.5em;
+    //border-left: 0.5em var(--bs-tertiary-bg) solid;
+}*/
+
 //.apidoc-arg {
 //    white-space: nowrap;
 //}
