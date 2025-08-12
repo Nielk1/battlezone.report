@@ -241,6 +241,9 @@ class ApiDocController extends Controller
         }
         $name = $field['name'];
         $code = $field['code'] ?? strtolower(preg_replace('/[^a-z0-9]+/i', '_', $name));
+        if ($special == 'type') {
+            $code = "TYPE-" . $code;
+        }
         if (!isset($glyph)) {
             $glyph = "bi bi-question-circle";
             $name = $field['name'] . ":" . ($field['type'] ?? 'unknown') . ($special ? " ($special)" : '');
@@ -467,7 +470,7 @@ class ApiDocController extends Controller
             $types = $api['types'][$module] ?? [];
             foreach ($types as $type_name) {
                 // Create a lookup: type name => "module/type_name"
-                $type_id_map[$type_name] = $module . '/' . strtolower(preg_replace('/[^a-z0-9]+/i', '_', $type_name));
+                $type_id_map[$type_name] = $module . '/TYPE-' . strtolower(preg_replace('/[^a-z0-9]+/i', '_', $type_name));
             }
         }
 
