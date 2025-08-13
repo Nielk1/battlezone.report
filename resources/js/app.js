@@ -475,7 +475,7 @@ window.addEventListener('popstate', function(e) {
         ajaxNavigate(window.location.pathname + window.location.search + window.location.hash, target, depth, true);
     }
 
-    last_nav_url = window.location.toString();
+    last_nav_url = tmpWindowPath.toString();
 });
 
 function setupAjaxNavLinks() {
