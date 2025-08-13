@@ -206,7 +206,7 @@ function initPage() {
 
     // Scroll Spy Section
     {
-        function scrollHandler() {
+        function scrollHandler(event, force_auto_scroll = false) {
             let sections = scroll_spy_content.querySelectorAll('[data-spy="section"]');
             let navLinks = document.querySelectorAll('.channel-item');
             let scrollPos = scroll_spy_content.scrollY || scroll_spy_content.scrollTop;
@@ -225,6 +225,8 @@ function initPage() {
                 }
             }
 
+            let auto_scroll_spy = document.getElementById('channel-autoscroll-spy')?.classList.contains('active') ?? false;
+            let currentSpy = force_auto_scroll ? null : document.querySelector('.channel-item.spy');
             navLinks.forEach(link => {
                 //link.classList.toggle('spy', link.querySelector('.channel-link').getAttribute('href') === window.location.pathname + '#' + currentId);
 
@@ -241,15 +243,21 @@ function initPage() {
 
                 // Check for anchor-only link
                 if (href.startsWith('#')) {
-                    link.classList.toggle('spy', href === '#' + currentId);
+                    let spy = href === '#' + currentId;
+                    link.classList.toggle('spy', spy);
+                    if (auto_scroll_spy && spy && currentSpy !== link) {
+                        // scroll
+                        link.scrollIntoView({ block: 'nearest' });
+                    }
                 } else {
                     // Full path + hash
                     const urlObj = new URL(href, window.location.origin);
-                    link.classList.toggle(
-                        'spy',
-                        urlObj.pathname === window.location.pathname &&
-                        urlObj.hash === '#' + currentId
-                    );
+                    let spy = urlObj.pathname === window.location.pathname && urlObj.hash === '#' + currentId;
+                    link.classList.toggle('spy', spy);
+                    if (auto_scroll_spy && spy && currentSpy !== link) {
+                        // scroll
+                        link.scrollIntoView({ block: 'nearest' });
+                    }
                 }
             });
 
@@ -267,6 +275,24 @@ function initPage() {
         }
         if (scroll_spy_content) {
             scroll_spy_content.addEventListener('scroll', scrollHandler);
+        }
+
+        function toggleAutoScrollSpy() {
+            const button = document.getElementById('channel-autoscroll-spy');
+            if (!button) return;
+            const isActive = button.classList.toggle('active');
+            if (isActive) {
+                scrollHandler(null, true);
+                setQueryParam('sc', '1');
+            } else {
+                removeQueryParam('sc');
+            }
+        }
+
+        let channel_autoscroll_spy = document.getElementById('channel-autoscroll-spy');
+        if (channel_autoscroll_spy) {
+            channel_autoscroll_spy.removeEventListener('click', toggleAutoScrollSpy); // Remove any existing handler
+            channel_autoscroll_spy.addEventListener('click', toggleAutoScrollSpy); // Add the new handler
         }
     }
 
@@ -291,7 +317,6 @@ function initPage() {
             sidebar_toggle.addEventListener('click', toggleSidebar); // Add the new handler
         }
     }
-
 
     function getMainPathSegment(path) {
        return path.split('/').filter(Boolean)[0] || '';
@@ -392,16 +417,34 @@ function ajaxNavigate(url, targetSelector, depth = 1, historyNavigation = false)
         });
 }
 
-var last_nav_url = window.location.toString(); // Initialize with the current path
+//var last_nav_url = window.location.toString(); // Initialize with the current path
+
+let tmpWindowPath = new URL(window.location.href);
+if (tmpWindowPath.searchParams.has('sc')) {
+    tmpWindowPath.searchParams.delete('sc');
+}
+if (tmpWindowPath.searchParams.has('sbh')) {
+    tmpWindowPath.searchParams.delete('sbh');
+}
+var last_nav_url = tmpWindowPath.toString();
+
 window.addEventListener('popstate', function(e) {
     // Reload the content for the current URL
     //ajaxNavigate(window.location.pathname + window.location.search, '#main-content');
 
-    const oldUrl = new URL(last_nav_url, window.location.origin);
-    if (oldUrl.pathname == window.location.pathname && oldUrl.search == window.location.search)
+    let tmpWindowPath = new URL(window.location.href);
+    if (tmpWindowPath.searchParams.has('sc')) {
+        tmpWindowPath.searchParams.delete('sc');
+    }
+    if (tmpWindowPath.searchParams.has('sbh')) {
+        tmpWindowPath.searchParams.delete('sbh');
+    }
+
+    const oldUrl = new URL(last_nav_url, tmpWindowPath.origin);
+    if (oldUrl.pathname == tmpWindowPath.pathname && oldUrl.search == tmpWindowPath.search)
     {
         // URLs are the same aside from maybe the hash
-        let hash = window.location.hash;
+        let hash = tmpWindowPath.hash;
         if (!hash || hash === '' || hash === '#') {
             hash = "#top"; // Default to top if no hash
         }
@@ -417,7 +460,7 @@ window.addEventListener('popstate', function(e) {
 
         // Determine ajax depth and target
         const oldSegments = oldUrl.pathname.split('/').filter(Boolean);
-        const newSegments = window.location.pathname.split('/').filter(Boolean);
+        const newSegments = tmpWindowPath.pathname.split('/').filter(Boolean);
 
         // If both start with different segments, we have a depth 1 at the main content
         let depth = 1;

@@ -257,6 +257,7 @@ class ApiDocController extends Controller
             foreach ($field['fields'] as $inner_field) {
                 $start = $inner_field['start'] ?? 0;
                 $section_key = $this->findSectionKey($sections, $start);
+
                 [$memberChannel, $memberContent] = $this->generateChannelAndContentFromFieldEntry($inner_field, "inner_" . $special, $code, $sections_data);
                 //$members[] = $memberChannel;
                 //$content_members[] = $memberContent;
@@ -303,9 +304,9 @@ class ApiDocController extends Controller
 
             // consider flattening the content as well, but only if the category is really useless
             $content_data = $content_children[0];
-            if ($content_data['name'] === 'Other' && empty($content_data['desc']) && empty($content_data['tags'])) {
+            //if ($content_data['name'] === 'Other' && empty($content_data['desc']) && empty($content_data['tags'])) {
                 $content_children = $content_data['children'];
-            }
+            //}
         }
 
         $desc = $field['desc'] ?? null;
@@ -565,6 +566,7 @@ class ApiDocController extends Controller
             'code' => 'apidoc',
             'activeNav' => 'modding',
             'doc_name' => $api['name'] ?? 'API Documentation',
+            'scrollSpyAutoScroll' => true,
         ]);
     }
 

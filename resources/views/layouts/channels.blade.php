@@ -17,7 +17,15 @@
 @section('content')
 <div class="page-container">
     <aside class="sidebar2" id="sidebar2" @if(isset($sidebarWidth)) style="width: {{ $sidebarWidth }}px;" @endif>
-        <div class="header-bar header-bar-menu-pad">{{ $channels_header ?? 'Channels' }}</div>
+        <div class="header-bar header-bar-menu-pad">
+            <div class="flex-grow-1 text-truncate">{{ $channels_header ?? 'Channels' }}</div>
+            @if(isset($scrollSpyAutoScroll) && $scrollSpyAutoScroll)
+                <div id="channel-autoscroll-spy" class="{{ request()->query('sc') ? ' active' : '' }}">
+                    <i class="on bi bi-arrow-down-up"></i>
+                    <i class="off bi bi-stop"></i>
+                </div>
+            @endif
+        </div>
         <div class="sidebar2-content">
             <div class="channel-list">
                 @foreach($channels as $channel)

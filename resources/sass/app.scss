@@ -1373,10 +1373,22 @@ $border-widths: (
 //    white-space: pre-wrap;
 //}
 
-
-
-
-
+#channel-autoscroll-spy {
+    .on {
+        display: none;
+    }
+    .off {
+        display: inline;
+    }
+    &.active {
+        .on {
+            display: inline;
+        }
+        .off {
+            display: none;
+        }
+    }
+}
 
 
 

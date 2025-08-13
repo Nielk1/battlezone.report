@@ -168,8 +168,12 @@
                             $typesOut = [];
                             if(isset($arg['type'])) {
                                 foreach($arg['type'] as $type) {
-                                    if(isset($type_id_map[rtrim($type, '?')])) {
-                                        $typesOut[] = '<a href="#' . e($type_id_map[rtrim($type, '?')]) . '">' . e($type) . '</a>';
+                                    preg_match('/^([^\[\]\?]+)([\?\[\]]+)?$/', $type, $matches);
+                                    $typeBase = $matches[1] ?? $type;
+                                    $typeSuffix = $matches[2] ?? '';
+
+                                    if(isset($type_id_map[$typeBase])) {
+                                        $typesOut[] = '<a href="#' . e($type_id_map[$typeBase]) . '">' . e($typeBase) . '</a>' . e($typeSuffix);
                                     } else {
                                         $typesOut[] = e($type);
                                     }
