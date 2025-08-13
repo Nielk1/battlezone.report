@@ -1248,8 +1248,15 @@ $border-widths: (
     position: relative;
     //padding-left: 0.75em;
     padding-left: 0.5em;
+    --bs-border-opacity: 1;
+
     &.param,
-    &.return {
+    &.return,
+    &.hook_add,
+    &.hook_call {
+        .fw-bolder {
+            --bs-text-opacity: 1;
+        }
         &::before {
             position: absolute;
             left: -10px;
@@ -1263,21 +1270,64 @@ $border-widths: (
                  1px  1px 0 black;
         }
     }
-    &.param::before {
-        content: "P";
-            text-shadow:
-                -1px -1px 0 var(--bs-info),
-                 1px -1px 0 var(--bs-info),
-                -1px  1px 0 var(--bs-info),
-                 1px  1px 0 var(--bs-info);
+    &.param {
+        border-color: rgba(var(--bs-info-rgb), var(--bs-border-opacity)) !important;
+        .fw-bolder {
+            color: rgba(var(--bs-info-rgb), var(--bs-text-opacity)) !important;
+        }
+        &::before {
+            content: "P";
+                text-shadow:
+                    -1px -1px 0 var(--bs-info),
+                     1px -1px 0 var(--bs-info),
+                    -1px  1px 0 var(--bs-info),
+                     1px  1px 0 var(--bs-info);
+        }
     }
-    &.return::before {
-        content: "R";
-            text-shadow:
-                -1px -1px 0 var(--bs-danger),
-                 1px -1px 0 var(--bs-danger),
-                -1px  1px 0 var(--bs-danger),
-                 1px  1px 0 var(--bs-danger);
+    &.return {
+        border-color: rgba(var(--bs-danger-rgb), var(--bs-border-opacity)) !important;
+        .fw-bolder {
+            color: rgba(var(--bs-danger-rgb), var(--bs-text-opacity)) !important;
+        }
+        &::before {
+            content: "R";
+                text-shadow:
+                    -1px -1px 0 var(--bs-danger),
+                     1px -1px 0 var(--bs-danger),
+                    -1px  1px 0 var(--bs-danger),
+                     1px  1px 0 var(--bs-danger);
+        }
+    }
+
+
+    &.hook_add {
+        border-color: rgba(var(--bs-secondary-rgb), var(--bs-border-opacity)) !important;
+        .fw-bolder {
+            color: rgba(var(--bs-tertiary-rgb), var(--bs-text-opacity)) !important;
+        }
+        &::before {
+            content: "A";
+                text-shadow:
+                    -1px -1px 0 var(--bs-secondary),
+                     1px -1px 0 var(--bs-secondary),
+                    -1px  1px 0 var(--bs-secondary),
+                     1px  1px 0 var(--bs-secondary);
+        }
+    }
+
+    &.hook_call {
+        border-color: rgba(var(--bs-secondary-rgb), var(--bs-border-opacity)) !important;
+        .fw-bolder {
+            color: rgba(var(--bs-tertiary-rgb), var(--bs-text-opacity)) !important;
+        }
+        &::before {
+            content: "C";
+                text-shadow:
+                    -1px -1px 0 var(--bs-secondary),
+                     1px -1px 0 var(--bs-secondary),
+                    -1px  1px 0 var(--bs-secondary),
+                     1px  1px 0 var(--bs-secondary);
+        }
     }
 }
 

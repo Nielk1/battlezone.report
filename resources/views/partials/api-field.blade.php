@@ -18,6 +18,7 @@
                 @break
             @case('function')
             @case('function_overload')
+            @case('event')
                 @php($type_code = 'function')
                 @php($has_non_primitive = true)
                 @break
@@ -49,17 +50,23 @@
         <div class="d-flex justify-content-between flex-column">
             <div>
                 <span class="h5">
-                    {{ $content['name'] }}
-                    @if(isset($content['base']))
-                        @if(($type_code ?? null) == 'type' || ($type_code ?? null) == 'alias')
-                            :
-                            @if(isset($type_id_map[$content['base']]))
-                                <a href="#{{ $type_id_map[$content['base']] }}">{{ $content['base'] }}</a>
-                            @else
-                                {{ $content['base'] }}
-                            @endif
-                        @endif
-                    @endif
+                    @if($type == 'event')"@endif{{ $content['name'] }}@if($type == 'event')"@endif
+                    <?php
+                        if(isset($content['base'])) {
+                            preg_match('/^([^\[\]\?]+)([\?\[\]]+)?$/', $content['base'], $matches);
+                            $typeBase = $matches[1] ?? $content['base'];
+                            $typeSuffix = $matches[2] ?? '';
+
+                            if(($type_code ?? null) == 'type' || ($type_code ?? null) == 'alias') {
+                                echo(' : ');
+                                if(isset($type_id_map[$typeBase])) {
+                                    echo('<a href="#' . $type_id_map[$typeBase] . '">' . e($typeBase) . '</a>' . e($typeSuffix));
+                                } else {
+                                    echo(e($content['base']));
+                                }
+                            }
+                        }
+                    ?>
                 </span>
                 @if($type_code == 'function')
                     <span class="h4">(</span>
@@ -71,8 +78,12 @@
                                 $typesOut = [];
                                 if(isset($arg['type'])) {
                                     foreach($arg['type'] as $type) {
-                                        if(isset($type_id_map[rtrim($type, '?')])) {
-                                            $typesOut[] = '<a href="#' . e($type_id_map[rtrim($type, '?')]) . '">' . e($type) . '</a>';
+                                        preg_match('/^([^\[\]\?]+)([\?\[\]]+)?$/', $type, $matches);
+                                        $typeBase = $matches[1] ?? $type;
+                                        $typeSuffix = $matches[2] ?? '';
+
+                                        if(isset($type_id_map[$typeBase])) {
+                                            $typesOut[] = '<a href="#' . e($type_id_map[$typeBase]) . '">' . e($typeBase) . '</a>' . e($typeSuffix);
                                         } else {
                                             $typesOut[] = e($type);
                                         }
@@ -95,8 +106,12 @@
                             $typesOut = [];
                             if(isset($return['type'])) {
                                 foreach($return['type'] as $type) {
-                                    if(isset($type_id_map[rtrim($type, '?')])) {
-                                        $typesOut[] = '<a href="#' . e($type_id_map[rtrim($type, '?')]) . '">' . e($type) . '</a>';
+                                    preg_match('/^([^\[\]\?]+)([\?\[\]]+)?$/', $type, $matches);
+                                    $typeBase = $matches[1] ?? $type;
+                                    $typeSuffix = $matches[2] ?? '';
+
+                                    if(isset($type_id_map[$typeBase])) {
+                                        $typesOut[] = '<a href="#' . e($type_id_map[$typeBase]) . '">' . e($typeBase) . '</a>' . e($typeSuffix);
                                     } else {
                                         $typesOut[] = e($type);
                                     }
@@ -159,11 +174,25 @@
             @case('section')
                 @break
             @case ('function')
+
+                @if(isset($content['hook_add']))
+                    <span class="print-and-select">----</span>
+                    <div class="arg-item hook_add mb-1 border-15 border-start">
+                        <span class="print-and-select">@add&nbsp;</span><span class="fw-bolder">{{ $content['hook_add'] }}</span>
+                    </div>
+                @endif
+                @if(isset($content['hook_call']))
+                    <span class="print-and-select">----</span>
+                    <div class="arg-item hook_call mb-1 border-15 border-start">
+                        <span class="print-and-select">@call&nbsp;</span><span class="fw-bolder">{{ $content['hook_call'] }}</span>
+                    </div>
+                @endif
+
                 @if(isset($content['args']))
                 @foreach($content['args'] as $arg)
                     <span class="print-and-select">----</span>
-                    <div class="arg-item param mb-1 border-15 border-start border-info">
-                        <span class="print-and-select">@param&nbsp;</span><span class="fw-bolder text-info">{{ $arg['name'] ?? '' }}</span>
+                    <div class="arg-item param mb-1 border-15 border-start">
+                        <span class="print-and-select">@param&nbsp;</span><span class="fw-bolder">{{ $arg['name'] ?? '' }}</span>
                         <?php
                             $typesOut = [];
                             if(isset($arg['type'])) {
@@ -204,14 +233,18 @@
                 @php($return_index = 1)
                 @foreach($content['returns'] as $return)
                     <span class="print-and-select">----</span>
-                    <div class="arg-item return mb-1 border-15 border-start border-danger position-relative">
-                        <span class="print-and-select">@return&nbsp;</span><span class="fw-bolder text-danger">{{ $return['name'] ?? '['.$return_index.']' }}</span>
+                    <div class="arg-item return mb-1 border-15 border-start position-relative">
+                        <span class="print-and-select">@return&nbsp;</span><span class="fw-bolder">{{ $return['name'] ?? '['.$return_index.']' }}</span>
                         <?php
                             $typesOut = [];
                             if(isset($return['type'])) {
                                 foreach($return['type'] as $type) {
-                                    if(isset($type_id_map[rtrim($type, '?')])) {
-                                        $typesOut[] = '<a href="#' . e($type_id_map[rtrim($type, '?')]) . '">' . e($type) . '</a>';
+                                    preg_match('/^([^\[\]\?]+)([\?\[\]]+)?$/', $type, $matches);
+                                    $typeBase = $matches[1] ?? $type;
+                                    $typeSuffix = $matches[2] ?? '';
+
+                                    if(isset($type_id_map[$typeBase])) {
+                                        $typesOut[] = '<a href="#' . e($type_id_map[$typeBase]) . '">' . e($typeBase) . '</a>' . e($typeSuffix);
                                     } else {
                                         $typesOut[] = e($type);
                                     }

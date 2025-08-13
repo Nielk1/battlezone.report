@@ -157,6 +157,11 @@ class ApiDocController extends Controller
                     $typeArray[] = "alias";
                     $specialModulator = "alias";
                     break;
+                case 'event':
+                    $glyph = "glyph/tablericons/access-point";
+                    $typeArray[] = "event";
+                    $specialModulator = "event";
+                    break;
                 case 'function?':
                     $typeArray[] = "nil";
                 case 'function':
@@ -243,6 +248,9 @@ class ApiDocController extends Controller
         $code = $field['code'] ?? strtolower(preg_replace('/[^a-z0-9]+/i', '_', $name));
         if ($special == 'type') {
             $code = "TYPE-" . $code;
+        }
+        if ($special == 'event') {
+            $code = "EVENT-" . $code;
         }
         if (!isset($glyph)) {
             $glyph = "bi bi-question-circle";
@@ -360,6 +368,8 @@ class ApiDocController extends Controller
 
             'args' => $args ?? null,
             'returns' => $returns ?? null,
+            'hook_add' => $field['add'] ?? null,
+            'hook_call' => $field['call'] ?? null,
 
             //'children' => $content_members
             'children' => $content_children
@@ -463,7 +473,7 @@ class ApiDocController extends Controller
         $channels = [];
         $contents = [];
 
-        $key_list = array_unique(array_merge(array_keys($api['types']), array_keys($api['fields'])));
+        $key_list = array_unique(array_merge(array_keys($api['events']), array_keys($api['types']), array_keys($api['fields'])));
         usort($key_list, [self::class, 'sortUnderscoresLast']);
 
         $type_id_map = [];
@@ -477,8 +487,18 @@ class ApiDocController extends Controller
 
         foreach ($key_list as $module) {
             $sections = $this->buildSections($module, $api['sections'][$module] ?? []);
+            $events = $api['events'][$module] ?? [];
             $types = $api['types'][$module] ?? [];
             $fields = $api['fields'][$module] ?? [];
+
+            foreach ($events as $event) {
+                $start = $event['start'] ?? 0;
+                $section_key = $this->findSectionKey($sections, $start);
+                //[$channel, $content] = $this->generateChannelAndContentFromFieldEntry($field, 'field', $sections[$section_key]['code'] ?? null);
+                [$channel, $content] = $this->generateChannelAndContentFromFieldEntry($event, 'event', $module ?? null, $api['sections'][$module] ?? []);
+                $sections[$section_key]['children'][] = $channel;
+                $sections[$section_key]['content'][] = $content;
+            }
 
             // Populate sections with types and fields
             foreach ($types as $type) {
@@ -492,7 +512,7 @@ class ApiDocController extends Controller
                     $sections[$section_key]['content'][] = $new_content_item;
                 }
             }
-            usort($fields, [self::class, 'sortFieldByProperties']);
+            //usort($fields, [self::class, 'sortFieldByProperties']);
             foreach ($fields as $field) {
                 $start = $field['start'] ?? 0;
                 $section_key = $this->findSectionKey($sections, $start);
