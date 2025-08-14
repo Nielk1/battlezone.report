@@ -25,7 +25,27 @@
                 @foreach($content as $item)
                     <span class="print-and-select">===================================================</span>
                     <div class="content-item" data-spy="section" id="{{ $item['code'] }}">
-                        <h2>{{ $item['name'] }}</h2>
+                        <h2>
+                            {{ $item['name'] }}
+                            <?php
+                                $typeBase = $item['name'] ?? null;
+                                if (isset($typeBase) && isset($type_id_map[$typeBase])) {
+                                    echo(' : <a href="#' . $type_id_map[$typeBase] . '">' . e($typeBase) . '</a>');
+                                }
+                            ?>
+                        </h2>
+
+                        @if(isset($item['authors']) && count($item['authors']) > 0)
+                            <div class="documentation-authors">
+                                <strong>Authors:</strong>
+                                <ul>
+                                    @foreach($item['authors'] as $author)
+                                        <li>{{ $author }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+
                         <span class="print-and-select">----</span>
                         <div class="documentation-desc">{!! $item['desc'] !!}</div>
                         @if(isset($item['children']) && count($item['children']) > 0)

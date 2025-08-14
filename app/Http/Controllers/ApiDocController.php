@@ -567,6 +567,7 @@ class ApiDocController extends Controller
 
             $name = $api['modules'][$module]['name'] ?? $module;
             $module_desc = $api['modules'][$module]['desc'] ?? null;
+            $module_authors = $api['modules'][$module]['authors'] ?? null;
             [$module_tags, $module_desc_html] = $this->extractTagsAndDescription($module_desc);
 
             $channels[] = new Channel($name, null, null, null, null, "#{$module}", [], $children);
@@ -574,7 +575,8 @@ class ApiDocController extends Controller
                 'name' => $name,
                 'code' => $module,
                 'desc' => $module_desc_html,
-                'children' => $content_children
+                'children' => $content_children,
+                'authors' => $module_authors ?? []
             ];
         }
 
