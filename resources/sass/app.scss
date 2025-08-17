@@ -1252,6 +1252,7 @@ $border-widths: (
 
     &.param,
     &.return,
+    &.enum-field,
     &.hook_add,
     &.hook_call {
         .fw-bolder {
@@ -1268,6 +1269,20 @@ $border-widths: (
                  1px -1px 0 black,
                 -1px  1px 0 black,
                  1px  1px 0 black;
+        }
+    }
+    &.enum-field {
+        border-color: rgba(var(--bs-success-rgb), var(--bs-border-opacity)) !important;
+        .fw-bolder {
+            color: rgba(var(--bs-success-rgb), var(--bs-text-opacity)) !important;
+        }
+        &::before {
+            content: "-";
+                text-shadow:
+                    -1px -1px 0 var(--bs-success),
+                     1px -1px 0 var(--bs-success),
+                    -1px  1px 0 var(--bs-success),
+                     1px  1px 0 var(--bs-success);
         }
     }
     &.param {
@@ -1338,6 +1353,22 @@ $border-widths: (
     }
     pre.language-lua {
         padding: 0.5em;
+    }
+    table:not([class]) {
+        @extend .table;
+        @extend .table-sm;
+        @extend .table-bordered;
+        //@extend .table-striped;
+        @extend .table-hover;
+    }
+
+    .colorbox {
+        display: inline-block;
+        width: 1em;
+        height: 1em;
+        //border: 1px solid black;
+        //@extend .rounded-1;
+        //float: right;
     }
 }
 

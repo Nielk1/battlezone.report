@@ -30,7 +30,7 @@
                             <?php
                                 $typeBase = $item['name'] ?? null;
                                 if (isset($typeBase) && isset($type_id_map[$typeBase])) {
-                                    echo(' : <a href="#' . $type_id_map[$typeBase] . '">' . e($typeBase) . '</a>');
+                                    echo(' <span class="align-text-middle"><i class="bi bi-arrow-right"><span class="select-only">-&gt;</span></i></span> <span class="apidoc-arg"><span class="fw-bolder text-danger">table</span>: <a href="#' . $type_id_map[$typeBase] . '">' . e($typeBase) . '</a></span>');
                                 }
                             ?>
                         </h2>

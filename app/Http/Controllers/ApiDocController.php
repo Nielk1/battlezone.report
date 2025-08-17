@@ -133,6 +133,9 @@ class ApiDocController extends Controller
     {
         $sections = $this->buildSections($section_code, $sections_data);
 
+        $base = $field['base'] ?? null;
+        $isEnum = false;
+
         $glyph = null;
         $typeArrayRaw = [];
         $typeArray = [];
@@ -170,11 +173,11 @@ class ApiDocController extends Controller
                     break;
                 case 'function_overload':
                     $glyph = "glyph/tablericons/math-function-y";
-                    $typeArray[] = "function_overload";
+                    $typeArray[] = "function overload";
                     break;
                 case 'function_callback':
                     $glyph = "glyph/tablericons/function";
-                    $typeArray[] = "function_callback";
+                    $typeArray[] = "function callback";
                     break;
                 case 'string?':
                     $typeArray[] = "nil";
@@ -206,12 +209,21 @@ class ApiDocController extends Controller
                     $glyph = "bi bi-toggle-on";
                     $typeArray[] = "boolean";
                     break;
+                case 'enum':
+                    $glyph = "bi bi-list-ul";
+                    $typeArray[] = "enum";
+                    break;
                 default:
-                    $typeArray[] = "UNK_" . $type;
                     if (str_starts_with($type, 'enum ')) {
-                        $glyph = "bi bi-list-ul";
+                        //$typeArray[] = substr($type, 5);
+                        //$typeArray[] = 'enum';
+                        $typeArray[] = $type;
+                        //$type = substr($type, 5);
+                        $base = substr($type, 5);
+                        $glyph = "bi bi-card-list";
                         break;
                     }
+                    $typeArray[] = "UNK_" . $type;
                     if (str_starts_with($type, 'fun(')) {
                         $glyph = "glyph/tablericons/math-function";
                         break;
@@ -237,7 +249,9 @@ class ApiDocController extends Controller
         }
         switch ($special) {
             case 'type':
-                if ($specialModulator == 'alias') {
+                if (isset($field['type']) && $field['type'] == 'enum') {
+                    $isEnum = true;
+                } elseif ($specialModulator == 'alias') {
                 } else {
                     $glyph = $glyph ?? "bi bi-box-fill";
                     $typeArray[] = "type";
@@ -359,7 +373,7 @@ class ApiDocController extends Controller
             'special' => $special,
             'glyph' => $glyph,
 
-            'base' => $field['base'] ?? null,
+            'base' => $base ?? null,
             'deprecated' => $field['deprecated'] ?? false,
             'global' => $field['global'] ?? false,
 
@@ -368,8 +382,11 @@ class ApiDocController extends Controller
 
             'args' => $args ?? null,
             'returns' => $returns ?? null,
+
             'hook_add' => $field['add'] ?? null,
             'hook_call' => $field['call'] ?? null,
+
+            'value' => $field['value'] ?? null,
 
             //'children' => $content_members
             'children' => $content_children
@@ -392,7 +409,7 @@ class ApiDocController extends Controller
             "#{$code}",
             $buttons,
             //$members
-            $children
+            $isEnum ? [] : $children
         );
         return [$channel, $content_item];
     }
@@ -447,8 +464,8 @@ class ApiDocController extends Controller
             $desc = preg_replace(self::MOD_TAG_PATTERN, '', $desc);
             $desc = preg_replace(self::MULTIPLAYER_TAG_PATTERN, '', $desc);
 
-
-            $desc_html = $this->converter->convert(trim($desc));
+            //$desc_html = $this->converter->convert(trim($desc));
+            $desc_html = (string) $this->converter->convert(trim($desc));
         } else {
             $desc_html = null;
         }
@@ -473,7 +490,7 @@ class ApiDocController extends Controller
         $channels = [];
         $contents = [];
 
-        $key_list = array_unique(array_merge(array_keys($api['events']), array_keys($api['types']), array_keys($api['fields'])));
+        $key_list = array_unique(array_merge(array_keys($api['events']), array_keys($api['types']), array_keys($api['fields']), array_keys($api['modules'])));
         usort($key_list, [self::class, 'sortUnderscoresLast']);
 
         $type_id_map = [];
@@ -492,6 +509,8 @@ class ApiDocController extends Controller
             $fields = $api['fields'][$module] ?? [];
 
             foreach ($events as $event) {
+                if ($event['local'] ?? false)
+                    continue;
                 $start = $event['start'] ?? 0;
                 $section_key = $this->findSectionKey($sections, $start);
                 //[$channel, $content] = $this->generateChannelAndContentFromFieldEntry($field, 'field', $sections[$section_key]['code'] ?? null);
@@ -503,6 +522,8 @@ class ApiDocController extends Controller
             // Populate sections with types and fields
             foreach ($types as $type) {
                 $type_data = $api['type_data'][$type] ?? null;
+                if ($type_data['local'] ?? false)
+                    continue;
                 if ($type_data) {
                     $start = $type_data['start'] ?? 0;
                     $section_key = $this->findSectionKey($sections, $start);
@@ -514,6 +535,8 @@ class ApiDocController extends Controller
             }
             //usort($fields, [self::class, 'sortFieldByProperties']);
             foreach ($fields as $field) {
+                if ($field['local'] ?? false)
+                    continue;
                 $start = $field['start'] ?? 0;
                 $section_key = $this->findSectionKey($sections, $start);
                 //[$channel, $content] = $this->generateChannelAndContentFromFieldEntry($field, 'field', $sections[$section_key]['code'] ?? null);

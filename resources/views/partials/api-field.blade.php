@@ -17,10 +17,14 @@
                 @php($has_non_primitive = true)
                 @break
             @case('function')
-            @case('function_overload')
+            @case('function overload')
             @case('event')
+            @case('function callback')
                 @php($type_code = 'function')
                 @php($has_non_primitive = true)
+                @break
+            @case('enum')
+                @php($type_code = 'enum')
                 @break
             @case('string')
             @case('integer')
@@ -29,6 +33,9 @@
                 @php($has_primitive = true)
                 @break
         @endswitch
+        @if(str_starts_with($type, 'enum '))
+            @php($type_code = 'enum ref')
+        @endif
         @if($type == 'nil')
             @php($nillable = true)
         @endif
@@ -57,7 +64,7 @@
                             $typeBase = $matches[1] ?? $content['base'];
                             $typeSuffix = $matches[2] ?? '';
 
-                            if(($type_code ?? null) == 'type' || ($type_code ?? null) == 'alias') {
+                            if(($type_code ?? null) == 'type' || ($type_code ?? null) == 'alias' || ($type_code ?? null) == 'enum ref') {
                                 echo(' : ');
                                 if(isset($type_id_map[$typeBase])) {
                                     echo('<a href="#' . $type_id_map[$typeBase] . '">' . e($typeBase) . '</a>' . e($typeSuffix));
@@ -167,7 +174,7 @@
             </div>
         </div>
     </div>
-    @if(!($has_primitive && !$has_non_primitive))
+    @if(!($has_primitive && !$has_non_primitive) && $type_code != 'enum ref')
         @switch($type_code ?? null)
             @case('type')
             @case('alias')
@@ -181,6 +188,7 @@
                         <span class="print-and-select">@add&nbsp;</span><span class="fw-bolder">{{ $content['hook_add'] }}</span>
                     </div>
                 @endif
+
                 @if(isset($content['hook_call']))
                     <span class="print-and-select">----</span>
                     <div class="arg-item hook_call mb-1 border-15 border-start">
@@ -229,6 +237,7 @@
                     </div>
                 @endforeach
                 @endif
+
                 @if(isset($content['returns']))
                 @php($return_index = 1)
                 @foreach($content['returns'] as $return)
@@ -272,6 +281,9 @@
                     </div>
                 @endforeach
                 @endif
+
+                @break
+            @case('enum')
                 @break
             @default
                 @if(isset($type_code))
@@ -351,7 +363,55 @@
     @endif
     <span class="print-and-select">----</span>
     <div class="documentation-desc">{!! $content['desc'] !!}</div>
-    @if(isset($content['children']) && count($content['children']) > 0)
+    @if(isset($type_code) && $type_code == 'enum')
+        @if(isset($content['children']) && count($content['children']) > 0)
+            <span class="print-and-select">>></span>
+            <div>
+                @foreach($content['children'] as $child)
+                    {{--@include('partials.api-field', ['content' => $child, 'type_id_map' => $type_id_map])--}}
+                    {{--<span class="print-and-select">----</span>--}}
+                    <div class="arg-item enum-field mb-1 border-15 border-start">
+                        <span class="fw-bolder">{{ $child['name'] ?? '' }}</span>
+                        <span> = {{ $child['value'] ?? '' }}: </span>
+                        <?php
+                            $typesOut = [];
+                            if(isset($child['type'])) {
+                                foreach($child['type'] as $type) {
+                                    preg_match('/^([^\[\]\?]+)([\?\[\]]+)?$/', $type, $matches);
+                                    $typeBase = $matches[1] ?? $type;
+                                    $typeSuffix = $matches[2] ?? '';
+
+                                    if(isset($type_id_map[$typeBase])) {
+                                        $typesOut[] = '<a href="#' . e($type_id_map[$typeBase]) . '">' . e($typeBase) . '</a>' . e($typeSuffix);
+                                    } else {
+                                        $typesOut[] = e($type);
+                                    }
+                                }
+                            }
+                            echo implode('<span class="fw-bold">|</span>', $typesOut);
+                        ?>
+                        @if(isset($child['tags']))
+                            <div class="d-flex flex-row gap-1">
+                                @if(isset($child['tags']['version']))
+                                    <span class="badge text-bg-info"><span class="print-and-select">[</span>version {{ $child['tags']['version'] }}<span class="print-and-select">]</span></span>
+                                @endif
+                                @foreach($child['tags'] as $tag => $tagcontent)
+                                    @if($tag === 'version')
+                                        @continue
+                                    @endif
+                                    <span class="badge text-bg-info"><span class="print-and-select">[</span>{{ $tag }}: {{ $tagcontent }}<span class="print-and-select">]</span></span>
+                                @endforeach
+                            </div>
+                        @endif
+                        @if(!empty($child['desc']))
+                            {!! $child['desc'] !!}
+                        @endif
+                    </div>
+                @endforeach
+            </div>
+            <span class="print-and-select"><<</span>
+        @endif
+    @elseif(isset($content['children']) && count($content['children']) > 0)
         <span class="print-and-select">>></span>
         <div>
             @foreach($content['children'] as $child)
