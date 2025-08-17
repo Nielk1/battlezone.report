@@ -336,6 +336,8 @@ function initPage() {
             LoadGameListBZCC();
         }
     }
+
+    Prism.highlightAll();
 }
 
 function initPage_full() {
@@ -352,8 +354,6 @@ function initPage_full() {
             }
         }
     }
-
-    Prism.highlightAll();
 }
 
 document.addEventListener('DOMContentLoaded', initPage_full);
