@@ -414,6 +414,9 @@ class ApiDocController extends Controller
         $desc = $field['desc'] ?? null;
         [$tags, $desc_html] = $this->extractTagsAndDescription($desc);
 
+        if ($field['local'] ?? false)
+            $tags['local'] = 'local use';
+
         // distinct and sort $typeArray
         $typeArray = array_values(array_unique($typeArray));
         sort($typeArray);
@@ -596,8 +599,8 @@ class ApiDocController extends Controller
             $fields = $api['fields'][$module] ?? [];
 
             foreach ($events as $event) {
-                if ($event['local'] ?? false)
-                    continue;
+                //if ($event['local'] ?? false)
+                //    continue;
                 $start = $event['start'] ?? 0;
                 $section_key = $this->findSectionKey($sections, $start);
                 //[$channel, $content] = $this->generateChannelAndContentFromFieldEntry($field, 'field', $sections[$section_key]['code'] ?? null);
@@ -609,8 +612,8 @@ class ApiDocController extends Controller
             // Populate sections with types and fields
             foreach ($types as $type) {
                 $type_data = $api['type_data'][$type] ?? null;
-                if ($type_data['local'] ?? false)
-                    continue;
+                //if ($type_data['local'] ?? false)
+                //    continue;
                 if ($type_data) {
                     $start = $type_data['start'] ?? 0;
                     $section_key = $this->findSectionKey($sections, $start);
@@ -622,8 +625,8 @@ class ApiDocController extends Controller
             }
             //usort($fields, [self::class, 'sortFieldByProperties']);
             foreach ($fields as $field) {
-                if ($field['local'] ?? false)
-                    continue;
+                //if ($field['local'] ?? false)
+                //    continue;
                 $start = $field['start'] ?? 0;
                 $section_key = $this->findSectionKey($sections, $start);
                 //[$channel, $content] = $this->generateChannelAndContentFromFieldEntry($field, 'field', $sections[$section_key]['code'] ?? null);
