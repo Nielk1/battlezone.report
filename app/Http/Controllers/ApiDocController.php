@@ -129,12 +129,21 @@ class ApiDocController extends Controller
         return strcmp($a_cmp, $b_cmp);
     }
 
-    private function generateChannelAndContentFromFieldEntry($field, $special, $section_code, $sections_data)
+    private function isPrimitiveType($type)
+    {
+        if (str_ends_with($type, '?')) {
+            $type = substr($type, 0, -1);
+        }
+        return in_array($type, ['string', 'integer', 'number', 'boolean']);
+    }
+
+    private function generateChannelAndContentFromFieldEntry($field, $special, $section_code, $sections_data, $type_data)
     {
         $sections = $this->buildSections($section_code, $sections_data);
 
         $base = $field['base'] ?? null;
-        $isEnum = false;
+        $condensed_children = false;
+        $is_function_overload_dummy = false;
 
         $glyph = null;
         $typeArrayRaw = [];
@@ -153,7 +162,46 @@ class ApiDocController extends Controller
 
         $name = $field['name'];
         foreach($typeArrayRaw as $type) {
-            $type = $field['type'];
+            //$type = $field['type'];
+            $type_old = $type;
+            $type_old = trim($type_old, '?');
+            $table_type_subparts = [];
+
+            if (isset($type_data) && $type_data != null) {
+                //$type = $type_data[$type] ?? $type;
+                // extract types from table and arrays and use the type_data to convert them, if they turn out to be aliases, back to their original type
+                if (str_starts_with($type, 'table<')) {
+                    $type_fragment = substr($type, 6);
+                    $type_fragment = trim($type_fragment, '>');
+                    $type_fragments = explode(',', $type_fragment);
+                    $type_fragments = array_map('trim', $type_fragments);
+                    foreach ($type_fragments as &$frag) {
+                        $table_type_subparts[] = $frag;
+                        if (
+                            isset($type_data[$frag]) &&
+                            is_array($type_data[$frag]) &&
+                            isset($type_data[$frag]['type']) &&
+                            $type_data[$frag]['type'] === 'alias'
+                        ) {
+                            $frag = $type_data[$frag]['base'] ?? $frag;
+                        }
+                    }
+                    unset($frag);
+                    $type = 'table<' . implode(', ', $type_fragments) . '>';
+                } elseif (str_ends_with($type, '[]')) {
+                    $type_fragment = substr($type, 0, -2);
+                    if (
+                        isset($type_data[$type_fragment]) &&
+                        is_array($type_data[$type_fragment]) &&
+                        isset($type_data[$type_fragment]['type']) &&
+                        $type_data[$type_fragment]['type'] === 'alias' &&
+                        isset($type_data[$type_fragment]['base'])
+                    ) {
+                        $type = $type_data[$type_fragment]['base'] . '[]';
+                    }
+                }
+            }
+
             switch ($type) {
                 case 'alias':
                     $glyph = $glyph ?? "bi bi-box-seam";
@@ -213,6 +261,32 @@ class ApiDocController extends Controller
                     $glyph = "bi bi-list-ul";
                     $typeArray[] = "enum";
                     break;
+                case 'function_overload_dummy':
+                    $glyph = "glyph/tablericons/math-function";
+                    $typeArray[] = "function_overload_dummy";
+                    //$condensed_children = true;
+                    $is_function_overload_dummy = true;
+                    break;
+                case 'integer[]':
+                    $typeArray[] = $type;
+                    $glyph = "bi bi-braces";
+                    $condensed_children = true;
+                    break;
+                case 'number[]':
+                    $typeArray[] = $type;
+                    $glyph = "bi bi-braces";
+                    $condensed_children = true;
+                    break;
+                case 'string[]':
+                    $typeArray[] = $type;
+                    $glyph = "bi bi-braces";
+                    $condensed_children = true;
+                    break;
+                case 'boolean[]':
+                    $typeArray[] = $type;
+                    $glyph = "bi bi-braces";
+                    $condensed_children = true;
+                    break;
                 default:
                     if (str_starts_with($type, 'enum ')) {
                         //$typeArray[] = substr($type, 5);
@@ -223,25 +297,31 @@ class ApiDocController extends Controller
                         $glyph = "bi bi-card-list";
                         break;
                     }
-                    $typeArray[] = "UNK_" . $type;
-                    if (str_starts_with($type, 'fun(')) {
-                        $glyph = "glyph/tablericons/math-function";
-                        break;
-                    }
                     if (str_starts_with($type, 'table<')) {
+                        //$typeArray[] = "table";
+                        //$type_fragment = substr($type, 6);
+                        //$type_fragment = trim($type_fragment, '>');
+                        //$type_fragments = explode(',', $type_fragment);
+                        //$type_fragments = array_map('trim', $type_fragments);
+                        //$typeArray[] = "table<" . implode(', ', $type_fragments) . ">";
+
+                        $typeArray[] = 'table<' . implode(', ', $table_type_subparts) . '>';
+
+                        if (count($type_fragments) === 2) {
+                            $condensed_children = true;
+                            if ($type_fragments[0] === 'string' && $type_fragments[1] === 'number') {
+
+                            } else {
+
+                            }
+                        }
+
                         $glyph = "bi bi-table";
                         break;
                     }
-                    if ($name == '[integer]') {
-                        $glyph = "bi bi-braces";
-                        break;
-                    }
-                    if ($name == '[number]') {
-                        $glyph = "bi bi-braces";
-                        break;
-                    }
-                    if ($name == '[string]') {
-                        $glyph = "bi bi-braces";
+                    $typeArray[] = "UNK_" . $type;
+                    if (str_starts_with($type, 'fun(')) {
+                        $glyph = "glyph/tablericons/math-function";
                         break;
                     }
                     break;
@@ -250,7 +330,7 @@ class ApiDocController extends Controller
         switch ($special) {
             case 'type':
                 if (isset($field['type']) && $field['type'] == 'enum') {
-                    $isEnum = true;
+                    $condensed_children = true;
                 } elseif ($specialModulator == 'alias') {
                 } else {
                     $glyph = $glyph ?? "bi bi-box-fill";
@@ -280,7 +360,7 @@ class ApiDocController extends Controller
                 $start = $inner_field['start'] ?? 0;
                 $section_key = $this->findSectionKey($sections, $start);
 
-                [$memberChannel, $memberContent] = $this->generateChannelAndContentFromFieldEntry($inner_field, "inner_" . $special, $code, $sections_data);
+                [$memberChannel, $memberContent] = $this->generateChannelAndContentFromFieldEntry($inner_field, "inner_" . $special, $code, $sections_data, $type_data);
                 //$members[] = $memberChannel;
                 //$content_members[] = $memberContent;
                 $sections[$section_key]['children'][] = $memberChannel;
@@ -388,6 +468,8 @@ class ApiDocController extends Controller
 
             'value' => $field['value'] ?? null,
 
+            'condensed' => $condensed_children,
+
             //'children' => $content_members
             'children' => $content_children
         ];
@@ -409,7 +491,7 @@ class ApiDocController extends Controller
             "#{$code}",
             $buttons,
             //$members
-            $isEnum ? [] : $children
+            $condensed_children || $is_function_overload_dummy ? [] : $children
         );
         return [$channel, $content_item];
     }
@@ -490,7 +572,12 @@ class ApiDocController extends Controller
         $channels = [];
         $contents = [];
 
-        $key_list = array_unique(array_merge(array_keys($api['events']), array_keys($api['types']), array_keys($api['fields']), array_keys($api['modules'])));
+        $key_list = array_unique(array_merge(
+            array_keys($api['events'] ?? []),
+            array_keys($api['types'] ?? []),
+            array_keys($api['fields'] ?? []),
+            array_keys($api['modules'] ?? [])
+        ));
         usort($key_list, [self::class, 'sortUnderscoresLast']);
 
         $type_id_map = [];
@@ -514,7 +601,7 @@ class ApiDocController extends Controller
                 $start = $event['start'] ?? 0;
                 $section_key = $this->findSectionKey($sections, $start);
                 //[$channel, $content] = $this->generateChannelAndContentFromFieldEntry($field, 'field', $sections[$section_key]['code'] ?? null);
-                [$channel, $content] = $this->generateChannelAndContentFromFieldEntry($event, 'event', $module ?? null, $api['sections'][$module] ?? []);
+                [$channel, $content] = $this->generateChannelAndContentFromFieldEntry($event, 'event', $module ?? null, $api['sections'][$module] ?? [], $api['type_data'] ?? []);
                 $sections[$section_key]['children'][] = $channel;
                 $sections[$section_key]['content'][] = $content;
             }
@@ -528,7 +615,7 @@ class ApiDocController extends Controller
                     $start = $type_data['start'] ?? 0;
                     $section_key = $this->findSectionKey($sections, $start);
                     //[$new_item, $new_content_item] = $this->generateChannelAndContentFromFieldEntry($type_data, 'type', $sections[$section_key]['code'] ?? null);
-                    [$new_item, $new_content_item] = $this->generateChannelAndContentFromFieldEntry($type_data, 'type', $module ?? null, $api['sections'][$module] ?? []);
+                    [$new_item, $new_content_item] = $this->generateChannelAndContentFromFieldEntry($type_data, 'type', $module ?? null, $api['sections'][$module] ?? [], $api['type_data'] ?? []);
                     $sections[$section_key]['children'][] = $new_item;
                     $sections[$section_key]['content'][] = $new_content_item;
                 }
@@ -540,7 +627,7 @@ class ApiDocController extends Controller
                 $start = $field['start'] ?? 0;
                 $section_key = $this->findSectionKey($sections, $start);
                 //[$channel, $content] = $this->generateChannelAndContentFromFieldEntry($field, 'field', $sections[$section_key]['code'] ?? null);
-                [$channel, $content] = $this->generateChannelAndContentFromFieldEntry($field, 'field', $module ?? null, $api['sections'][$module] ?? []);
+                [$channel, $content] = $this->generateChannelAndContentFromFieldEntry($field, 'field', $module ?? null, $api['sections'][$module] ?? [], $api['type_data'] ?? []);
                 $sections[$section_key]['children'][] = $channel;
                 $sections[$section_key]['content'][] = $content;
             }
