@@ -132,13 +132,7 @@
                         ?>
                         @if(isset($arg['tags']))
                             <div class="d-flex flex-row gap-1">
-                                @if(isset($arg['tags']['version']))
-                                    <span class="badge text-bg-info"><span class="print-and-select">[</span>version {{ $arg['tags']['version'] }}<span class="print-and-select">]</span></span>
-                                @endif
-                                @foreach($arg['tags'] as $tag => $tagcontent)
-                                    @if($tag === 'version') @continue @endif
-                                    <span class="badge text-bg-info"><span class="print-and-select">[</span>{{ $tag }}: {{ $tagcontent }}<span class="print-and-select">]</span></span>
-                                @endforeach
+                                @include('partials.api-field-tag', ['tags' => $arg['tags']])
                             </div>
                         @endif
                         @if(!empty($arg['desc']))
@@ -174,13 +168,7 @@
                         ?>
                         @if(isset($return['tags']))
                             <div class="d-flex flex-row gap-1">
-                                @if(isset($return['tags']['version']))
-                                    <span class="badge text-bg-info"><span class="print-and-select">[</span>version {{ $return['tags']['version'] }}<span class="print-and-select">]</span></span>
-                                @endif
-                                @foreach($return['tags'] as $tag => $tagcontent)
-                                    @if($tag === 'version') @continue @endif
-                                    <span class="badge text-bg-info"><span class="print-and-select">[</span>{{ $tag }}: {{ $tagcontent }}<span class="print-and-select">]</span></span>
-                                @endforeach
+                                @include('partials.api-field-tag', ['tags' => $return['tags']])
                             </div>
                         @endif
                         @if(!empty($return['desc']))
@@ -302,13 +290,7 @@
                         ?>
                         @if(isset($child['tags']))
                             <div class="d-flex flex-row gap-1">
-                                @if(isset($child['tags']['version']))
-                                    <span class="badge text-bg-info"><span class="print-and-select">[</span>version {{ $child['tags']['version'] }}<span class="print-and-select">]</span></span>
-                                @endif
-                                @foreach($child['tags'] as $tag => $tagcontent)
-                                    @if($tag === 'version') @continue @endif
-                                    <span class="badge text-bg-info"><span class="print-and-select">[</span>{{ $tag }}: {{ $tagcontent }}<span class="print-and-select">]</span></span>
-                                @endforeach
+                                @include('partials.api-field-tag', ['tags' => $child['tags']])
                             </div>
                         @endif
                         @if(!empty($child['desc']))
