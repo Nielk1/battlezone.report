@@ -137,9 +137,9 @@ class ApiDocController extends Controller
         return in_array($type, ['string', 'integer', 'number', 'boolean']);
     }
 
-    private function generateChannelAndContentFromFieldEntry($field, $special, $section_code, $sections_data, $type_data)
+    private function generateChannelAndContentFromFieldEntry($field, $special, $section_code, $sections_data, $type_data, $depth)
     {
-        $sections = $this->buildSections($section_code, $sections_data);
+        $sections = $this->buildSections($section_code, $sections_data, $depth);
 
         $base = $field['base'] ?? null;
         $condensed_children = false;
@@ -360,7 +360,7 @@ class ApiDocController extends Controller
                 $start = $inner_field['start'] ?? 0;
                 $section_key = $this->findSectionKey($sections, $start);
 
-                [$memberChannel, $memberContent] = $this->generateChannelAndContentFromFieldEntry($inner_field, "inner_" . $special, $code, $sections_data, $type_data);
+                [$memberChannel, $memberContent] = $this->generateChannelAndContentFromFieldEntry($inner_field, "inner_" . $special, $code, $sections_data, $type_data, $depth + 1);
                 //$members[] = $memberChannel;
                 //$content_members[] = $memberContent;
                 $sections[$section_key]['children'][] = $memberChannel;
@@ -375,7 +375,7 @@ class ApiDocController extends Controller
         foreach ($sections as $section) {
             if (!empty($section['children'])) {
                 $section_name = $section['name'] ?? "Other";
-                $section_code = $section['code'] ?? null;
+                $section_code = $code . '/' . ($section['code'] ?? null);
                 $section_desc = $section['desc'] ?? null;
                 [$section_tags, $section_desc_html] = $this->extractTagsAndDescription($section_desc);
 
@@ -593,7 +593,7 @@ class ApiDocController extends Controller
         }
 
         foreach ($key_list as $module) {
-            $sections = $this->buildSections($module, $api['sections'][$module] ?? []);
+            $sections = $this->buildSections($module, $api['sections'][$module] ?? [], 0);
             $events = $api['events'][$module] ?? [];
             $types = $api['types'][$module] ?? [];
             $fields = $api['fields'][$module] ?? [];
@@ -604,7 +604,7 @@ class ApiDocController extends Controller
                 $start = $event['start'] ?? 0;
                 $section_key = $this->findSectionKey($sections, $start);
                 //[$channel, $content] = $this->generateChannelAndContentFromFieldEntry($field, 'field', $sections[$section_key]['code'] ?? null);
-                [$channel, $content] = $this->generateChannelAndContentFromFieldEntry($event, 'event', $module ?? null, $api['sections'][$module] ?? [], $api['type_data'] ?? []);
+                [$channel, $content] = $this->generateChannelAndContentFromFieldEntry($event, 'event', $module ?? null, $api['sections'][$module] ?? [], $api['type_data'] ?? [], 1);
                 $sections[$section_key]['children'][] = $channel;
                 $sections[$section_key]['content'][] = $content;
             }
@@ -618,7 +618,7 @@ class ApiDocController extends Controller
                     $start = $type_data['start'] ?? 0;
                     $section_key = $this->findSectionKey($sections, $start);
                     //[$new_item, $new_content_item] = $this->generateChannelAndContentFromFieldEntry($type_data, 'type', $sections[$section_key]['code'] ?? null);
-                    [$new_item, $new_content_item] = $this->generateChannelAndContentFromFieldEntry($type_data, 'type', $module ?? null, $api['sections'][$module] ?? [], $api['type_data'] ?? []);
+                    [$new_item, $new_content_item] = $this->generateChannelAndContentFromFieldEntry($type_data, 'type', $module ?? null, $api['sections'][$module] ?? [], $api['type_data'] ?? [], 1);
                     $sections[$section_key]['children'][] = $new_item;
                     $sections[$section_key]['content'][] = $new_content_item;
                 }
@@ -630,7 +630,7 @@ class ApiDocController extends Controller
                 $start = $field['start'] ?? 0;
                 $section_key = $this->findSectionKey($sections, $start);
                 //[$channel, $content] = $this->generateChannelAndContentFromFieldEntry($field, 'field', $sections[$section_key]['code'] ?? null);
-                [$channel, $content] = $this->generateChannelAndContentFromFieldEntry($field, 'field', $module ?? null, $api['sections'][$module] ?? [], $api['type_data'] ?? []);
+                [$channel, $content] = $this->generateChannelAndContentFromFieldEntry($field, 'field', $module ?? null, $api['sections'][$module] ?? [], $api['type_data'] ?? [], 1);
                 $sections[$section_key]['children'][] = $channel;
                 $sections[$section_key]['content'][] = $content;
             }
@@ -706,16 +706,25 @@ class ApiDocController extends Controller
     }
 
     // Helper to build sections array
-    private function buildSections($module, $sections)
+    private function buildSections($module, $sections, $depth)
     {
-        $result = [0 => ['name' => null, 'desc' => null, 'children' => [], 'content' => [], 'code' => $module]];
+        //$result = [0 => ['name' => null, 'desc' => null, 'children' => [], 'content' => [], 'code' => $module]];
+        $result = [0 => [
+            'name' => null,
+            'desc' => null,
+        
+            'code' => $module . "/SEC-" . (string)$depth . '-' . strtolower(preg_replace('/[^a-z0-9]+/i', '_', $section['name'] ?? "Other")),
+        
+            'children' => [],
+            'content' => []
+        ]];
         foreach ($sections as $section) {
             $result[$section['start']] = [
                 'name' => $section['name'],
                 'desc' => $section['desc'] ?? null,
 
                 //'code' => $module . "/" . strtolower(preg_replace('/[^a-z0-9]+/i', '_', $section['name'] ?? "Other")),
-                'code' => $module . "/SEC-" . strtolower(preg_replace('/[^a-z0-9]+/i', '_', $section['name'] ?? "Other")),
+                'code' => $module . "/SEC-" . (string)$depth . '-' . strtolower(preg_replace('/[^a-z0-9]+/i', '_', $section['name'] ?? "Other")),
 
                 'children' => [],
                 'content' => []
