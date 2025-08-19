@@ -531,16 +531,24 @@ class ApiDocController extends Controller
                     $tag_type = trim($mod_exu_matches['tagtype2'][$i]);
                     $tag_desc = trim($mod_exu_matches['tagdesc2'][$i]);
                 }
-                $tags['mod'][] = [ 'name' => trim($tag_type), 'desc' => (string)$this->converter->convert(trim($tag_desc)) ];
+                $prefix = $tag_type;
+                if (strlen($prefix) > 0) {
+                    $prefix = '**' . $prefix . '**: ';
+                }
+                $tags['mod'][] = [ 'name' => trim($tag_type), 'desc' => (string)$this->converter->convert($prefix . trim($tag_desc)) ];
             }
 
-            // Extract multiplayer tags
+            // Extract warning tags
             preg_match_all(self::WARNING_TAG_PATTERN, $desc, $warning_matches);
             foreach ($warning_matches['tagname'] as $i => $warning_value) {
                 $tag_key = $warning_matches['tagname'][$i];
                 $tag_type = $warning_matches['tagtype'][$i];
                 $tag_desc = $warning_matches['tagdesc'][$i];
-                $tags[strtolower($tag_type)][] = [ 'type' => trim($tag_type), 'name' => trim($tag_key), 'desc' => (string)$this->converter->convert(trim($tag_desc)) ];
+                $prefix = $tag_key;
+                if (strlen($prefix) > 0) {
+                    $prefix = '**' . $prefix . '**: ';
+                }
+                $tags[strtolower($tag_type)][] = [ 'type' => trim($tag_type), 'name' => trim($tag_key), 'desc' => (string)$this->converter->convert($prefix . trim($tag_desc)) ];
             }
 
             // Remove Tags

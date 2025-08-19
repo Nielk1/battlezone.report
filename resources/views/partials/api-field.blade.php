@@ -206,9 +206,6 @@
             <i class="bi bi-exclamation-octagon-fill alert-icon" aria-label="Error:"></i>
             <div>
                 <span class="print-and-select">Error:</span>
-                @if(isset($tag['name']) && !empty($tag['name']))
-                <strong>{{ $tag['name'] }}:</strong>
-                @endif
                 {!! $tag['desc'] !!}
             </div>
         </div>
@@ -221,9 +218,6 @@
             <i class="bi bi-exclamation-triangle-fill alert-icon" aria-label="Warning:"></i>
             <div>
                 <span class="print-and-select">Warning:</span>
-                @if(isset($tag['name']) && !empty($tag['name']))
-                <strong>{{ $tag['name'] }}:</strong>
-                @endif
                 {!! $tag['desc'] !!}
             </div>
         </div>
@@ -236,9 +230,6 @@
             <i class="bi bi-info-circle-fill alert-icon" aria-label="Info:"></i>
             <div>
                 <span class="print-and-select">Info:</span>
-                @if(isset($tag['name']) && !empty($tag['name']))
-                <strong>{{ $tag['name'] }}:</strong>
-                @endif
                 {!! $tag['desc'] !!}
             </div>
         </div>
@@ -251,9 +242,6 @@
             <i class="bi bi-tools alert-icon" aria-label="Mod:"></i>
             <div>
                 <span class="print-and-select">Mod:</span>
-                @if(isset($tag['name']) && !empty($tag['name']))
-                <strong>{{ $tag['name'] }}:</strong>
-                @endif
                 {!! $tag['desc'] !!}
             </div>
         </div>
