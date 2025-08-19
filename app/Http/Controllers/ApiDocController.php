@@ -12,7 +12,7 @@ class ApiDocController extends Controller
     private CommonMarkConverter $converter;
     private const VERSION_TAG_PATTERN = '/\{VERSION[: ]\s*([\d\w\.]+\+?)\}/';
     private const INTERNAL_USE_TAG_PATTERN = '/\{INTERNAL USE\}/';
-    private const MULTIPLAYER_TAG_PATTERN = '/\{(?<tagtype>\((i|!|!!)\))(?<tagname>.*)\1[: ]?\s+(?<tagdesc>[^}]+)\}/';
+    private const WARNING_TAG_PATTERN = '/\{(?<tagtype>\((i|!|!!)\))(?<tagname>.*)\1[: ]?\s+(?<tagdesc>[^}]+)\}/';
     private const MOD_TAG_PATTERN = '/\{MOD:(?:(?<tagtype>[^:}]{1,50}):\s*(?<tagdesc>[^}]+)|(?<tagtype2>\S+)\s+(?<tagdesc2>[^}]+))\}/';
 
     public function __construct()
@@ -531,23 +531,23 @@ class ApiDocController extends Controller
                     $tag_type = trim($mod_exu_matches['tagtype2'][$i]);
                     $tag_desc = trim($mod_exu_matches['tagdesc2'][$i]);
                 }
-                $tags['mod'][] = [ 'name' => trim($tag_type), 'desc' => trim($tag_desc) ];
+                $tags['mod'][] = [ 'name' => trim($tag_type), 'desc' => (string)$this->converter->convert(trim($tag_desc)) ];
             }
 
             // Extract multiplayer tags
-            preg_match_all(self::MULTIPLAYER_TAG_PATTERN, $desc, $multiplayer_matches);
-            foreach ($multiplayer_matches['tagname'] as $i => $multiplayer_value) {
-                $tag_key = $multiplayer_matches['tagname'][$i];
-                $tag_type = $multiplayer_matches['tagtype'][$i];
-                $tag_desc = $multiplayer_matches['tagdesc'][$i];
-                $tags[strtolower($tag_type)][] = [ 'type' => trim($tag_type), 'name' => trim($tag_key), 'desc' => trim($tag_desc) ];
+            preg_match_all(self::WARNING_TAG_PATTERN, $desc, $warning_matches);
+            foreach ($warning_matches['tagname'] as $i => $warning_value) {
+                $tag_key = $warning_matches['tagname'][$i];
+                $tag_type = $warning_matches['tagtype'][$i];
+                $tag_desc = $warning_matches['tagdesc'][$i];
+                $tags[strtolower($tag_type)][] = [ 'type' => trim($tag_type), 'name' => trim($tag_key), 'desc' => (string)$this->converter->convert(trim($tag_desc)) ];
             }
 
             // Remove Tags
             $desc = preg_replace(self::VERSION_TAG_PATTERN, '', $desc);
             $desc = preg_replace(self::INTERNAL_USE_TAG_PATTERN, '', $desc);
             $desc = preg_replace(self::MOD_TAG_PATTERN, '', $desc);
-            $desc = preg_replace(self::MULTIPLAYER_TAG_PATTERN, '', $desc);
+            $desc = preg_replace(self::WARNING_TAG_PATTERN, '', $desc);
 
             //$desc_html = $this->converter->convert(trim($desc));
             $desc_html = (string) $this->converter->convert(trim($desc));

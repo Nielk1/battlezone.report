@@ -209,7 +209,7 @@
                 @if(isset($tag['name']) && !empty($tag['name']))
                 <strong>{{ $tag['name'] }}:</strong>
                 @endif
-                {{ $tag['desc'] }}
+                {!! $tag['desc'] !!}
             </div>
         </div>
     @endforeach
@@ -224,7 +224,7 @@
                 @if(isset($tag['name']) && !empty($tag['name']))
                 <strong>{{ $tag['name'] }}:</strong>
                 @endif
-                {{ $tag['desc'] }}
+                {!! $tag['desc'] !!}
             </div>
         </div>
     @endforeach
@@ -239,7 +239,7 @@
                 @if(isset($tag['name']) && !empty($tag['name']))
                 <strong>{{ $tag['name'] }}:</strong>
                 @endif
-                {{ $tag['desc'] }}
+                {!! $tag['desc'] !!}
             </div>
         </div>
     @endforeach
@@ -254,7 +254,7 @@
                 @if(isset($tag['name']) && !empty($tag['name']))
                 <strong>{{ $tag['name'] }}:</strong>
                 @endif
-                {{ $tag['desc'] }}
+                {!! $tag['desc'] !!}
             </div>
         </div>
     @endforeach

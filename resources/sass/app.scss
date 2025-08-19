@@ -1346,8 +1346,9 @@ $border-widths: (
     }
 }
 
-.arg-item,
-.documentation-desc {
+//.arg-item,
+//.documentation-desc,
+.apidoc {
     p:last-child {
         margin-bottom: 0;
     }
