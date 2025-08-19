@@ -1372,6 +1372,20 @@ $border-widths: (
         //float: right;
     }
 }
+
+.apidoc {
+    border-top-width: 2px !important;
+    //border-bottom-width: 1px !important;
+    border-top-style: solid !important;
+    //border-bottom-style: solid !important;
+    padding-top: 8px !important;
+    //padding-bottom: 8px !important;
+    //&:last-child {
+    //    border-top: none;
+    //    border-bottom: none;
+    //}
+}
+
 /*.arg-item {
     .colorbox {
         float: right;
