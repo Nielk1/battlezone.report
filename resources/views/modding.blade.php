@@ -26,48 +26,62 @@
 
 <div class="page-container">
     <div class="container">
-        <div class="row modal-nav">
-            <div class="col-12">
-                <div class="modal-block align-items-center">
-                    <div class="modal-icon-box">
-                        <div class="modal-icon">
-                            {{--{!! File::get(resource_path('svg/glyph/brand/lua.svg')) !!}--}}
-                            <svg><use xlink:href="#svg/glyph/brand/lua_a"></use></svg>
-                            <svg class="color2"><use xlink:href="#svg/glyph/brand/lua_b"></use></svg>
-                        </div>
+        <div class="row">
+            <div class="col-12"><h2 class="text-center">Battlezone 98 Redux</h2></div>
+            <div class="col-12 col-md-6 p-2 mb-1">
+                <a title="Battlezone 98 Redux: Mission API ScriptUtils"
+                   data-ajaxnav="true"
+                   href="{{ route('apidoc', ['api' => 'bz98r']) }}"
+                   class="modal-button d-flex gap-1 align-items-center"
+                   role="button">
+                    <div class="modal-icon">
+                        <svg><use xlink:href="#svg/glyph/brand/lua_a"></use></svg>
+                        <svg class="color2"><use xlink:href="#svg/glyph/brand/lua_b"></use></svg>
                     </div>
-                    <div class="d-flex flex-fill flex-column flex-md-row gap-1">
-                        <div class="flex-grow-1">
-                            <div class="d-flex flex-column flex-grow gap-1">
-                                <a title="BZ98R Bare ScriptUtils"
-                                   data-ajaxnav="true"
-                                   href="{{ route('apidoc', ['api' => 'bz98r']) }}"
-                                   class="modal-button x4btn"
-                                   role="button">BZ98R ScriptUtils</a>
-
-                                <a title="BZ98R _api Wrapper"
-                                   data-ajaxnav="true"
-                                   href="{{ route('apidoc', ['api' => 'bz98r_api']) }}"
-                                   class="modal-button x4btn"
-                                   role="button">BZ98R "_api" Wrapper</a>
-
-                                <a title="BZ98R _api Wrapper"
-                                   data-ajaxnav="true"
-                                   href="{{ route('apidoc', ['api' => 'bz98r_api', 'deprecated' => 1]) }}"
-                                   class="modal-button x4btn"
-                                   role="button"><span class="text-nowrap">BZ98R "_api" Wrapper</span><wbr> <span class="text-nowrap">(Show Deprecated)</span></a>
-
-                                <span class="modal-button x4btn disabled" href="#" role="button">Extra Utilities</span>
-                            </div>
-                        </div>
-                        <div class="flex-grow-1">
-                            <div class="d-flex flex-column flex-grow gap-1">
-                                <span class="modal-button x4btn disabled" href="#" role="button">BZCC ScriptUtils</span>
-                                <span class="modal-button x4btn disabled" href="#" role="button">BZCC "_api" Wrapper</span>
-                            </div>
-                        </div>
+                    <div class="flex-fill"><span class="text-nowrap">Mission API ScriptUtils</span> <span class="text-nowrap">(Game Engine Built-in)</span></div>
+                </a>
+            </div>
+            <div class="col-12 col-md-6 p-2 mb-1">
+                <a title="Battlezone 98 Redux: Extended Mission API"
+                   data-ajaxnav="true"
+                   href="{{ route('apidoc', ['api' => 'bz98r_api']) }}"
+                   class="modal-button d-flex gap-1 align-items-center"
+                   role="button">
+                    <div class="modal-icon">
+                        <svg><use xlink:href="#svg/glyph/brand/lua_a"></use></svg>
+                        <svg class="color2"><use xlink:href="#svg/glyph/brand/lua_b"></use></svg>
                     </div>
-                </div>
+                    <div class="flex-fill"><span class="text-nowrap">Extended Mission API</span> <span class="text-nowrap">(Mod by Nielk1)</span></div>
+                </a>
+            </div>
+            <div class="col-12 col-md-6 p-2 mb-1">
+                <span class="disabled modal-button d-flex gap-1 align-items-center" role="button">
+                    <div class="modal-icon">
+                        <svg><use xlink:href="#svg/glyph/brand/lua_a"></use></svg>
+                        <svg class="color2"><use xlink:href="#svg/glyph/brand/lua_b"></use></svg>
+                    </div>
+                    <div class="flex-fill"><span class="text-nowrap">Extra Utilities</span> <span class="text-nowrap">(Mod by VTrider)</span></div>
+                </span>
+            </div>
+            <div class="col-12"><hr></div>
+            <div class="col-12"><h2 class="text-center">Battlezone Combat Commander</h2></div>
+            <div class="col-12 col-md-6 p-2 mb-1">
+                <span class="disabled modal-button d-flex gap-1 align-items-center" role="button">
+                    <div class="modal-icon">
+                        <svg><use xlink:href="#svg/glyph/brand/lua_a"></use></svg>
+                        <svg class="color2"><use xlink:href="#svg/glyph/brand/lua_b"></use></svg>
+                    </div>
+                    <div class="flex-fill"><span class="text-nowrap">Mission API ScriptUtils</span> <span class="text-nowrap">(Game Engine Built-in)</span></div>
+                </span>
+            </div>
+            <div class="col-12 col-md-6 p-2 mb-1">
+                <span class="disabled modal-button d-flex gap-1 align-items-center" role="button">
+                    <div class="modal-icon">
+                        <svg><use xlink:href="#svg/glyph/brand/lua_a"></use></svg>
+                        <svg class="color2"><use xlink:href="#svg/glyph/brand/lua_b"></use></svg>
+                    </div>
+                    <div class="flex-fill"><span class="text-nowrap">Extended Mission API</span> <span class="text-nowrap">(Mod by Nielk1)</span></div>
+                </span>
             </div>
             {{--
             <div class="col-lg-6 col-12">

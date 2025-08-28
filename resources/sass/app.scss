@@ -6,12 +6,11 @@ $sidebar-icon-spacing: 8px; // spacing between icons
 $sidebar-padding: 8px; // padding of the entire sidebar (mostly affects top/bottom)
 $sidebar-icons-sidepad: 14px; // extra space on the sides of icons for the active indicator
 
-//$modal-icon-size: 48px;
-$modal-icon-size: 96px;
-$modal-block-size: 500px;
-//$modal-icon-spacing: 8px;
-$modal-inbox-spacing: 1em;
-$modal-outbox-spacing: 2em;
+//$modal-icon-size: 96px;
+$modal-icon-size: 64px;
+//$modal-block-size: 500px;
+//$modal-inbox-spacing: 1em;
+//$modal-outbox-spacing: 2em;
 
 $sidebar-width: $sidebar-icon-size + $sidebar-icons-sidepad * 2;
 
@@ -1514,9 +1513,10 @@ $border-widths: (
 
 
 
-
 .modal-button {
-    padding: 0.15em 1em;
+    //padding: 0.15em 1em;
+    padding: 0.15em 1em 0.15em 0.15em;
+    //padding: 0.15em;
     text-align: center;
     text-decoration: none;
 
@@ -1537,106 +1537,53 @@ $border-widths: (
         background-color: $primary;
         color: color-contrast($primary);
     }
-
-    //&.x4btn {
-    //    //font-size: 1.5em;
-    //    //padding: 0.25em 1em;
-    //    @include media-breakpoint-up(md) {
-    //        min-height: calc(#{$modal-icon-size} / 2 - 0.25rem + 2px);
-    //        line-height: calc(#{$modal-icon-size} / 2 - 0.25rem + 2px);
-    //        padding: 0;
-    //    }
-    //}
+    &:hover .modal-icon,
+    &.active .modal-icon {
+        color: color-contrast($primary);
+        svg.color2 {
+            color: rgba(var(--bs-link-color-rgb), var(--bs-link-opacity, 1));
+        }
+    }
 
     &.disabled {
         opacity: 0.65;
         pointer-events: none;
     }
-}
 
-
-
-.modal-nav {
-    //gap: 2em;
-    //gap: #{$modal-outbox-spacing};
-    //gap: #{$modal-outbox-spacing};
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    .modal-block {
-        background-color: var(--bs-tertiary-bg);
-        display: flex;
-
-        @include chamfer(6px);
-        padding: #{$modal-inbox-spacing};
-        //max-width: #{$modal-block-size};
-
-        gap: #{$modal-inbox-spacing};
-        margin-bottom: #{$modal-inbox-spacing};
-
-        p:last-child {
-            margin-bottom: 0;
-        }
-    }
-
-    .modal-icon-box {
+    .modal-icon {
         min-width: #{$modal-icon-size};
         width: #{$modal-icon-size};
         height: #{$modal-icon-size};
         display: flex;
         align-items: center;
         justify-content: center;
-        font-weight: bold;
-        font-size: 1.2rem;
-        cursor: pointer;
         user-select: none;
         position: relative;
         border-radius: 0;
 
-        .modal-icon {
-            width: 100%;
-            height: 100%;
+        color: rgba(var(--bs-link-color-rgb), var(--bs-link-opacity, 1));
+        padding: 2px;
+        transition: fill 0.15s;
 
-            --bs-bg-opacity: 1;
-            background-color: rgba(var(--bs-secondary-rgb), var(--bs-bg-opacity));
-            color: rgba(var(--bs-link-color-rgb), var(--bs-link-opacity, 1));
-            padding: 2px;
-            transition: background-color 0.15s,
-                        fill 0.15s;
+        //border-radius: inherit;
 
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            //border-radius: inherit;
-            @include chamfer(6px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
 
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            .bi {
-                //font-size: 1.5em;
-                font-size: calc(96px / 2);
-            }
+        .bi {
+            //font-size: 1.5em;
+            font-size: calc(96px / 2);
         }
+    }
 
-        svg {
-            position: absolute;
-            max-width: calc(100% - 0.5rem);
-            max-height: calc(100% - 0.5rem);
-        }
-        svg.color2 {
-            color: color-contrast($primary);
-        }
-
-        &:hover .modal-icon,
-        &.active .modal-icon {
-            background-color: $primary;
-            color: color-contrast($primary);
-            svg.color2 {
-                color: rgba(var(--bs-link-color-rgb), var(--bs-link-opacity, 1));
-            }
-        }
+    svg {
+        position: absolute;
+        max-width: calc(100% - 0.5rem);
+        max-height: calc(100% - 0.5rem);
+    }
+    svg.color2 {
+        color: color-contrast($primary);
     }
 }
 
