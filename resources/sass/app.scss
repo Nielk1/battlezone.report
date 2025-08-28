@@ -1538,15 +1538,15 @@ $border-widths: (
         color: color-contrast($primary);
     }
 
-    &.x4btn {
-        //font-size: 1.5em;
-        //padding: 0.25em 1em;
-        @include media-breakpoint-up(md) {
-            min-height: calc(#{$modal-icon-size} / 2 - 0.25rem + 2px);
-            line-height: calc(#{$modal-icon-size} / 2 - 0.25rem + 2px);
-            padding: 0;
-        }
-    }
+    //&.x4btn {
+    //    //font-size: 1.5em;
+    //    //padding: 0.25em 1em;
+    //    @include media-breakpoint-up(md) {
+    //        min-height: calc(#{$modal-icon-size} / 2 - 0.25rem + 2px);
+    //        line-height: calc(#{$modal-icon-size} / 2 - 0.25rem + 2px);
+    //        padding: 0;
+    //    }
+    //}
 
     &.disabled {
         opacity: 0.65;

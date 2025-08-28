@@ -137,8 +137,12 @@ class ApiDocController extends Controller
         return in_array($type, ['string', 'integer', 'number', 'boolean']);
     }
 
-    private function generateChannelAndContentFromFieldEntry($field, $special, $section_code, $sections_data, $type_data, $depth)
+    private function generateChannelAndContentFromFieldEntry($field, $special, $section_code, $sections_data, $type_data, $depth, $showDeprecated)
     {
+        if (($field['deprecated'] ?? false) && !$showDeprecated) {
+            return [null, null];
+        }
+
         $sections = $this->buildSections($section_code, $sections_data, $depth);
 
         $base = $field['base'] ?? null;
@@ -226,6 +230,9 @@ class ApiDocController extends Controller
                 case 'function_callback':
                     $glyph = "glyph/tablericons/function";
                     $typeArray[] = "function callback";
+                    break;
+                case 'nil':
+                    $typeArray[] = "nil";
                     break;
                 case 'string?':
                     $typeArray[] = "nil";
@@ -360,11 +367,13 @@ class ApiDocController extends Controller
                 $start = $inner_field['start'] ?? 0;
                 $section_key = $this->findSectionKey($sections, $start);
 
-                [$memberChannel, $memberContent] = $this->generateChannelAndContentFromFieldEntry($inner_field, "inner_" . $special, $code, $sections_data, $type_data, $depth + 1);
+                [$memberChannel, $memberContent] = $this->generateChannelAndContentFromFieldEntry($inner_field, "inner_" . $special, $code, $sections_data, $type_data, $depth + 1, $showDeprecated);
                 //$members[] = $memberChannel;
                 //$content_members[] = $memberContent;
-                $sections[$section_key]['children'][] = $memberChannel;
-                $sections[$section_key]['content'][] = $memberContent;
+                if ($memberChannel && $memberContent) {
+                    $sections[$section_key]['children'][] = $memberChannel;
+                    $sections[$section_key]['content'][] = $memberContent;
+                }
             }
         }
 
@@ -565,7 +574,7 @@ class ApiDocController extends Controller
         return [$tags, $desc_html];
     }
 
-    public function index($api = null)
+    public function index(Request $request, $api = null)
     {
         // Only allow safe characters in $api
         if (
@@ -573,6 +582,8 @@ class ApiDocController extends Controller
         ) {
             abort(404);
         }
+
+        $showDeprecated = $request->query('deprecated') == '1';
 
         $jsonPath = resource_path('data/docgen/'.$api.'.json');
         if (!file_exists($jsonPath)) {
@@ -612,9 +623,11 @@ class ApiDocController extends Controller
                 $start = $event['start'] ?? 0;
                 $section_key = $this->findSectionKey($sections, $start);
                 //[$channel, $content] = $this->generateChannelAndContentFromFieldEntry($field, 'field', $sections[$section_key]['code'] ?? null);
-                [$channel, $content] = $this->generateChannelAndContentFromFieldEntry($event, 'event', $module ?? null, $api['sections'][$module] ?? [], $api['type_data'] ?? [], 1);
-                $sections[$section_key]['children'][] = $channel;
-                $sections[$section_key]['content'][] = $content;
+                [$channel, $content] = $this->generateChannelAndContentFromFieldEntry($event, 'event', $module ?? null, $api['sections'][$module] ?? [], $api['type_data'] ?? [], 1, $showDeprecated);
+                if ($channel && $content) {
+                    $sections[$section_key]['children'][] = $channel;
+                    $sections[$section_key]['content'][] = $content;
+                }
             }
 
             // Populate sections with types and fields
@@ -626,9 +639,11 @@ class ApiDocController extends Controller
                     $start = $type_data['start'] ?? 0;
                     $section_key = $this->findSectionKey($sections, $start);
                     //[$new_item, $new_content_item] = $this->generateChannelAndContentFromFieldEntry($type_data, 'type', $sections[$section_key]['code'] ?? null);
-                    [$new_item, $new_content_item] = $this->generateChannelAndContentFromFieldEntry($type_data, 'type', $module ?? null, $api['sections'][$module] ?? [], $api['type_data'] ?? [], 1);
-                    $sections[$section_key]['children'][] = $new_item;
-                    $sections[$section_key]['content'][] = $new_content_item;
+                    [$new_item, $new_content_item] = $this->generateChannelAndContentFromFieldEntry($type_data, 'type', $module ?? null, $api['sections'][$module] ?? [], $api['type_data'] ?? [], 1, $showDeprecated);
+                    if ($new_item && $new_content_item) {
+                        $sections[$section_key]['children'][] = $new_item;
+                        $sections[$section_key]['content'][] = $new_content_item;
+                    }
                 }
             }
             //usort($fields, [self::class, 'sortFieldByProperties']);
@@ -638,9 +653,11 @@ class ApiDocController extends Controller
                 $start = $field['start'] ?? 0;
                 $section_key = $this->findSectionKey($sections, $start);
                 //[$channel, $content] = $this->generateChannelAndContentFromFieldEntry($field, 'field', $sections[$section_key]['code'] ?? null);
-                [$channel, $content] = $this->generateChannelAndContentFromFieldEntry($field, 'field', $module ?? null, $api['sections'][$module] ?? [], $api['type_data'] ?? [], 1);
-                $sections[$section_key]['children'][] = $channel;
-                $sections[$section_key]['content'][] = $content;
+                [$channel, $content] = $this->generateChannelAndContentFromFieldEntry($field, 'field', $module ?? null, $api['sections'][$module] ?? [], $api['type_data'] ?? [], 1, $showDeprecated);
+                if ($channel && $content) {
+                    $sections[$section_key]['children'][] = $channel;
+                    $sections[$section_key]['content'][] = $content;
+                }
             }
 
             // Prepare children arrays for output
@@ -720,9 +737,9 @@ class ApiDocController extends Controller
         $result = [0 => [
             'name' => null,
             'desc' => null,
-        
+
             'code' => $module . "/SEC-" . (string)$depth . '-' . strtolower(preg_replace('/[^a-z0-9]+/i', '_', $section['name'] ?? "Other")),
-        
+
             'children' => [],
             'content' => []
         ]];

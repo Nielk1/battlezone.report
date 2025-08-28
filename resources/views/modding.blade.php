@@ -43,18 +43,26 @@
                                    data-ajaxnav="true"
                                    href="{{ route('apidoc', ['api' => 'bz98r']) }}"
                                    class="modal-button x4btn"
-                                   role="button">BZ98R Bare ScriptUtils</a>
+                                   role="button">BZ98R ScriptUtils</a>
 
                                 <a title="BZ98R _api Wrapper"
                                    data-ajaxnav="true"
                                    href="{{ route('apidoc', ['api' => 'bz98r_api']) }}"
                                    class="modal-button x4btn"
                                    role="button">BZ98R "_api" Wrapper</a>
+
+                                <a title="BZ98R _api Wrapper"
+                                   data-ajaxnav="true"
+                                   href="{{ route('apidoc', ['api' => 'bz98r_api', 'deprecated' => 1]) }}"
+                                   class="modal-button x4btn"
+                                   role="button"><span class="text-nowrap">BZ98R "_api" Wrapper</span><wbr> <span class="text-nowrap">(Show Deprecated)</span></a>
+
+                                <span class="modal-button x4btn disabled" href="#" role="button">Extra Utilities</span>
                             </div>
                         </div>
                         <div class="flex-grow-1">
                             <div class="d-flex flex-column flex-grow gap-1">
-                                <span class="modal-button x4btn disabled" href="#" role="button">BZCC Bare ScriptUtils</span>
+                                <span class="modal-button x4btn disabled" href="#" role="button">BZCC ScriptUtils</span>
                                 <span class="modal-button x4btn disabled" href="#" role="button">BZCC "_api" Wrapper</span>
                             </div>
                         </div>
