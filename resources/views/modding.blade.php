@@ -98,6 +98,24 @@
                 </a>
             </div>
             <div class="col-12 col-md-6 p-2 mb-1">
+                <a title="Battlezone 98 Redux: Extended Mission API"
+                   data-ajaxnav="true"
+                   href="{{ route('apidoc', ['api' => 'bz98r_api', 'deprecated' => '1']) }}"
+                   data-game-tags="bz98r"
+                   data-tags="lua"
+                   class="modal-button d-flex gap-1 align-items-center"
+                   role="button">
+                    <div class="modal-icon">
+                        <svg><use xlink:href="#svg/glyph/brand/lua_a"></use></svg>
+                        <svg class="color2"><use xlink:href="#svg/glyph/brand/lua_b"></use></svg>
+                    </div>
+                    <div class="flex-fill"><span class="text-nowrap">Extended Mission API</span> <span class="text-nowrap">(Mod by Nielk1)</span> <span class="text-nowrap fst-italic">(show deprecated)</span></div>
+                    <div class="tags">
+                        <div class="badge">BZ98R</div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-12 col-md-6 p-2 mb-1">
                 <span class="disabled modal-button d-flex gap-1 align-items-center" data-game-tags="bz98r" data-tags="lua" role="button">
                     <div class="modal-icon">
                         <svg><use xlink:href="#svg/glyph/brand/lua_a"></use></svg>
