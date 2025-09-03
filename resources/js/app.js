@@ -13,6 +13,61 @@ var last_nav_url = null;
 var scroll_spy_hash_debounce = '';
 var scroll_spy_content = null;
 
+function setQueryParam(key, value) {
+    const url = new URL(window.location);
+    url.searchParams.delete(key); // Remove all existing
+    url.searchParams.set(key, value); // Set new value
+    window.history.replaceState({}, '', url);
+}
+function deleteQueryParam(key) {
+    const url = new URL(window.location);
+    url.searchParams.delete(key);
+    window.history.replaceState({}, '', url);
+}
+
+function addQueryParam(key, value) {
+    const url = new URL(window.location);
+    // prevent adding a tag value that already exists
+    if (!url.searchParams.has(key) || !url.searchParams.getAll(key).includes(value)) {
+        url.searchParams.append(key, value);
+        window.history.replaceState({}, '', url);
+    }
+}
+function removeQueryParam(key, value){
+    const url = new URL(window.location);
+    if (url.searchParams.has(key)) {
+        const values = url.searchParams.getAll(key);
+        const newValues = values.filter(v => v !== value);
+        if (newValues.length < values.length) {
+            url.searchParams.delete(key);
+            newValues.forEach(v => url.searchParams.append(key, v));
+            window.history.replaceState({}, '', url);
+            return true;
+        }
+    }
+    return false;
+}
+function toggleQueryParam(key, value){
+    if (getQueryParams(key).includes(value)) {
+        removeQueryParam(key, value);
+        return false;
+    } else {
+        addQueryParam(key, value);
+        return true;
+    }
+}
+
+function getQueryParams(key) {
+    const url = new URL(window.location);
+    if (url.searchParams.has(key)) {
+        // getAll returns all values for repeated keys
+        return url.searchParams.getAll(key).map(tag => tag.trim()).filter(Boolean);
+        const values = url.searchParams.getAll(key);
+        //return [...new Set(values.flatMap(v => v.split(',').map(tag => tag.trim())))].filter(Boolean);
+        //return [...new Set(values.map(v => v.trim()))].filter(Boolean);
+    }
+    return [];
+}
 
 function toggleSidebar() {
     const layout = document.getElementById('main-layout');
@@ -20,7 +75,7 @@ function toggleSidebar() {
     if (isHidden) {
         setQueryParam('sbh', '1');
     } else {
-        removeQueryParam('sbh');
+        deleteQueryParam('sbh');
     }
 };
 
@@ -285,7 +340,7 @@ function initPage() {
                 scrollHandler(null, true);
                 setQueryParam('sc', '1');
             } else {
-                removeQueryParam('sc');
+                deleteQueryParam('sc');
             }
         }
 
@@ -335,6 +390,65 @@ function initPage() {
         if (LoadGameListBZCC) {
             LoadGameListBZCC();
         }
+    }
+
+    // modding
+    {
+        function UpdateToggleTagActives()
+        {
+            const activeTags = getQueryParams('tags');
+            const activeGTags = getQueryParams('gtags');
+            const moddingLinks = document.querySelectorAll('.modal-toggle[data-tag]');
+            moddingLinks.forEach(link => {
+                const tag = link.getAttribute('data-tag');
+                if (activeTags.includes(tag)) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+            const moddingLinksGame = document.querySelectorAll('.modal-toggle[data-game-tag]');
+            moddingLinksGame.forEach(link => {
+                const gameTag = link.getAttribute('data-game-tag');
+                if (activeGTags.includes(gameTag)) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+
+            const modalBtns = document.querySelectorAll('.modal-button');
+            modalBtns.forEach(modalBtn => {
+                const gameTags = modalBtn.getAttribute('data-game-tags')?.split(',') || [];
+                const tags = modalBtn.getAttribute('data-tags')?.split(',') || [];
+                const showModalG = activeGTags.length === 0 || activeGTags.some(tag => gameTags.includes(tag));
+                const showModalT = activeTags.length === 0 || activeTags.some(tag => tags.includes(tag));
+                modalBtn.parentElement.style.display = showModalG && showModalT ? 'block' : 'none';
+            });
+        }
+
+        const moddingLinks = document.querySelectorAll('.modal-toggle[data-tag]');
+        const moddingLinksGame = document.querySelectorAll('.modal-toggle[data-game-tag]');
+        moddingLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const tag = link.getAttribute('data-tag');
+                // Handle modding link click
+                toggleQueryParam('tags', tag);
+                UpdateToggleTagActives();
+            });
+        });
+        moddingLinksGame.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const gameTag = link.getAttribute('data-game-tag');
+                // Handle modding link click
+                toggleQueryParam('gtags', gameTag);
+                UpdateToggleTagActives();
+            });
+        });
+
+        UpdateToggleTagActives();
     }
 
     Prism.highlightAll();

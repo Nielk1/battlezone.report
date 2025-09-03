@@ -57,17 +57,6 @@
         @include('partials.nav-data')
     </main>
     <script type="text/javascript">
-        function setQueryParam(key, value) {
-            const url = new URL(window.location);
-            url.searchParams.set(key, value);
-            window.history.replaceState({}, '', url);
-        }
-        function removeQueryParam(key) {
-            const url = new URL(window.location);
-            url.searchParams.delete(key);
-            window.history.replaceState({}, '', url);
-        }
-
         function scrollSidebar(amount) {
             const scrollArea = document.querySelector('.sidebar-scroll');
             scrollArea.scrollBy({ top: amount, behavior: 'smooth' });
