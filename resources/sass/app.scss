@@ -1279,8 +1279,13 @@ $border-widths: (
     overflow: hidden;
     pointer-events: none;
     user-select: text;
-    display: inline-block;
-    height: 1px;
+
+    position: absolute;
+    height: auto;
+    width: auto;
+    left: 0;
+
+    // Below is needed to prevent incorrect ajax-nav-3 height, somehow
     width: 10px;
     margin-left: -10px;
 }
@@ -1293,7 +1298,6 @@ $border-widths: (
     height: 1px;
     width: 10px;
     margin-left: -10px;
-    float: left;
 }
 @media print {
     .print-and-select {
@@ -1445,6 +1449,10 @@ $border-widths: (
     //    border-top: none;
     //    border-bottom: none;
     //}
+
+
+    border-left-width: 5px !important;
+    border-left-style: solid !important;
 }
 
 /*.arg-item {
@@ -1535,6 +1543,45 @@ $border-widths: (
 //.documentation-desc {
 //    white-space: pre-wrap;
 //}
+
+@media print {
+    #ajax-nav-1,
+    #ajax-nav-2,
+    #ajax-nav-3,
+    #ajax-nav-4,
+    #ajax-nav-5 {
+        position: static;
+    }
+    .sidebar3 {
+        background: white !important;
+    }
+    .apidoc {
+
+        border-top-width: 1px !important;
+        border-top-style: solid !important;
+
+        border-left-width: 1px !important;
+        border-left-style: solid !important;
+
+        border-color: black !important;
+
+        padding-top: 8px !important;
+
+        .badge {
+            color: #000 !important;
+            background-color: transparent !important;
+            border: 1px solid #000 !important;
+        }
+
+        .arg-item {
+            border-left: none !important;
+            padding-left: 0 !important;
+            &::before {
+                content: none !important;
+            }
+        }
+    }
+}
 
 #channel-autoscroll-spy {
     .on {

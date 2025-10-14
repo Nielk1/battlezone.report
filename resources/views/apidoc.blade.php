@@ -23,7 +23,7 @@
         <div id="main-scrollable-content" class="sidebar3-content">
             <div class="container">
                 @foreach($content as $item)
-                    <span class="print-and-select">===================================================</span>
+                    <span class="select-only">===================================================</span>
                     <div class="content-item" data-spy="section" id="{{ $item['code'] }}">
                         <h2>
                             {{ $item['name'] }}
@@ -46,16 +46,16 @@
                             </div>
                         @endif
 
-                        <span class="print-and-select">----</span>
+                        {{--<span class="select-only">----</span>--}}
                         <div class="documentation-desc">{!! $item['desc'] !!}</div>
                         @if(isset($item['children']) && count($item['children']) > 0)
-                            <span class="print-and-select">>></span>
+                            <span class="select-only">>></span>
                             <div>
                                 @foreach($item['children'] as $child)
                                     @include('partials.api-field', ['content' => $child, 'type_id_map' => $type_id_map])
                                 @endforeach
                             </div>
-                            <span class="print-and-select"><<</span>
+                            <span class="select-only"><<</span>
                         @endif
                     </div>
                     <hr>

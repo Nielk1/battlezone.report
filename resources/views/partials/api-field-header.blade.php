@@ -96,7 +96,7 @@
                 @if($type === 'nil')
                     @continue
                 @endif
-                <span class="badge text-bg-primary text-wrap"><span class="print-and-select">[</span>{{ $type }}<span class="print-and-select">]</span></span>
+                <span class="badge text-bg-primary text-wrap"><span class="select-only">[</span>{{ $type }}<span class="select-only">]</span></span>
                 {{--<span class="badge text-bg-secondary">{{ $type }}</span>
                 <span class="badge text-bg-success">{{ $type }}</span>
                 <span class="badge text-bg-danger">{{ $type }}</span>
@@ -106,13 +106,13 @@
                 <span class="badge text-bg-dark">{{ $type }}</span>--}}
             @endforeach
             @if($nillable)
-                <span class="badge text-bg-secondary"><span class="print-and-select">[</span>nil<span class="print-and-select">]</span></span>
+                <span class="badge text-bg-secondary"><span class="select-only">[</span>nil<span class="select-only">]</span></span>
             @endif
             @if(isset($content['global']) && $content['global'])
-                <span class="badge text-bg-success"><span class="print-and-select">[</span>global<span class="print-and-select">]</span></span>
+                <span class="badge text-bg-success"><span class="select-only">[</span>global<span class="select-only">]</span></span>
             @endif
             @if(isset($content['deprecated']) && $content['deprecated'])
-                <span class="badge text-bg-danger"><span class="print-and-select">[</span>deprecated<span class="print-and-select">]</span></span>
+                <span class="badge text-bg-danger"><span class="select-only">[</span>deprecated<span class="select-only">]</span></span>
             @endif
             @include('partials.api-field-tag', ['tags' => $content['tags']])
         </div>

@@ -76,7 +76,7 @@
             @php($nillable = true)
         @endif
     @endforeach
-    <span class="print-and-select">---------------------------------------------------</span>
+    <span class="select-only">---------------------------------------------------</span>
 
     @if($is_function_overload_dummy && isset($content['children']) && count($content['children']) > 0)
         @foreach($content['children'] as $child)
@@ -95,14 +95,14 @@
             @case ('function')
 
                 @if(isset($content['hook_add']))
-                    <span class="print-and-select">----</span>
+                    {{--<span class="select-only">----</span>--}}
                     <div class="arg-item hook_add mb-1 border-15 border-start">
                         <span class="print-and-select">@add&nbsp;</span><span class="fw-bolder">{{ $content['hook_add'] }}</span>
                     </div>
                 @endif
 
                 @if(isset($content['hook_call']))
-                    <span class="print-and-select">----</span>
+                    {{--<span class="select-only">----</span>--}}
                     <div class="arg-item hook_call mb-1 border-15 border-start">
                         <span class="print-and-select">@call&nbsp;</span><span class="fw-bolder">{{ $content['hook_call'] }}</span>
                     </div>
@@ -110,7 +110,7 @@
 
                 @if(isset($content['args']))
                 @foreach($content['args'] as $arg)
-                    <span class="print-and-select">----</span>
+                    {{--<span class="select-only">----</span>--}}
                     <div class="arg-item param mb-1 border-15 border-start">
                         <span class="print-and-select">@param&nbsp;</span><span class="fw-bolder">{{ $arg['name'] ?? '' }}</span>
                         <?php
@@ -145,7 +145,7 @@
                 @if(isset($content['returns']))
                 @php($return_index = 1)
                 @foreach($content['returns'] as $return)
-                    <span class="print-and-select">----</span>
+                    {{--<span class="select-only">----</span>--}}
                     <div class="arg-item return mb-1 border-15 border-start position-relative">
                         <span class="print-and-select">@return&nbsp;</span><span class="fw-bolder">{{ $return['name'] ?? '['.$return_index.']' }}</span>
                         <?php
@@ -201,11 +201,11 @@
     @endif
     @if(isset($content['tags']['(!!)']))
     @foreach($content['tags']['(!!)'] as $tag)
-        <span class="print-and-select">----</span>
+        {{--<span class="select-only">----</span>--}}
         <div class="alert alert-danger d-flex align-items-center my-1" role="alert">
             <i class="bi bi-exclamation-octagon-fill alert-icon" aria-label="Error:"></i>
             <div>
-                <span class="print-and-select">Error:</span>
+                <span class="print-and-select float-start"><strong>Error</strong>:&nbsp;</span>
                 {!! $tag['desc'] !!}
             </div>
         </div>
@@ -213,11 +213,11 @@
     @endif
     @if(isset($content['tags']['(!)']))
     @foreach($content['tags']['(!)'] as $tag)
-        <span class="print-and-select">----</span>
+        {{--<span class="select-only">----</span>--}}
         <div class="alert alert-warning d-flex align-items-center my-1" role="alert">
             <i class="bi bi-exclamation-triangle-fill alert-icon" aria-label="Warning:"></i>
             <div>
-                <span class="print-and-select">Warning:</span>
+                <span class="print-and-select float-start"><strong>Warning</strong>:&nbsp;</span>
                 {!! $tag['desc'] !!}
             </div>
         </div>
@@ -225,11 +225,11 @@
     @endif
     @if(isset($content['tags']['(i)']))
     @foreach($content['tags']['(i)'] as $tag)
-        <span class="print-and-select">----</span>
+        {{--<span class="select-only">----</span>--}}
         <div class="alert alert-info d-flex align-items-center my-1" role="alert">
             <i class="bi bi-info-circle-fill alert-icon" aria-label="Info:"></i>
             <div>
-                <span class="print-and-select">Info:</span>
+                <span class="print-and-select float-start"><strong>Info</strong>:&nbsp;</span>
                 {!! $tag['desc'] !!}
             </div>
         </div>
@@ -237,27 +237,27 @@
     @endif
     @if(isset($content['tags']['mod']))
     @foreach($content['tags']['mod'] as $tag)
-        <span class="print-and-select">----</span>
+        {{--<span class="select-only">----</span>--}}
         <div class="alert alert-light d-flex align-items-center my-1" role="alert">
             <i class="bi bi-tools alert-icon" aria-label="Mod:"></i>
             <div>
-                <span class="print-and-select">Mod:</span>
+                <span class="print-and-select float-start"><strong>Mod</strong>:&nbsp;</span>
                 {!! $tag['desc'] !!}
             </div>
         </div>
     @endforeach
     @endif
-    <span class="print-and-select">----</span>
+    {{--<span class="select-only">----</span>--}}
     <div class="documentation-desc">{!! $content['desc'] !!}</div>
     @if(isset($content['condensed']) && $content['condensed'])
         @if(isset($content['children']) && count($content['children']) > 0)
-            <span class="print-and-select">>></span>
+            <span class="select-only">>></span>
             <div>
                 @foreach($content['children'] as $child)
                     {{--@include('partials.api-field', ['content' => $child, 'type_id_map' => $type_id_map])--}}
-                    {{--<span class="print-and-select">----</span>--}}
+                    {{--<span class="select-only">----</span>--}}
                     <div class="arg-item enum-field mb-1 border-15 border-start">
-                        <span class="fw-bolder">{{ $child['name'] ?? '' }}</span>
+                        <span class="print-and-select">@field&nbsp;</span><span class="fw-bolder">{{ $child['name'] ?? '' }}</span>
                         <span> = {{ $child['value'] ?? '' }}: </span>
                         <?php
                             $typesOut = [];
@@ -287,15 +287,15 @@
                     </div>
                 @endforeach
             </div>
-            <span class="print-and-select"><<</span>
+            <span class="select-only"><<</span>
         @endif
     @elseif(!$is_function_overload_dummy && isset($content['children']) && count($content['children']) > 0)
-        <span class="print-and-select">>></span>
+        <span class="select-only">>></span>
         <div>
             @foreach($content['children'] as $child)
                 @include('partials.api-field', ['content' => $child, 'type_id_map' => $type_id_map])
             @endforeach
         </div>
-        <span class="print-and-select"><<</span>
+        <span class="select-only"><<</span>
     @endif
 </div>
