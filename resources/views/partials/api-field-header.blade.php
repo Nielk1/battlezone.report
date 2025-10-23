@@ -13,6 +13,26 @@
     @endif
     <div class="d-flex justify-content-between flex-column">
         <div>
+            @if($prefix_scope)
+                @if(isset($root) && is_array($root) && count($root) > 0)
+                    @foreach($root as $idx => $rootPart)
+                        <span class="h5">
+                            @if($rootPart == null)
+                                <span class="root_backlink">_G</span>
+                            @else
+                                @php($typeRoot = $rootPart['code'])
+                                @php($nameRoot = $rootPart['name'])
+                                @if(isset($typeRoot))
+                                    <a class="root_backlink" href="#{{ $typeRoot }}">{{ $nameRoot }}</a>
+                                @else
+                                    <span class="root_backlink">{{ $nameRoot }}</span>
+                                @endif
+                            @endif
+                        </span>
+                        <span class="h4">.</span>
+                    @endforeach
+                @endif
+            @endif
             <span class="h5">
                 @if($type == 'event')"@endif{{ $content['name'] }}@if($type == 'event')"@endif
                 <?php
@@ -28,6 +48,15 @@
                             } else {
                                 echo(e($content['base']));
                             }
+                        }
+                        elseif(($type_code ?? null) == 'enum value' || ($type_code ?? null) == 'type value') {
+                            echo(' &lt;');
+                            if(isset($type_id_map[$typeBase])) {
+                                echo('<a href="#' . $type_id_map[$typeBase] . '">' . e($typeBase) . '</a>' . e($typeSuffix));
+                            } else {
+                                echo(e($content['base']));
+                            }
+                            echo('&gt;');
                         }
                     }
                 ?>
@@ -96,7 +125,7 @@
                 @if($type === 'nil')
                     @continue
                 @endif
-                <span class="badge text-bg-primary text-wrap"><span class="select-only">[</span>{{ $type }}<span class="select-only">]</span></span>
+                <span class="badge api_tag text-bg-primary text-wrap"><span class="select-only">[</span>{{ $type }}<span class="select-only">]</span></span>
                 {{--<span class="badge text-bg-secondary">{{ $type }}</span>
                 <span class="badge text-bg-success">{{ $type }}</span>
                 <span class="badge text-bg-danger">{{ $type }}</span>
@@ -106,13 +135,13 @@
                 <span class="badge text-bg-dark">{{ $type }}</span>--}}
             @endforeach
             @if($nillable)
-                <span class="badge text-bg-secondary"><span class="select-only">[</span>nil<span class="select-only">]</span></span>
+                <span class="badge api_tag text-bg-secondary"><span class="select-only">[</span>nil<span class="select-only">]</span></span>
             @endif
             @if(isset($content['global']) && $content['global'])
-                <span class="badge text-bg-success"><span class="select-only">[</span>global<span class="select-only">]</span></span>
+                <span class="badge api_tag text-bg-success"><span class="select-only">[</span>global<span class="select-only">]</span></span>
             @endif
             @if(isset($content['deprecated']) && $content['deprecated'])
-                <span class="badge text-bg-danger"><span class="select-only">[</span>deprecated<span class="select-only">]</span></span>
+                <span class="badge api_tag text-bg-danger"><span class="select-only">[</span>deprecated<span class="select-only">]</span></span>
             @endif
             @include('partials.api-field-tag', ['tags' => $content['tags']])
         </div>

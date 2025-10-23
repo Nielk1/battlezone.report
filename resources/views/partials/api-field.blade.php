@@ -3,7 +3,13 @@
     @php($has_primitive = false)
     @php($has_non_primitive = false)
     @php($type_code = null)
+    @php($prefix_scope = false)
     @php($is_function_overload_dummy = false)
+    @if(isset($child['global']) && $child['global'])
+        @php($root = [null])
+    @elseif(!isset($root))
+        @php($root = [])
+    @endif
     @foreach($content['type'] as $type)
         @switch($type)
             @case('section')
@@ -19,6 +25,7 @@
                 @break
             @case('function')
             @case('function overload')
+                @php($prefix_scope = true)
             @case('event')
             @case('function callback')
                 @php($type_code = 'function')
@@ -28,6 +35,7 @@
                 @php($type_code = 'function')
                 @php($has_non_primitive = true)
                 @php($is_function_overload_dummy = true)
+                @php($prefix_scope = true)
                 @break
             {{--@case('table<string, string>')
             @case('table<string, number>')
@@ -53,6 +61,10 @@
             @case('boolean[]')
                 @php($type_code = 'array')
                 @break--}}
+            @case('table')
+                @php($type_code = 'table')
+                @php($prefix_scope = true)
+                @break
             @case('enum')
                 @php($type_code = 'enum')
                 @break
@@ -61,16 +73,27 @@
             @case('number')
             @case('boolean')
                 @php($has_primitive = true)
+                @php($prefix_scope = true)
                 @break
         @endswitch
-        @if(str_starts_with($type, 'enum '))
+        @if(str_starts_with($type, 'enum value '))
+            @php($type_code = 'enum value')
+            @php($prefix_scope = true)
+        @elseif(str_starts_with($type, 'enum '))
             @php($type_code = 'enum ref')
+            @php($prefix_scope = true)
+        @endif
+        @if(str_starts_with($type, 'type value '))
+            @php($type_code = 'type value')
+            @php($prefix_scope = true)
         @endif
         @if(str_starts_with($type, 'table<'))
             @php($type_code = 'table')
+            @php($prefix_scope = true)
         @endif
         @if(str_ends_with($type, '[]'))
             @php($type_code = 'array')
+            @php($prefix_scope = true)
         @endif
         @if($type == 'nil')
             @php($nillable = true)
@@ -80,13 +103,16 @@
 
     @if($is_function_overload_dummy && isset($content['children']) && count($content['children']) > 0)
         @foreach($content['children'] as $child)
-            @include('partials.api-field-header', ['content' => $child, 'type_id_map' => $type_id_map])
+            @include('partials.api-field-header', ['content' => $child, 'type_id_map' => $type_id_map, 'prefix_scope' => $prefix_scope, 'root' => $root])
         @endforeach
     @else
-        @include('partials.api-field-header', ['content' => $content, 'type_id_map' => $type_id_map])
+        @include('partials.api-field-header', ['content' => $content, 'type_id_map' => $type_id_map, 'prefix_scope' => $prefix_scope, 'root' => $root])
     @endif
 
-    @if(!($has_primitive && !$has_non_primitive) && $type_code != 'enum ref')
+    @if(!($has_primitive && !$has_non_primitive)
+        && $type_code != 'enum ref'
+        && $type_code != 'enum value'
+        && $type_code != 'type value')
         @switch($type_code ?? null)
             @case('type')
             @case('alias')
@@ -182,6 +208,8 @@
             @case('enum')
             @case('table')
             @case('array')
+                @break
+            @case('any')
                 @break
             @default
                 @if(isset($type_code))
@@ -292,9 +320,19 @@
     @elseif(!$is_function_overload_dummy && isset($content['children']) && count($content['children']) > 0)
         <span class="select-only">>></span>
         <div>
-            @foreach($content['children'] as $child)
-                @include('partials.api-field', ['content' => $child, 'type_id_map' => $type_id_map])
-            @endforeach
+            @if($type_code == 'type')
+                @foreach($content['children'] as $child)
+                    @include('partials.api-field', ['content' => $child, 'type_id_map' => $type_id_map, 'root' => [$content]])  {{-- Types reset scope for display --}}
+                @endforeach
+            @elseif($type_code == 'table' || $type_code == 'array')
+                @foreach($content['children'] as $child)
+                    @include('partials.api-field', ['content' => $child, 'type_id_map' => $type_id_map, 'root' => array_merge($root, [$content])])
+                @endforeach
+            @else
+                @foreach($content['children'] as $child)
+                    @include('partials.api-field', ['content' => $child, 'type_id_map' => $type_id_map, 'root' => $root])
+                @endforeach
+            @endif
         </div>
         <span class="select-only"><<</span>
     @endif

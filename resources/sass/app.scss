@@ -588,9 +588,6 @@ $border-widths: (
     background: transparent;
 }
 .sidebar2-content::-webkit-scrollbar-thumb {
-    background: transparent;
-}
-.sidebar2-content:hover::-webkit-scrollbar-thumb {
     background: #ccc;
     border-radius: 4px;
     border: 2px solid transparent; /* Simulates margin around the thumb */
@@ -1475,7 +1472,13 @@ $border-widths: (
         //margin: -2px 0;
     }
 
-    .badge {
+    .root_backlink {
+        text-decoration: none;
+        font-size: 0.75em;
+        font-weight: bold;
+    }
+
+    .badge.api_tag {
         --bs-badge-border-radius: 0;
         display: block;
     }

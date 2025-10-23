@@ -165,10 +165,36 @@ class ApiDocController extends Controller
         }
 
         $name = $field['name'];
-        foreach($typeArrayRaw as $type) {
+        $typeArrayProc1 = array_unique(
+            array_merge(
+                ...array_map([$this, 'getTypesForTypeString'], $typeArrayRaw)
+            )
+        );
+        $found_nil = false;
+        $found_nillable = false;
+        $typeArrayProc2 = array_unique(
+            array_map(function($x) use (&$found_nil, &$found_nillable) {
+                if ($x === 'nil') {
+                    $found_nil = true;
+                    return $x;
+                }
+                $newVal = rtrim($x, '?');
+                if ($newVal !== $x) {
+                    $found_nillable = true;
+                }
+                if (strpos($newVal, 'fun(') === 0) {
+                    return 'function';
+                }
+                return $newVal;
+            }, $typeArrayProc1)
+        );
+        if ($found_nillable && !$found_nil) {
+            $typeArrayProc2[] = 'nil';
+        }
+        foreach($typeArrayProc2 as $type) {
             //$type = $field['type'];
             $type_old = $type;
-            $type_old = trim($type_old, '?');
+            $type_old = rtrim($type_old, '?');
             $table_type_subparts = [];
 
             if (isset($type_data) && $type_data != null) {
@@ -176,7 +202,7 @@ class ApiDocController extends Controller
                 // extract types from table and arrays and use the type_data to convert them, if they turn out to be aliases, back to their original type
                 if (str_starts_with($type, 'table<')) {
                     $type_fragment = substr($type, 6);
-                    $type_fragment = trim($type_fragment, '>');
+                    $type_fragment = rtrim($type_fragment, '>');
                     $type_fragments = explode(',', $type_fragment);
                     $type_fragments = array_map('trim', $type_fragments);
                     foreach ($type_fragments as &$frag) {
@@ -208,7 +234,7 @@ class ApiDocController extends Controller
 
             switch ($type) {
                 case 'alias':
-                    $glyph = $glyph ?? "bi bi-box-seam";
+                    $glyph = $glyph ?? "bi bi-box";
                     $typeArray[] = "alias";
                     $specialModulator = "alias";
                     break;
@@ -294,6 +320,14 @@ class ApiDocController extends Controller
                     $glyph = "bi bi-braces";
                     $condensed_children = true;
                     break;
+                case 'any':
+                    $typeArray[] = $type;
+                    $glyph = "bi bi-asterisk";
+                    break;
+                case 'any[]':
+                    $typeArray[] = $type;
+                    $glyph = "bi bi-braces-asterisk";
+                    break;
                 default:
                     if (str_starts_with($type, 'enum ')) {
                         //$typeArray[] = substr($type, 5);
@@ -326,6 +360,18 @@ class ApiDocController extends Controller
                         $glyph = "bi bi-table";
                         break;
                     }
+                    if (isset($type_data[$type])) {
+                        if (isset($type_data[$type]['type']) && $type_data[$type]['type'] == 'enum') {
+                            $base = $type;
+                            $glyph = "bi bi-dot";
+                            $typeArray[] = 'enum value ' . $type;
+                        } else {
+                            $base = $type;
+                            $glyph = "bi bi-code";
+                            $typeArray[] = 'type value ' . $type;
+                        }
+                        break;
+                    }
                     $typeArray[] = "UNK_" . $type;
                     if (str_starts_with($type, 'fun(')) {
                         $glyph = "glyph/tablericons/math-function";
@@ -346,7 +392,7 @@ class ApiDocController extends Controller
                 break;
         }
         $name = $field['name'];
-        $code = $field['code'] ?? strtolower(preg_replace('/[^a-z0-9]+/i', '_', $name));
+        $code = $field['code'] ?? preg_replace('/[^a-z0-9]+/i', '_', $name);
         if ($special == 'type') {
             $code = "TYPE-" . $code;
         }
@@ -557,7 +603,7 @@ class ApiDocController extends Controller
                 if (strlen($prefix) > 0) {
                     $prefix = '**' . $prefix . '**: ';
                 }
-                $tags[strtolower($tag_type)][] = [ 'type' => trim($tag_type), 'name' => trim($tag_key), 'desc' => (string)$this->converter->convert($prefix . trim($tag_desc)) ];
+                $tags[$tag_type][] = [ 'type' => trim($tag_type), 'name' => trim($tag_key), 'desc' => (string)$this->converter->convert($prefix . trim($tag_desc)) ];
             }
 
             // Remove Tags
@@ -607,7 +653,7 @@ class ApiDocController extends Controller
             $types = $api['types'][$module] ?? [];
             foreach ($types as $type_name) {
                 // Create a lookup: type name => "module/type_name"
-                $type_id_map[$type_name] = $module . '/TYPE-' . strtolower(preg_replace('/[^a-z0-9]+/i', '_', $type_name));
+                $type_id_map[$type_name] = $module . '/TYPE-' . preg_replace('/[^a-z0-9]+/i', '_', $type_name);
             }
         }
 
@@ -738,7 +784,7 @@ class ApiDocController extends Controller
             'name' => null,
             'desc' => null,
 
-            'code' => $module . "/SEC-" . (string)$depth . '-' . strtolower(preg_replace('/[^a-z0-9]+/i', '_', $section['name'] ?? "Other")),
+            'code' => $module . "/SEC-" . (string)$depth . '-' . preg_replace('/[^a-z0-9]+/i', '_', $section['name'] ?? "Other"),
 
             'children' => [],
             'content' => []
@@ -749,7 +795,7 @@ class ApiDocController extends Controller
                 'desc' => $section['desc'] ?? null,
 
                 //'code' => $module . "/" . strtolower(preg_replace('/[^a-z0-9]+/i', '_', $section['name'] ?? "Other")),
-                'code' => $module . "/SEC-" . (string)$depth . '-' . strtolower(preg_replace('/[^a-z0-9]+/i', '_', $section['name'] ?? "Other")),
+                'code' => $module . "/SEC-" . (string)$depth . '-' . preg_replace('/[^a-z0-9]+/i', '_', $section['name'] ?? "Other"),
 
                 'children' => [],
                 'content' => []
