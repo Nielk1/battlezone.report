@@ -77,8 +77,33 @@ class ApiDocController extends Controller
     {
         $types = [];
         $has_nil = false;
-        foreach (explode('|', $type_string) as $type) {
-            $type = trim($type);
+
+        // Split only on top-level | (not inside <...> or {...})
+        $parts = [];
+        $level_angle = 0;
+        $level_curly = 0;
+        $buffer = '';
+        $len = strlen($type_string);
+
+        for ($i = 0; $i < $len; $i++) {
+            $char = $type_string[$i];
+            if ($char === '<') $level_angle++;
+            if ($char === '>') $level_angle = max(0, $level_angle - 1);
+            if ($char === '{') $level_curly++;
+            if ($char === '}') $level_curly = max(0, $level_curly - 1);
+
+            if ($char === '|' && $level_angle === 0 && $level_curly === 0) {
+                $parts[] = trim($buffer);
+                $buffer = '';
+            } else {
+                $buffer .= $char;
+            }
+        }
+        if (strlen($buffer)) {
+            $parts[] = trim($buffer);
+        }
+
+        foreach ($parts as $type) {
             if ($type === 'nil') {
                 $has_nil = true;
                 continue;
@@ -87,18 +112,6 @@ class ApiDocController extends Controller
                 $has_nil = true;
                 $type = substr($type, 0, -1);
             }
-
-            // likely will remove these in the future
-            //if (str_starts_with($type, 'enum ')) {
-            //    $type = 'enum';
-            //}
-            //if (str_starts_with($type, 'fun(')) {
-            //    $type = 'function';
-            //}
-            //if (str_starts_with($type, 'table<')) {
-            //    $type = 'table';
-            //}
-
             $types[] = $type;
         }
 
@@ -182,19 +195,23 @@ class ApiDocController extends Controller
                 if ($newVal !== $x) {
                     $found_nillable = true;
                 }
-                if (strpos($newVal, 'fun(') === 0) {
-                    return 'function';
-                }
+                //if (strpos($newVal, 'fun(') === 0) {
+                //    return 'function';
+                //}
                 return $newVal;
             }, $typeArrayProc1)
         );
         if ($found_nillable && !$found_nil) {
             $typeArrayProc2[] = 'nil';
         }
-        foreach($typeArrayProc2 as $type) {
+        if (count($typeArrayProc2) === 2 && end($typeArrayProc2) === 'nil') {
+            $typeArrayProc2[0] .= '?';
+            array_pop($typeArrayProc2);
+        }
+        foreach($typeArrayProc2 as $type_old) {
             //$type = $field['type'];
-            $type_old = $type;
-            $type_old = rtrim($type_old, '?');
+            $type = $type_old;
+            $type = rtrim($type, '?');
             $table_type_subparts = [];
 
             if (isset($type_data) && $type_data != null) {
@@ -362,21 +379,24 @@ class ApiDocController extends Controller
                     }
                     if (isset($type_data[$type])) {
                         if (isset($type_data[$type]['type']) && $type_data[$type]['type'] == 'enum') {
-                            $base = $type;
+                            //$base = $type;
                             $glyph = "bi bi-dot";
-                            $typeArray[] = 'enum value ' . $type;
+                            $typeArray[] = $type;
+                            $special = "field";
                         } else {
-                            $base = $type;
+                            //$base = $type;
                             $glyph = "bi bi-code";
-                            $typeArray[] = 'type value ' . $type;
+                            $typeArray[] = $type;
+                            $special = "field";
                         }
                         break;
                     }
-                    $typeArray[] = "UNK_" . $type;
                     if (str_starts_with($type, 'fun(')) {
                         $glyph = "glyph/tablericons/math-function";
+                        $typeArray[] = $type;
                         break;
                     }
+                    $typeArray[] = "UNK_" . $type;
                     break;
             }
         }

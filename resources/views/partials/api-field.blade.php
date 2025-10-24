@@ -10,6 +10,9 @@
     @elseif(!isset($root))
         @php($root = [])
     @endif
+    @if(isset($child['special']) && $child['special'] == 'field')
+        @php($prefix_scope = true)
+    @endif
     @foreach($content['type'] as $type)
         @switch($type)
             @case('section')
@@ -22,6 +25,10 @@
             @case('alias')
                 @php($type_code = 'alias')
                 @php($has_non_primitive = true)
+                @break
+            @case('any')
+                @php($type_code = 'any')
+                @php($prefix_scope = true)
                 @break
             @case('function')
             @case('function overload')
@@ -110,9 +117,7 @@
     @endif
 
     @if(!($has_primitive && !$has_non_primitive)
-        && $type_code != 'enum ref'
-        && $type_code != 'enum value'
-        && $type_code != 'type value')
+        && $type_code != 'enum ref')
         @switch($type_code ?? null)
             @case('type')
             @case('alias')
@@ -212,18 +217,21 @@
             @case('any')
                 @break
             @default
-                @if(isset($type_code))
-                <h6>TYPECODE: {{ $type_code }}</h6>
-                @endif
-                @if(isset($content['type']))
-                @foreach($content['type'] as $type)
-                    <h6>TYPE: {{ $type }}</h6>
-                @endforeach
-                @endif
-                <h6>SPECIAL: {{ $content['special'] ?? 'NO SPECIAL' }}</h6>
-                <h6>GLYPH: {{ $content['glyph'] ?? 'NO GLYPH' }}</h6>
-                @if(isset($content['view']))
-                    <pre>VIEW: {{ $content['view'] }}</pre>
+                @if(isset($child['special']) && $child['special'] == 'field')
+                @else
+                    @if(isset($type_code))
+                    <h6>TYPECODE: {{ $type_code }}</h6>
+                    @endif
+                    @if(isset($content['type']))
+                    @foreach($content['type'] as $type)
+                        <h6>TYPE: {{ $type }}</h6>
+                    @endforeach
+                    @endif
+                    <h6>SPECIAL: {{ $content['special'] ?? 'NO SPECIAL' }}</h6>
+                    <h6>GLYPH: {{ $content['glyph'] ?? 'NO GLYPH' }}</h6>
+                    @if(isset($content['view']))
+                        <pre>VIEW: {{ $content['view'] }}</pre>
+                    @endif
                 @endif
         @endswitch
     @endif
