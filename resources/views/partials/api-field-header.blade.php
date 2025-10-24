@@ -111,34 +111,35 @@
                 @endif
             @endif
             @if(($content['special'] ?? null) == 'field')
-                <span class="h5">
-                    <?php
-                        if (isset($content['type']) && is_array($content['type']) && count($content['type']) > 0) {
-                            echo(' &lt;see: ');
-                            //if(isset($type_id_map[$typeBase])) {
-                            //    echo('<a href="#' . $type_id_map[$typeBase] . '">' . e($typeBase) . '</a>' . e($typeSuffix));
+                <?php
+                    if (isset($content['type']) && is_array($content['type']) && count($content['type']) > 0) {
+                        //if(isset($type_id_map[$typeBase])) {
+                        //    echo('<a href="#' . $type_id_map[$typeBase] . '">' . e($typeBase) . '</a>' . e($typeSuffix));
+                        //} else {
+                        //    echo(e($content['base']));
+                        //}
+
+                        $typesOut = [];
+                        foreach($content['type'] as $type) {
+                            preg_match('/^([^\[\]\?]+)([\?\[\]]+)?$/', $type, $matches);
+                            $typeBase = $matches[1] ?? $type;
+                            $typeSuffix = $matches[2] ?? '';
+
+                            if(isset($type_id_map[$typeBase])) {
+                                $typesOut[] = '<a href="#' . e($type_id_map[$typeBase]) . '">' . e($typeBase) . '</a>' . e($typeSuffix);
                             //} else {
-                            //    echo(e($content['base']));
-                            //}
-
-                            $typesOut = [];
-                            foreach($content['type'] as $type) {
-                                preg_match('/^([^\[\]\?]+)([\?\[\]]+)?$/', $type, $matches);
-                                $typeBase = $matches[1] ?? $type;
-                                $typeSuffix = $matches[2] ?? '';
-
-                                if(isset($type_id_map[$typeBase])) {
-                                    $typesOut[] = '<a href="#' . e($type_id_map[$typeBase]) . '">' . e($typeBase) . '</a>' . e($typeSuffix);
-                                //} else {
-                                //    $typesOut[] = e($type);
-                                }
+                            //    $typesOut[] = e($type);
                             }
-                            echo(implode('<span class="fw-bold">, </span>', $typesOut));
-
-                            echo('&gt;');
                         }
-                    ?>
-                </span>
+                        if (count($typesOut) > 0) {
+                            echo('<span class="h5">');
+                            echo(' &lt;see: ');
+                            echo(implode('<span class="fw-bold">, </span>', $typesOut));
+                            echo('&gt;');
+                            echo('</span>');
+                        }
+                    }
+                ?>
             @endif
         </div>
         <div class="d-flex flex-row gap-1">
