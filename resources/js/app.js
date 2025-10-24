@@ -167,10 +167,10 @@ function initPage() {
     // this function will get called on first load and any ajax nav so be sure to not duplicate event listeners or other work
 
     // might be worth doing a fresh-nav array for URL depths, since we might only want to auto-scroll if the length 1 change occured
-    let freshNav = last_nav_url != window.location.pathname;
+    let freshNav = last_nav_url != window.location.href;
     if (freshNav)
         freshNav = navDepthChange(last_nav_url, window.location.pathname);
-    last_nav_url = window.location.pathname;
+    last_nav_url = window.location.href;
 
     // page nav data
     {
