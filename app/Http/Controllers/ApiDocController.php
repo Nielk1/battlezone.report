@@ -345,6 +345,7 @@ class ApiDocController extends Controller
                 case 'any[]':
                     $typeArray[] = $type;
                     $glyph = "bi bi-braces-asterisk";
+                    $condensed_children = true;
                     break;
                 default:
                     if (str_starts_with($type, 'enum ')) {
