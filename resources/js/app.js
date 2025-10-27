@@ -167,10 +167,20 @@ function initPage() {
     // this function will get called on first load and any ajax nav so be sure to not duplicate event listeners or other work
 
     // might be worth doing a fresh-nav array for URL depths, since we might only want to auto-scroll if the length 1 change occured
-    let freshNav = last_nav_url != window.location.href;
+
+    let tmpWindowPath = new URL(window.location.href);
+    if (tmpWindowPath.searchParams.has('sc')) {
+        tmpWindowPath.searchParams.delete('sc');
+    }
+    if (tmpWindowPath.searchParams.has('sbh')) {
+        tmpWindowPath.searchParams.delete('sbh');
+    }
+    var tmpWindowPathUrl = tmpWindowPath.pathname + tmpWindowPath.search;
+
+    let freshNav = last_nav_url != tmpWindowPathUrl;
     if (freshNav)
         freshNav = navDepthChange(last_nav_url, window.location.pathname);
-    last_nav_url = window.location.href;
+    last_nav_url = tmpWindowPathUrl;
 
     // page nav data
     {
@@ -540,7 +550,7 @@ if (tmpWindowPath.searchParams.has('sc')) {
 if (tmpWindowPath.searchParams.has('sbh')) {
     tmpWindowPath.searchParams.delete('sbh');
 }
-var last_nav_url = tmpWindowPath.toString();
+var last_nav_url = tmpWindowPath.pathname + tmpWindowPath.search;
 
 window.addEventListener('popstate', function(e) {
     // Reload the content for the current URL
@@ -554,8 +564,8 @@ window.addEventListener('popstate', function(e) {
         tmpWindowPath.searchParams.delete('sbh');
     }
 
-    const oldUrl = new URL(last_nav_url, tmpWindowPath.origin);
-    if (oldUrl.pathname == tmpWindowPath.pathname && oldUrl.search == tmpWindowPath.search)
+    const newUrl = tmpWindowPath.pathname + tmpWindowPath.search;
+    if (last_nav_url == newUrl)
     {
         // URLs are the same aside from maybe the hash
         let hash = tmpWindowPath.hash;
@@ -589,7 +599,7 @@ window.addEventListener('popstate', function(e) {
         ajaxNavigate(window.location.pathname + window.location.search + window.location.hash, target, depth, true);
     }
 
-    last_nav_url = tmpWindowPath.toString();
+    last_nav_url = newUrl;
 });
 
 function setupAjaxNavLinks() {

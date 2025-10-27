@@ -1408,6 +1408,19 @@ $border-widths: (
     }
 }
 
+.documentation-desc,
+.apidoc {
+    table:not([class]) {
+        border: 2px solid black;
+
+        @extend .table;
+        @extend .table-sm;
+        @extend .table-bordered;
+        //@extend .table-striped;
+        @extend .table-hover;
+    }
+}
+
 //.arg-item,
 //.documentation-desc,
 .apidoc {
@@ -1416,13 +1429,6 @@ $border-widths: (
     }
     pre.language-lua {
         padding: 0.5em;
-    }
-    table:not([class]) {
-        @extend .table;
-        @extend .table-sm;
-        @extend .table-bordered;
-        //@extend .table-striped;
-        @extend .table-hover;
     }
 
     .colorbox {

@@ -208,10 +208,11 @@ class ApiDocController extends Controller
             $typeArrayProc2[0] .= '?';
             array_pop($typeArrayProc2);
         }
-        foreach($typeArrayProc2 as $type_old) {
+        //foreach($typeArrayProc2 as $type_old) {
+        foreach($typeArrayProc2 as $type) {
             //$type = $field['type'];
-            $type = $type_old;
-            $type = rtrim($type, '?');
+            //$type = $type_old;
+            //$type = rtrim($type, '?');
             $table_type_subparts = [];
 
             if (isset($type_data) && $type_data != null) {
