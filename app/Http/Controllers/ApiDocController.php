@@ -379,8 +379,12 @@ class ApiDocController extends Controller
                         $glyph = "bi bi-table";
                         break;
                     }
-                    if (isset($type_data[$type])) {
-                        if (isset($type_data[$type]['type']) && $type_data[$type]['type'] == 'enum') {
+                    $clean_type = $type;
+                    if (str_ends_with($type, '?')) {
+                        $clean_type = substr($type, 0, -1);
+                    }
+                    if (isset($type_data[$clean_type])) {
+                        if (isset($type_data[$clean_type]['type']) && $type_data[$clean_type]['type'] == 'enum') {
                             //$base = $type;
                             $glyph = "bi bi-dot";
                             $typeArray[] = $type;
