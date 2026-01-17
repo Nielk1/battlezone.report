@@ -34,8 +34,8 @@ class GamesApiController extends Controller
             $newQueryString .= ($newQueryString ? '&' : '') . $additional_query;
         }
 
-        //$url = 'https://multiplayersessionlist.iondriver.com/api/2.0/sessions' . ($newQueryString ? ('?' . $newQueryString) : '');
-        $url = 'http://localhost:6000/api/2.0/sessions' . ($newQueryString ? ('?' . $newQueryString) : '');
+        $url = 'https://multiplayersessionlist.iondriver.com/api/2.0/sessions' . ($newQueryString ? ('?' . $newQueryString) : '');
+        //$url = 'http://localhost:6000/api/2.0/sessions' . ($newQueryString ? ('?' . $newQueryString) : '');
 
         if ($isChunked) {
             // Keep current chunked proxy logic
