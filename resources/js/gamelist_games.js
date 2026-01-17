@@ -4,16 +4,20 @@ export function LoadGameListGames() {
 
     let lastData = null;
 
-    function setSessionCountElem(elemId, value) {
+    function setSessionCountElem(elemId, value, showSpinner = false) {
         const elem = document.getElementById(elemId);
-        elem.innerHTML = ''; // Clear contents
+        elem.innerHTML = '';
+        if (showSpinner) {
+            const spinner = document.createElement('i');
+            spinner.className = 'fas fa-spinner fa-spin';
+            elem.appendChild(spinner);
+            return;
+        }
         if (value >= 0 && value <= 9) {
             const icon = document.createElement('i');
             if (value === 0) {
                 icon.className = 'bi bi-0-circle';
-            }
-            else
-            {
+            } else {
                 icon.className = `bi bi-${value}-square-fill`;
             }
             elem.appendChild(icon);
@@ -22,8 +26,7 @@ export function LoadGameListGames() {
         }
     }
 
-    function FillFromData(data, allowZero = false) {
-
+    function FillFromData(data) {
         let BZCC_Sessions = 0;
         let BZCC_Players = 0;
         let BZ98R_Sessions = 0;
@@ -32,54 +35,70 @@ export function LoadGameListGames() {
         if (data?.session) {
             for (const [key, value] of Object.entries(data.session)) {
                 if (key.startsWith('bigboat:battlezone_98_redux')) {
-                    BZ98R_Sessions++;
-                    if (value.players) {
-                        BZ98R_Players += value.players.length;
+                    let players = (value.player_count?.player ?? 0) + (value.player_count?.spectator ?? 0);
+                    if (players > 0) {
+                        BZ98R_Sessions++;
+                        BZ98R_Players += players;
                     }
                 }
                 if (key.startsWith('bigboat:battlezone_combat_commander')) {
-                    BZCC_Sessions++;
-                    if (value.players) {
-                        BZCC_Players += value.players.length;
+                    let players = (value.player_count?.player ?? 0) + (value.player_count?.spectator ?? 0);
+                    if (players > 0) {
+                        BZCC_Sessions++;
+                        BZCC_Players += players;
                     }
                 }
             }
         }
 
-        if (allowZero || BZ98R_Sessions > 0) setSessionCountElem("bz98r-sessions", BZ98R_Sessions);
-        if (allowZero || BZ98R_Players > 0) setSessionCountElem("bz98r-players", BZ98R_Players);
-        if (allowZero || BZCC_Sessions > 0) setSessionCountElem("bzcc-sessions", BZCC_Sessions);
-        if (allowZero || BZCC_Players > 0) setSessionCountElem("bzcc-players", BZCC_Players);
-
+        setSessionCountElem("bz98r-sessions", BZ98R_Sessions);
+        setSessionCountElem("bz98r-players", BZ98R_Players);
+        setSessionCountElem("bzcc-sessions", BZCC_Sessions);
+        setSessionCountElem("bzcc-players", BZCC_Players);
     }
 
     function CreateOrUpdateSessionDom($id, data) {
-        //const lobbyList = document.getElementById('lobbyList');
-        //lobbyList.classList.remove('loading');
-
         FillFromData(data);
         lastData = data;
+    }
 
-        //var session = data.session[$id];
-        //console.log(session);
-        //console.log(data);
-        //for(let session of data.session) {
-        //    console.log(session);
-        //}
+    function showAllSpinners() {
+        setSessionCountElem("bz98r-sessions", null, true);
+        setSessionCountElem("bz98r-players", null, true);
+        setSessionCountElem("bzcc-sessions", null, true);
+        setSessionCountElem("bzcc-players", null, true);
+    }
+
+    function showAllZeros() {
+        setSessionCountElem("bz98r-sessions", 0);
+        setSessionCountElem("bz98r-players", 0);
+        setSessionCountElem("bzcc-sessions", 0);
+        setSessionCountElem("bzcc-players", 0);
     }
 
     document.getElementById("gamelist-games-reload").addEventListener('click', function (e) {
         e.preventDefault();
         document.querySelector("#gamelist-games-reload i")?.classList.add('fa-spin');
-        // TODO once we add filtering, we need super-minimal data
-        let GetGamesAjax = RefreshSessionList(CreateOrUpdateSessionDom, ['bigboat:battlezone_98_redux','bigboat:battlezone_combat_commander'], () => {
-            // all done
-            FillFromData(lastData, true);
-            document.querySelector("#gamelist-games-reload i")?.classList.remove('fa-spin');
-        });
-        GetGamesAjax.send();
+        showAllSpinners();
+        let GetGamesAjax = RefreshSessionList({
+            CreateOrUpdateSessionDom: CreateOrUpdateSessionDom,
+            doneFn: () => {
+                // all done
+                if (lastData) {
+                    FillFromData(lastData);
+                } else {
+                    showAllZeros();
+                }
+                document.querySelector("#gamelist-games-reload i")?.classList.remove('fa-spin');
+            },
+            failFn: () => {
+                showAllZeros();
+                document.querySelector("#gamelist-games-reload i")?.classList.remove('fa-spin');
+            }
+        }, ['bigboat:battlezone_98_redux','bigboat:battlezone_combat_commander']);
     });
 
-    //document.getElementById("btnRefresh").click();
+    // On load, show spinners and trigger initial load
+    showAllSpinners();
     document.querySelector("#gamelist-games-reload i").click();
 }

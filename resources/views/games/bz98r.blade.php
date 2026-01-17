@@ -238,7 +238,7 @@
         /*.gamelist>:not(caption)>*>* {
             color: #00ff00;
         }*/
-        #lobbyList>:not(caption)>* {
+        #sessionList>:not(caption)>* {
             color: #00ff00;
         }
 
@@ -420,7 +420,7 @@
                 border: solid yellow 1px;
             }*/
 
-        #lobbyList:not(.show_extra) .extra_row {
+        #sessionList:not(.show_extra) .extra_row {
             display: none !important;
         }
         .session_name_box {
@@ -475,40 +475,40 @@
 
         @media screen and (max-width: 992px) {
             /* if we're too thin and extra is open, hide the map name in the first row */
-            #lobbyList.show_extra .session_name_cell {
+            #sessionList.show_extra .session_name_cell {
                 display: none !important;
             }
             /* if we're too thin and extra is open, show the map name in the info section */
-            #lobbyList.show_extra .session_name_box {
+            #sessionList.show_extra .session_name_box {
                 display: block;
             }
         }
 
-        #lobbyListLoading {
+        #sessionListLoading {
             transition: opacity 0.3s;
             will-change: opacity;
             opacity: 1;
         }
-        #lobbyListHeader:not(.loading) #lobbyListLoading {
+        #sessionListHeader:not(.loading) #sessionListLoading {
             opacity: 0;
-            transition-delay: 0.5s; // Delayed fade-out
+            transition-delay: 0.5s; /* Delayed fade-out */
         }
     </style>
 
 <div class="page-container">
     <div class="sidebar3" style="background-color: black !important;">
 
-        <div id="lobbyListHeader" class="header-bar header-bar-menu-pad">
+        <div id="sessionListHeader" class="header-bar header-bar-menu-pad">
             <div class="flex-grow-1 text-truncate">Battlezone 98 Redux - Multiplayer Session List</div>
             <div class="d-flex gap-1 float-end">
-                <i id="lobbyListLoading" class="text-primary fa fa-circle-o-notch fa-spin fa-2x fa-fw"></i>
+                <i id="sessionListLoading" class="text-primary fa fa-circle-o-notch fa-spin fa-2x fa-fw"></i>
                 <button id="btnExtra" type="button" data-bs-toggle="button" aria-pressed="false" class="btn btn-sm btn-outline-primary">Thin</button>
                 <button id="btnRefresh" type="button" class="btn btn-sm btn-outline-primary">Refresh</button>
             </div>
         </div>
 
         <div class="sidebar3-content" style="display: flex; flex-direction: column;">
-            <div id="lobbyList" class="container-fluid mt-2 flex-fill show_extra"></div>
+            <div id="sessionList" class="container-fluid mt-2 flex-fill show_extra"></div>
 
             <footer class="border-top footer text-muted">
                 <div class="container-fluid">

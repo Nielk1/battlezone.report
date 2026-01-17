@@ -583,7 +583,7 @@ window.addEventListener('popstate', function(e) {
         //ajaxNavigate(window.location.pathname + window.location.search + window.location.hash, '#main-content', 1, true);
 
         // Determine ajax depth and target
-        const oldSegments = oldUrl.pathname.split('/').filter(Boolean);
+        const oldSegments = last_nav_url.split('/').filter(Boolean);
         const newSegments = tmpWindowPath.pathname.split('/').filter(Boolean);
 
         // If both start with different segments, we have a depth 1 at the main content

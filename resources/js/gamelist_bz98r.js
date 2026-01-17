@@ -25,32 +25,34 @@ export function LoadGameListBZ98R() {
     document.getElementById("btnExtra").addEventListener('click', function (e) {
         e.preventDefault();
         const btnExtra = document.getElementById('btnExtra');
-        const lobbyList = document.getElementById('lobbyList');
+        const sessionList = document.getElementById('sessionList');
         if (btnExtra.classList.contains('active')) {
-            lobbyList.classList.add('show_extra');
+            sessionList.classList.add('show_extra');
             btnExtra.classList.remove('active');
         } else {
-            lobbyList.classList.remove('show_extra');
+            sessionList.classList.remove('show_extra');
             btnExtra.classList.add('active');
         }
     });
     document.getElementById("btnRefresh").addEventListener('click', function (e) {
         e.preventDefault();
 
-        const lobbyList = document.getElementById('lobbyList');
-        const lobbyListHeader = document.getElementById('lobbyListHeader');
-        lobbyList.innerHTML = '';
-        //lobbyList.classList.add('loading');
-        lobbyListHeader.classList.add('loading');
+        const sessionList = document.getElementById('sessionList');
+        const sessionListHeader = document.getElementById('sessionListHeader');
+        sessionList.innerHTML = '';
+        //sessionList.classList.add('loading');
+        sessionListHeader.classList.add('loading');
 
-        let GetGamesAjax = RefreshSessionList(CreateOrUpdateSessionDom, ['bigboat:battlezone_98_redux'], () => {
-            //lobbyList.classList.remove('loading');
-            lobbyListHeader.classList.remove('loading');
-        });
-        GetGamesAjax.send();
+        let GetGamesAjax = RefreshSessionList({
+            CreateOrUpdateSessionDom: CreateOrUpdateSessionDom,
+            doneFn: () => {
+                //sessionList.classList.remove('loading');
+                sessionListHeader.classList.remove('loading');
+            },
+        }, ['bigboat:battlezone_98_redux']);
     });
 
-    var parent = document.querySelector('#lobbyList');
+    var sessionList = document.querySelector('#sessionList');
 
     function GenerateHtml_IdentitySteam(identity) {
         let platform_name = identity.nickname || identity.$id;
@@ -67,7 +69,7 @@ export function LoadGameListBZ98R() {
         let platform_profile = identity.profile_url;
         if (platform_profile) {
             //return `<a href="${platform_profile}" title="${encodeAttr(platform_name)}" target="_blank" rel="noopener noreferrer" class="chamfer icon icon_gog text-decoration-none me-1" data-id="${encodeAttr(identity.$id)}" data-type="${encodeAttr(identity.$type)}"><i class="icon icon-gog" aria-hidden="true" title="GOG"></i></a>`;
-            return `<a href="${platform_profile}" title="${encodeAttr(platform_name)}" target="_blank" rel="noopener noreferrer" class="chamfer icon icon_gog text-decoration-none me-1" data-id="${encodeAttr(identity.$id)}" data-type="${encodeAttr(identity.$type)}"><img src="/img/gog-icon.svg" class="icon" aria-hidden="true" title="GOG"></img></a>`;
+            return `<a href="${platform_profile}" title="${encodeAttr(platform_name)}" target="_blank" rel="noopener noreferrer" class="chamfer icon icon_gog text-decoration-none me-1" data-id="${encodeAttr(identity.$id)}" data-type="${encodeAttr(identity.$type)}"><svg width="24" height="24" style="padding:2px;"><use xlink:href="#svg/glyph/brand/gog"></use></svg></a>`;
         } else {
             //return `<div title="Steam" class="chamfer icon icon_gog me-1" data-id="${encodeAttr(identity.$id)}" data-type="${encodeAttr(identity.$type)}"><i class="icon icon-gog" aria-hidden="true" title="GOG"></i></div>`;
             return `<div title="Steam" class="chamfer icon icon_gog me-1" data-id="${encodeAttr(identity.$id)}" data-type="${encodeAttr(identity.$type)}"><img src="/img/gog-icon.svg" class="icon" aria-hidden="true" title="GOG"></img></div>`;
@@ -182,15 +184,15 @@ export function LoadGameListBZ98R() {
     }
 
     function CreateOrUpdateSessionDom($id, data) {
-        //const lobbyList = document.getElementById('lobbyList');
-        //lobbyList.classList.remove('loading');
+        //const sessionList = document.getElementById('sessionList');
+        //sessionList.classList.remove('loading');
 
         var session = data.session[$id];
-        var sessionDom = parent.querySelector(`#\\/session\\/${CSS.escape($id)}`);
-        var sessionDom2 = parent.querySelector(`#\\/session\\/${CSS.escape($id)}\\/row2`);
+        var sessionDom = sessionList.querySelector(`#\\/session\\/${CSS.escape($id)}`);
+        var sessionDom2 = sessionList.querySelector(`#\\/session\\/${CSS.escape($id)}\\/row2`);
 
         if (!sessionDom) {
-            parent.insertAdjacentHTML('beforeend', `<div class="mb-1 d-flex flex-row flex-nowrap" id="/session/${encodeAttr($id)}">
+            sessionList.insertAdjacentHTML('beforeend', `<div class="mb-1 d-flex flex-row flex-nowrap" id="/session/${encodeAttr($id)}">
                 <div class="me-1 status_flags d-flex flex-row justify-content-between">
                     <div>
                         <div data-path="session.status.is_locked_off" class="icon"></div>
@@ -251,9 +253,9 @@ export function LoadGameListBZ98R() {
             </div>`);
             //<div data-path="players" class="row g-0" style="margin-right: -.25rem !important;"></div>
             //<div class="icon" style="border-right:solid black 2px; box-sizing: content-box;" data-path="session.level.game_type"></div>
-            sessionDom2 = parent.lastElementChild;
+            sessionDom2 = sessionList.lastElementChild;
             sessionDom = sessionDom2.previousElementSibling;
-            //sessionDom = parent.lastElementChild;
+            //sessionDom = sessionList.lastElementChild;
         }
 
         // Map Image

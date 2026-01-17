@@ -25,32 +25,34 @@ export function LoadGameListBZCC() {
     document.getElementById("btnExtra").addEventListener('click', function (e) {
         e.preventDefault();
         const btnExtra = document.getElementById('btnExtra');
-        const lobbyList = document.getElementById('lobbyList');
+        const sessionList = document.getElementById('sessionList');
         if (btnExtra.classList.contains('active')) {
-            lobbyList.classList.add('show_extra');
+            sessionList.classList.add('show_extra');
             btnExtra.classList.remove('active');
         } else {
-            lobbyList.classList.remove('show_extra');
+            sessionList.classList.remove('show_extra');
             btnExtra.classList.add('active');
         }
     });
     document.getElementById("btnRefresh").addEventListener('click', function (e) {
         e.preventDefault();
 
-        const lobbyList = document.getElementById('lobbyList');
-        const lobbyListHeader = document.getElementById('lobbyListHeader');
-        lobbyList.innerHTML = '';
-        //lobbyList.classList.add('loading');
-        lobbyListHeader.classList.add('loading');
+        const sessionList = document.getElementById('sessionList');
+        const sessionListHeader = document.getElementById('sessionListHeader');
+        sessionList.innerHTML = '';
+        //sessionList.classList.add('loading');
+        sessionListHeader.classList.add('loading');
 
-        let GetGamesAjax = RefreshSessionList(CreateOrUpdateSessionDom, ['bigboat:battlezone_combat_commander'], () => {
-            //lobbyList.classList.remove('loading');
-            lobbyListHeader.classList.remove('loading');
-        });
-        GetGamesAjax.send();
+        let GetGamesAjax = RefreshSessionList({
+            CreateOrUpdateSessionDom: CreateOrUpdateSessionDom,
+            doneFn: () => {
+                //sessionList.classList.remove('loading');
+                sessionListHeader.classList.remove('loading');
+            },
+        }, ['bigboat:battlezone_combat_commander']);
     });
 
-    var parent = document.querySelector('#lobbyList');
+    var parent = document.querySelector('#sessionList');
 
     function GenerateHtml_IdentitySteam(identity) {
         let platform_name = identity.nickname || identity.$id;
@@ -70,7 +72,7 @@ export function LoadGameListBZCC() {
             return `<a href="${platform_profile}" title="${encodeAttr(platform_name)}" target="_blank" rel="noopener noreferrer" class="chamfer icon icon_gog text-decoration-none me-1" data-id="${encodeAttr(identity.$id)}" data-type="${encodeAttr(identity.$type)}"><img src="/img/gog-icon.svg" class="icon" aria-hidden="true" title="GOG"></img></a>`;
         } else {
             //return `<div title="Steam" class="chamfer icon icon_gog me-1" data-id="${encodeAttr(identity.$id)}" data-type="${encodeAttr(identity.$type)}"><i class="icon icon-gog" aria-hidden="true" title="GOG"></i></div>`;
-            return `<div title="Steam" class="chamfer icon icon_gog me-1" data-id="${encodeAttr(identity.$id)}" data-type="${encodeAttr(identity.$type)}"><img src="/img/gog-icon.svg" class="icon" aria-hidden="true" title="GOG"></img></div>`;
+            return `<div title="Steam" class="chamfer icon icon_gog me-1" data-id="${encodeAttr(identity.$id)}" data-type="${encodeAttr(identity.$type)}"><svg width="24" height="24" style="padding:2px;"><use xlink:href="#svg/glyph/brand/gog"></use></svg></div>`;
         }
     }
 
@@ -182,8 +184,8 @@ export function LoadGameListBZCC() {
     }
 
     function CreateOrUpdateSessionDom($id, data) {
-        //const lobbyList = document.getElementById('lobbyList');
-        //lobbyList.classList.remove('loading');
+        //const sessionList = document.getElementById('sessionList');
+        //sessionList.classList.remove('loading');
 
         var session = data.session[$id];
         var sessionDom = parent.querySelector(`#\\/session\\/${CSS.escape($id)}`);
@@ -558,6 +560,7 @@ export function LoadGameListBZCC() {
                         case 'kill_limit':
                         case 'time_limit':
                         case 'respawn':
+                        case 'vehicle_only':
                             break;
                         default:
                             htmlEntries += `<div class="text-truncate text-center chamfer d-flex flex-row mb-1" title="${encodeAttr(prop)}">${escapeHtml('' + session.level.rules[prop])}</div>`;
