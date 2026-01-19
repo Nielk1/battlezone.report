@@ -44,13 +44,51 @@ export function LoadGameListBZCC() {
         sessionListHeader.classList.add('loading');
 
         let GetGamesAjax = RefreshSessionList({
-            CreateOrUpdateSessionDom: CreateOrUpdateSessionDom,
-            doneFn: () => {
+            process: UpdateDatumDom,
+            done: () => {
                 //sessionList.classList.remove('loading');
                 sessionListHeader.classList.remove('loading');
             },
         }, ['bigboat:battlezone_combat_commander']);
     });
+
+    function UpdateDatumDom(updates, data) {
+        const seen = new Set(); // prevent refiring updates we already did in this batch
+        for (const [datumKey, affectedSet] of updates.entries()) {
+            // type - Datum type that caused this update
+            // id - Datum id that caused this update
+            let [type, id] = datumKey.split('\t');
+
+            for (const affected of affectedSet) {
+                // affectedType - Datum type that is influenced by this update
+                // affectedId - Datum id that is influenced by this update
+                let [affectedType, affectedId] = datumKey.split('\t');
+                const key = `${affectedType}\t${affectedId}`;
+                if (seen.has(key)) continue;
+                seen.add(key);
+
+                console.log(affectedType, affectedId);
+
+                //if (affectedType === 'source') {
+                //    CreateOrUpdateSourceDom?.(affectedId, data);
+                //}
+                if (affectedType === 'session') {
+                    if (type == 'source') {
+                        // source nodes aren't refleccted in Session dom so ignore them even if they triggered an update
+                    } else {
+                        CreateOrUpdateSessionDom(affectedId, data);
+                    }
+                }
+                //if (affectedType === 'lobby') {
+                //    if (type == 'source') {
+                //        // source nodes aren't refleccted in Session dom so ignore them even if they triggered an update
+                //    } else {
+                //        CreateOrUpdateLobbyDom(affectedId, data);
+                //    }
+                //}
+            }
+        }
+    }
 
     var parent = document.querySelector('#sessionList');
 

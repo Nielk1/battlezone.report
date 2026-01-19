@@ -206,7 +206,7 @@ function processIncomingDataDebounced(functions, nonce) {
                 console.log(data.$type, data.$id, data.$data);
             } else if (data.$type == 'mark') {
                 if (data.mark == "end" && data.nonce == nonce) {
-                    functions.doneFn?.();
+                    functions.done?.();
                 }
             } else {
                 ListData[data.$type] = ListData[data.$type] || {};
@@ -227,51 +227,43 @@ function processIncomingDataDebounced(functions, nonce) {
     }, INCOMING_DATA_DEBOUNCE_MS);
 }
 
-let debouncingDatums = false;
-let debouncingSet = new Set();
-let debouncingTimeout = -1;
+let debouncingMap = new Map(); // Map: datumKey -> Set of affected keys
+let debouncingInterval = null;
+const DEBOUNCE_PULSE_MS = 250;
+
+function startDebouncePulse(functions, data) {
+    if (debouncingInterval !== null) return; // Already running
+
+    debouncingInterval = setInterval(() => {
+        if (debouncingMap.size === 0) return; // Nothing to process
+
+        // Copy and clear the map for this pulse
+        const currentMap = new Map(debouncingMap);
+        debouncingMap.clear();
+
+        console.log("START PENDING POOLING");
+        functions.process?.(currentMap, data);
+        console.log("END PENDING POOLING");
+    }, DEBOUNCE_PULSE_MS);
+}
+
+function stopDebouncePulse() {
+    if (debouncingInterval !== null) {
+        clearInterval(debouncingInterval);
+        debouncingInterval = null;
+    }
+}
+
 function UpdateSessionListWithDataFragments(functions, data, modified) {
     for (const mod of modified) {
-        var $parts = mod.split('\t', 2);
-        var $type = $parts[0];
-        var $id = $parts[1];
-
-        // set of all affected items by the incoming datum
-        let affected_set = ExpandDataRefs($type, $id);
-
-        if (affected_set) {
-            for (let v of affected_set) {
-                //console.log(v);
-                let tmp = v.split('\t');
-                debouncingSet.add(`${tmp[0]}\t${tmp[1]}`)
-            }
-            if (!debouncingDatums) {
-                debouncingDatums = true;
-                debouncingTimeout = setTimeout(() => {
-                    console.log("START PENDING POOLING");
-                    for (const affected of debouncingSet) {
-                        let tmp = affected.split('\t');
-                        console.log("Pending Datum Triggered", tmp[0], tmp[1])
-                        if (tmp[0] == 'source') {
-                            functions.CreateOrUpdateSourceDom?.(tmp[1], data);
-                        }
-                        if (tmp[0] == 'session') {
-                            functions.CreateOrUpdateSessionDom?.(tmp[1], data);
-                        }
-                        if (tmp[0] == 'lobby') {
-                            functions.CreateOrUpdateLobbyDom?.(tmp[1], data);
-                        }
-                    }
-                    debouncingSet = new Set();
-                    debouncingDatums = false;
-                    debouncingTimeout = -1;
-                    console.log("END PENDING POOLING");
-                }, 250);
-            }
+        // For each modified datum, get its full parent chain (including itself)
+        let affectedSet = ExpandDataRefs(...mod.split('\t'));
+        if (affectedSet) {
+            debouncingMap.set(mod, new Set(affectedSet));
+            startDebouncePulse(functions, data);
         }
     }
-
-    functions.UpdateSessionListWithDataFragments?.(data, modified);
+    // Optionally, call stopDebouncePulse() when you want to flush and stop (e.g., on navigation)
 }
 
 //export function debounceDatums() {
@@ -316,13 +308,15 @@ export function RefreshSessionList(functions, games) {
         return;
 
     // forget any pending datums from a prior refresh
-    debouncingDatums = false;
-    debouncingSet = new Set();
-    if (debouncingTimeout >= 0) {
-        clearTimeout(debouncingTimeout);
-        console.log("ABORT PENDING POOLING");
-    }
-    debouncingTimeout = -1;
+    //debouncingDatums = false;
+    //debouncingSet = new Set();
+    //debouncingMap = new Map();
+    //if (debouncingTimeout >= 0) {
+    //    clearTimeout(debouncingTimeout);
+    //    console.log("ABORT PENDING POOLING");
+    //}
+    //debouncingTimeout = -1;
+    stopDebouncePulse();
 
     DataRefs_parents = {};
     DataRefs_children = {};
@@ -350,11 +344,12 @@ export function RefreshSessionList(functions, games) {
     ListData = {};
 
     // Clear the shared queue and debounce timer
-    incomingDataQueue = [];
-    if (incomingDataDebounceTimeout !== null) {
-        clearTimeout(incomingDataDebounceTimeout);
-        incomingDataDebounceTimeout = null;
-    }
+    //incomingDataQueue = [];
+    //if (incomingDataDebounceTimeout !== null) {
+    //    clearTimeout(incomingDataDebounceTimeout);
+    //    incomingDataDebounceTimeout = null;
+    //}
+    stopDebouncePulse();
 
     if (mode === 'event') {
         // Use EventSource for SSE
@@ -366,7 +361,7 @@ export function RefreshSessionList(functions, games) {
         var eventSource = new EventSource(url);
         eventSource.onmessage = function (event) {
             var s = event.data + "\n";
-            functions.GotDatumRaw?.(s);
+            functions.raw?.(s);
             //document.getElementById('codeRawJsonLines').appendChild(document.createTextNode(s));
             var data = JSON.parse(event.data);
             incomingDataQueue.push(data);
@@ -374,7 +369,7 @@ export function RefreshSessionList(functions, games) {
         };
         eventSource.onerror = function () {
             eventSource.close();
-            functions.doneFn?.();
+            functions.done?.();
         };
         GetGamesAjax = eventSource;
     } else {
@@ -387,7 +382,7 @@ export function RefreshSessionList(functions, games) {
             var end = 0;
             while ((end = GetGamesAjax.responseText.indexOf('\n', last_index)) > -1) {
                 var s = GetGamesAjax.responseText.substring(last_index, end + 1);
-                functions.GotDatumRaw?.(s);
+                functions.raw?.(s);
                 //document.getElementById('codeRawJsonLines').appendChild(document.createTextNode(s));
                 var data = JSON.parse(s);
                 incomingDataQueue.push(data);
@@ -395,7 +390,7 @@ export function RefreshSessionList(functions, games) {
             }
             processIncomingDataDebounced(functions);
         };
-        GetGamesAjax.onload = function () { functions.doneFn?.(); }
+        GetGamesAjax.onload = function () { functions.done?.(); }
         GetGamesAjax.send();
     }
     ListData = {};

@@ -2,7 +2,7 @@ import { RefreshSessionList } from '/resources/js/gamelist.js';
 
 export function LoadGameListGames() {
 
-    let lastData = null;
+    let GotData = false;
 
     function setSessionCountElem(elemId, value, showSpinner = false) {
         const elem = document.getElementById(elemId);
@@ -27,6 +27,7 @@ export function LoadGameListGames() {
     }
 
     function FillFromData(data) {
+        GotData = true;
         let BZCC_Sessions = 0;
         let BZCC_Players = 0;
         let BZ98R_Sessions = 0;
@@ -57,12 +58,47 @@ export function LoadGameListGames() {
         setSessionCountElem("bzcc-players", BZCC_Players);
     }
 
-    function CreateOrUpdateSessionDom($id, data) {
-        FillFromData(data);
-        lastData = data;
+    function UpdateDatumDom(updates, data) {
+        const seen = new Set(); // prevent refiring updates we already did in this batch
+        for (const [datumKey, affectedSet] of updates.entries()) {
+            // type - Datum type that caused this update
+            // id - Datum id that caused this update
+            let [type, id] = datumKey.split('\t');
+
+            for (const affected of affectedSet) {
+                // affectedType - Datum type that is influenced by this update
+                // affectedId - Datum id that is influenced by this update
+                let [affectedType, affectedId] = datumKey.split('\t');
+                const key = `${affectedType}\t${affectedId}`;
+                if (seen.has(key)) continue;
+                seen.add(key);
+
+                console.log(affectedType, affectedId);
+
+                //if (affectedType === 'source') {
+                //    CreateOrUpdateSourceDom?.(affectedId, data);
+                //}
+                if (affectedType === 'session') {
+                    if (type == 'source') {
+                        // source nodes aren't refleccted in Session dom so ignore them even if they triggered an update
+                    } else {
+                        FillFromData(data);
+                        //CreateOrUpdateSessionDom(affectedId, data);
+                    }
+                }
+                //if (affectedType === 'lobby') {
+                //    if (type == 'source') {
+                //        // source nodes aren't refleccted in Session dom so ignore them even if they triggered an update
+                //    } else {
+                //        CreateOrUpdateLobbyDom(affectedId, data);
+                //    }
+                //}
+            }
+        }
     }
 
     function showAllSpinners() {
+        GotData = false;
         setSessionCountElem("bz98r-sessions", null, true);
         setSessionCountElem("bz98r-players", null, true);
         setSessionCountElem("bzcc-sessions", null, true);
@@ -81,17 +117,14 @@ export function LoadGameListGames() {
         document.querySelector("#gamelist-games-reload i")?.classList.add('fa-spin');
         showAllSpinners();
         let GetGamesAjax = RefreshSessionList({
-            CreateOrUpdateSessionDom: CreateOrUpdateSessionDom,
-            doneFn: () => {
-                // all done
-                if (lastData) {
-                    FillFromData(lastData);
-                } else {
+            process: UpdateDatumDom,
+            done: () => {
+                if (!GotData) {
                     showAllZeros();
                 }
                 document.querySelector("#gamelist-games-reload i")?.classList.remove('fa-spin');
             },
-            failFn: () => {
+            fail: () => { // there is no fail fn?
                 showAllZeros();
                 document.querySelector("#gamelist-games-reload i")?.classList.remove('fa-spin');
             }
